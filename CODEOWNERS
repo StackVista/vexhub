@@ -1,0 +1,8 @@
+# CODEOWNERS for the StackVista VEX Hub.
+#
+# All paths default to infra-admins for now. Add per-directory
+# routing here when the team's review responsibilities are
+# finalised (e.g. routing /pkg/ to a dedicated security or product
+# team).
+
+* @StackVista/infra-admins

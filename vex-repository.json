@@ -1,0 +1,15 @@
+{
+  "name": "suse-observability",
+  "description": "VEX statements for SUSE Observability product images. Statements apply only in the SUSE Observability product context; do not use outside it.",
+  "versions": [
+    {
+      "spec_version": "0.1",
+      "locations": [
+        {
+          "url": "https://github.com/stackvista/vexhub/archive/refs/heads/main.tar.gz"
+        }
+      ],
+      "update_interval": "24h"
+    }
+  ]
+}

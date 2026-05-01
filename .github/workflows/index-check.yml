@@ -1,0 +1,46 @@
+# Asserts that index.json is in sync with the contents of pkg/.
+#
+# index.json is the lookup map Trivy consults via `--vex repo` to find
+# OpenVEX statement files for a given PURL. It is generated from the
+# pkg/ tree by tools/build_index.py and must never be edited by hand.
+#
+# This workflow runs `tools/build_index.py --check`, which regenerates
+# the index in memory and exits non-zero if the on-disk index.json
+# differs. When that happens, the contributor must run
+# `python3 tools/build_index.py` locally and commit the regenerated
+# file.
+name: index-check
+
+on:
+  pull_request:
+    paths:
+      - "pkg/**"
+      - "index.json"
+      - "tools/build_index.py"
+      - ".github/workflows/index-check.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "pkg/**"
+      - "index.json"
+      - "tools/build_index.py"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: index.json in sync with pkg/
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Verify index.json matches pkg/ tree
+        run: python3 tools/build_index.py --check
