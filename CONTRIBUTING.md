@@ -73,9 +73,12 @@ package across our portfolio.
 - **Lane 2: OCI image PURL with package subcomponent.** Use only when
   the assertion varies per image. Subject is the OCI image PURL with
   the `repository_url` qualifier; the affected package is named in
-  `subcomponents`. Because OCI PURLs are registry-coupled, list one
-  product entry per distribution registry — typically both
-  `quay.io/stackstate/<image>` and the Rancher-registry copy.
+  `subcomponents`. Because OCI PURLs are registry-coupled, author one
+  VEX file per distribution registry — typically both
+  `quay.io/stackstate/<image>` and the Rancher Prime
+  `registry.rancher.com/suse-observability/<image>` copy. This mirrors
+  Rancher's generated `rancher/vexhub` layout and lets Trivy's
+  `--vex repo` lookup resolve the exact image repository.
 
 ### Steps
 
@@ -85,10 +88,12 @@ package across our portfolio.
    [tools/README.md](./tools/README.md) for command examples.
    - Lane 1 path:
      `pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json`.
-   - Lane 2 path:
+   - Lane 2 paths:
      `pkg/oci/quay.io/stackstate/zookeeper/scan.openvex.json`
-     (and a sibling under the Rancher-registry path, or a single file
-     listing both in `products`).
+     and
+     `pkg/oci/registry.rancher.com/suse-observability/zookeeper/scan.openvex.json`.
+     Each file should contain the matching single OCI product, for
+     example `pkg:oci/zookeeper?repository_url=quay.io/stackstate/zookeeper`.
 2. Run `python3 tools/build_index.py` to regenerate `index.json`. CI
    asserts the on-disk index matches the `pkg/` tree
    (`tools/build_index.py --check`).

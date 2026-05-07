@@ -64,16 +64,21 @@ The statements should be re-reviewed if any supported SUSE Observability deploym
 
 ## Local Validation
 
-The draft file was checked with:
+The per-product OpenVEX files and generated Rancher-compatible index were
+checked with:
 
 ```bash
 python3 tools/build_index.py --check
+git diff --check
 trivy image --quiet --skip-db-update --scanners vuln --severity HIGH \
   --vex pkg/oci/quay.io/stackstate/kafka/scan.openvex.json \
   --show-suppressed \
   quay.io/stackstate/kafka:3.9.2-f6a6e1a0-main-35
 ```
 
-Trivy 0.70.0 reported `Total: 0 (HIGH: 0)` and showed six suppressed HIGH CVEs from the OpenVEX file: `CVE-2026-2332`, `CVE-2025-67030`, `CVE-2026-24281`, `CVE-2026-24308`, `CVE-2026-42577`, and `CVE-2026-42583`.
+The index helper was also checked with explicit PURL normalization assertions
+for Maven package IDs and OCI `repository_url` IDs.
+
+Trivy 0.70.0 reported `Total: 0 (HIGH: 0)` and showed six suppressed HIGH CVEs from the Quay OpenVEX file: `CVE-2026-2332`, `CVE-2025-67030`, `CVE-2026-24281`, `CVE-2026-24308`, `CVE-2026-42577`, and `CVE-2026-42583`.
 
 This validates the Trivy/OpenVEX shape. cve-reporter's Grype rows still need scanner-side alias/VEX handling if the goal is to make the combined Trivy+Grype total match the AppCo attestation count exactly.

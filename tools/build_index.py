@@ -2,9 +2,9 @@
 """Regenerate index.json from the contents of pkg/.
 
 Walks every *.openvex.json file under pkg/, extracts the product PURLs
-from each statement, normalises them (drops version and qualifiers),
-and writes a fresh index.json conforming to the Aqua VEX Repository
-specification.
+from each statement, normalises them for VEX repository lookup, and
+writes a fresh index.json conforming to the Aqua/Rancher VEX repository
+index shape.
 
 Idempotent: produces the same `packages` list for the same on-disk
 state. Authors should run this whenever they add, modify, or remove a
@@ -16,22 +16,30 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
-
-
-def now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+from urllib.parse import parse_qsl, quote
 
 
 def index_id_for_purl(purl: str) -> str:
-    """Return the canonical index id for a PURL: version and qualifiers stripped."""
-    head = purl
-    if "?" in head:
-        head, _ = head.split("?", 1)
-    if "@" in head:
-        head, _ = head.split("@", 1)
-    return head
+    """Return the Rancher-compatible VEX repository index ID for a PURL.
+
+    Package versions are not part of the repository index key, but qualifiers
+    can be identity-bearing. OCI image products rely on `repository_url`, so
+    keep qualifiers and percent-encode their values the same way Rancher's hub
+    does in index.json.
+    """
+    base, _, query = purl.partition("?")
+    if "@" in base:
+        base, _ = base.rsplit("@", 1)
+    if not query:
+        return base
+
+    qualifiers = []
+    for key, value in parse_qsl(query, keep_blank_values=True):
+        qualifiers.append(f"{quote(key, safe='')}={quote(value, safe='')}")
+    if not qualifiers:
+        return base
+    return f"{base}?{'&'.join(qualifiers)}"
 
 
 def collect_packages(hub_root: Path) -> list[dict]:
@@ -65,7 +73,6 @@ def collect_packages(hub_root: Path) -> list[dict]:
             entries[pid] = {
                 "id": pid,
                 "location": rel_location,
-                "format": "openvex",
             }
     return sorted(entries.values(), key=lambda e: e["id"])
 
@@ -87,7 +94,7 @@ def main() -> None:
 
     packages = collect_packages(args.hub_root)
     fresh = {
-        "updated_at": now_iso(),
+        "version": 1,
         "packages": packages,
     }
     index_path = args.hub_root / "index.json"
@@ -97,8 +104,8 @@ def main() -> None:
             with index_path.open() as f:
                 current = json.load(f)
         else:
-            current = {"packages": []}
-        if current.get("packages") != packages:
+            current = {"version": 1, "packages": []}
+        if current != fresh:
             print(
                 "index.json is out of sync with pkg/ contents.\n"
                 "Run: python3 tools/build_index.py",

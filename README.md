@@ -14,10 +14,13 @@ findings that genuinely don't apply to our deployment.
 ## Scope
 
 VEX statements in this hub apply to SUSE Observability product
-artefacts distributed under:
+artefacts distributed as OCI images from:
 
-- `pkg:oci/quay.io/stackstate/*`
-- `pkg:oci/<rancher-registry-namespace>/*` (Rancher Prime distribution)
+- `quay.io/stackstate/*`
+- `registry.rancher.com/suse-observability/*` (Rancher Prime distribution)
+
+OCI products are identified with the same PURL shape Rancher's hub
+uses: `pkg:oci/<image-name>?repository_url=<registry>/<namespace>/<image>`.
 
 The hub is **complementary to** the SUSE-wide automated VEX
 pipeline operated by Rancher's
@@ -48,6 +51,22 @@ image is scoped to how *we* configure the chart — it makes no claim
 about how SUSE Application Collection's source image behaves in
 another consumer's environment. 
 
+## Relationship to Rancher's VEX repos
+
+Rancher keeps authoring and publication separate:
+
+- `rancher/image-scanning` is the workflow repo where reviewed VEX
+  input is validated against scanner data and generated into OpenVEX.
+- `rancher/vexhub` is the published static hub consumed by Trivy and
+  other VEX repository clients.
+
+This repo currently carries SUSE Observability-specific authoring and
+publication together, but the published files intentionally mirror
+`rancher/vexhub`: one `pkg/.../scan.openvex.json` file per indexed
+product and an `index.json` with `version: 1` plus package IDs and
+locations. If a statement can be handled by Rancher's `image-scanning`
+workflow, prefer that route and let their automation publish it.
+
 ## Layout
 
 ```
@@ -57,10 +76,10 @@ vexhub/
   CODEOWNERS
   CONTRIBUTING.md
   vex-repository.json                  Aqua VEX Repository v0.1 descriptor
-  index.json                           PURL -> file mapping (generated)
+  index.json                           VEX repository index (generated)
   pkg/                                 OpenVEX statements, organised by PURL
     maven/                             pkg:maven/...
-    oci/                               pkg:oci/... (image-scoped, Lane 2)
+    oci/                               pkg:oci/... (image-scoped, one file per OCI product)
     apk/, rpm/, npm/, ...              one directory per PURL type as needed
   reports/                             CSV exports for human review (future)
   docs/
@@ -68,8 +87,10 @@ vexhub/
   tools/                               build_index.py + vexctl usage docs
 ```
 
-Layout matches the Aqua VEX Hub convention so consumers familiar with
-`aquasecurity/vexhub` find files where they expect.
+Layout matches the Aqua/Rancher VEX Hub convention so consumers familiar
+with `aquasecurity/vexhub` and `rancher/vexhub` find files where they
+expect. `index.json` intentionally mirrors Rancher's generated index:
+`version: 1` plus a `packages` list of PURL IDs and file locations.
 
 ## Consuming this hub with Trivy
 
@@ -87,7 +108,7 @@ Then run scans with the repo enabled:
 
 ```bash
 trivy vex repo download
-trivy image --vex repo --show-suppressed pkg:oci/quay.io/stackstate/zookeeper:<tag>
+trivy image --vex repo --show-suppressed quay.io/stackstate/kafka:<tag>
 ```
 
 Suppressed findings are annotated with the matching VEX statement and the

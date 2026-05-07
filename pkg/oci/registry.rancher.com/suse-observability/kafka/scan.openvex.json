@@ -1,6 +1,6 @@
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
-  "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json",
   "author": "SUSE Observability Security Engineering",
   "role": "Document Creator",
   "timestamp": "2026-05-07T14:47:40Z",
@@ -8,7 +8,7 @@
   "tooling": "Hand-authored from cve-reporter output and source review of docker-images and helm-charts; vexctl was not installed in the authoring environment.",
   "statements": [
     {
-      "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json#CVE-2026-2332",
+      "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json#CVE-2026-2332",
       "vulnerability": {
         "name": "CVE-2026-2332",
         "aliases": [
@@ -17,9 +17,9 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
           "identifiers": {
-            "purl": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka"
+            "purl": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka"
           },
           "subcomponents": [
             {
@@ -33,7 +33,7 @@
       "impact_statement": "SUSE Observability deploys this image as a Kafka broker StatefulSet. The Kafka chart runs /scripts/setup.sh, and that script execs kafka-server-start.sh with server.properties. The chart does not start Kafka Connect, does not expose a Jetty REST listener from this image, and JMX metrics are served by a separate jmx-exporter sidecar image. This statement does not apply to ad hoc use of this image for Kafka Connect or a custom command that starts Jetty-backed services."
     },
     {
-      "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json#CVE-2025-67030",
+      "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json#CVE-2025-67030",
       "vulnerability": {
         "name": "CVE-2025-67030",
         "aliases": [
@@ -42,9 +42,9 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
           "identifiers": {
-            "purl": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka"
+            "purl": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka"
           },
           "subcomponents": [
             {
@@ -58,7 +58,7 @@
       "impact_statement": "The reported plexus-utils issue is in archive extraction. SUSE Observability starts the image as a Kafka broker using kafka-server-start.sh and does not run Kafka Connect, plugin archive installation, Maven tooling, or any product workflow that extracts attacker-provided archives through plexus-utils inside the broker container. This statement does not apply to custom commands, manual operator sessions, or Kafka Connect deployments that use this image to unpack untrusted plugin archives."
     },
     {
-      "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json#CVE-2026-24281",
+      "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json#CVE-2026-24281",
       "vulnerability": {
         "name": "CVE-2026-24281",
         "aliases": [
@@ -67,9 +67,9 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
           "identifiers": {
-            "purl": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka"
+            "purl": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka"
           },
           "subcomponents": [
             {
@@ -83,7 +83,7 @@
       "impact_statement": "This ZooKeeper finding is in TLS hostname verification through ZKTrustManager. The SUSE Observability Kafka chart defaults ZooKeeper client TLS to disabled and connects the brokers to the chart-managed ZooKeeper service through KAFKA_ZOOKEEPER_CONNECT without ZooKeeper TLS client material. The ZKTrustManager hostname-verification path is therefore not executed in the supported default broker deployment. This statement does not apply if auth.zookeeper.tls.enabled is enabled or if the image is run with custom ZooKeeper TLS client configuration."
     },
     {
-      "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json#CVE-2026-24308",
+      "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json#CVE-2026-24308",
       "vulnerability": {
         "name": "CVE-2026-24308",
         "aliases": [
@@ -92,9 +92,9 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
           "identifiers": {
-            "purl": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka"
+            "purl": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka"
           },
           "subcomponents": [
             {
@@ -108,7 +108,7 @@
       "impact_statement": "This ZooKeeper finding concerns sensitive ZooKeeper client configuration values being logged. In the supported SUSE Observability Kafka broker deployment, ZooKeeper client TLS is disabled by default and auth.sasl.jaas.zookeeperUser/zookeeperPassword are empty, so the chart does not inject ZooKeeper client credentials or TLS secret paths into the broker's ZooKeeper client configuration. This statement does not apply to deployments that enable ZooKeeper SASL or ZooKeeper client TLS for Kafka brokers without re-validating the rendered configuration and log output."
     },
     {
-      "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json#CVE-2026-42577",
+      "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json#CVE-2026-42577",
       "vulnerability": {
         "name": "CVE-2026-42577",
         "aliases": [
@@ -117,9 +117,9 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
           "identifiers": {
-            "purl": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka"
+            "purl": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka"
           },
           "subcomponents": [
             {
@@ -133,7 +133,7 @@
       "impact_statement": "SUSE Observability starts this image as a Kafka broker. Kafka's broker listeners are configured through the chart's Kafka TCP listener settings and the chart does not configure ZooKeeper's Netty client socket implementation or Netty epoll transport for broker-to-ZooKeeper communication. The vulnerable Netty native epoll transport is present in the image but is not part of the broker execute path. This statement does not apply to custom commands or configuration that explicitly uses Netty epoll from this image."
     },
     {
-      "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/kafka/scan.openvex.json#CVE-2026-42583",
+      "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json#CVE-2026-42583",
       "vulnerability": {
         "name": "CVE-2026-42583",
         "aliases": [
@@ -142,9 +142,9 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
           "identifiers": {
-            "purl": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka"
+            "purl": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka"
           },
           "subcomponents": [
             {

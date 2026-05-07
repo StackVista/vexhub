@@ -40,7 +40,16 @@ resulting JSON — small file, infrequent edits.
 For Lane 2 (image PURL with subcomponent), see
 [vexctl docs](https://github.com/openvex/vexctl) and the OpenVEX spec.
 The `--product` flag accepts an OCI PURL; subcomponents can be added
-to the resulting JSON.
+to the resulting JSON. Keep one generated file per OCI repository URL,
+for example:
+
+```
+pkg/oci/quay.io/stackstate/kafka/scan.openvex.json
+pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json
+```
+
+The product IDs inside those files should use the matching OCI PURL,
+for example `pkg:oci/kafka?repository_url=quay.io/stackstate/kafka`.
 
 If multiple statements apply to the same package, append them to the
 same file's `statements` array, or use `vexctl merge` to combine
@@ -56,9 +65,11 @@ python3 tools/build_index.py
 ```
 
 The script walks `pkg/`, extracts product PURLs from every statement,
-normalises them (drops version and qualifiers), and rewrites
-`index.json` from scratch — sorted, deduplicated, and matching the
-[Aqua VEX Repository specification](https://github.com/aquasecurity/vex-repo-spec).
+normalises them for VEX repository lookup, and rewrites `index.json`
+from scratch — sorted, deduplicated, and matching the index shape used
+by [Rancher's VEX Hub](https://github.com/rancher/vexhub). Package
+versions are stripped from index IDs, while qualifiers such as OCI
+`repository_url` are preserved and percent-encoded.
 
 ## CI check
 
