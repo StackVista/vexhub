@@ -1,4 +1,10 @@
 {
-  "updated_at": "2026-05-01T07:25:29Z",
-  "packages": []
+  "updated_at": "2026-05-07T14:48:50Z",
+  "packages": [
+    {
+      "id": "pkg:oci/kafka",
+      "location": "pkg/oci/quay.io/stackstate/kafka/scan.openvex.json",
+      "format": "openvex"
+    }
+  ]
 }
