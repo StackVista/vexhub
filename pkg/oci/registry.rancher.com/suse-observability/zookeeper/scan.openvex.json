@@ -1,0 +1,55 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/registry.rancher.com/suse-observability/zookeeper/scan.openvex.json",
+  "author": "SUSE Observability Security Engineering",
+  "role": "Document Creator",
+  "version": 2,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-42577",
+        "aliases": [
+          "GHSA-rwm7-x88c-3g2p"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/zookeeper?repository_url=registry.rancher.com/suse-observability/zookeeper",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/io.netty/netty-transport-native-epoll@4.1.130.Final"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "The vulnerable code is in io.netty.channel.epoll handling of half-closed channels after a FIN+RST sequence. SUSE Observability deploys this image with the stable/zookeeper Helm chart: the chart command is /scripts/setup.sh, setup.sh execs the image entrypoint and zkServer.sh start-foreground, and the chart renders zoo.cfg directly. That rendered zoo.cfg does not set zookeeper.serverCnxnFactory or NettyServerCnxnFactory, and the supported defaults leave both client and quorum TLS disabled. The ZooKeeper server therefore uses the NIO connection factory for client/quorum traffic and does not instantiate io.netty.channel.epoll.* channels. This statement does not apply if custom ZooKeeper configuration sets zookeeper.serverCnxnFactory to NettyServerCnxnFactory, enables client/quorum TLS, or otherwise starts a Netty-based service from this image.",
+      "timestamp": "2026-05-08T11:45:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-42583",
+        "aliases": [
+          "GHSA-mj4r-2hfc-f8p6"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/zookeeper?repository_url=registry.rancher.com/suse-observability/zookeeper",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/io.netty/netty-codec@4.1.130.Final"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "The vulnerable code is io.netty.handler.codec.compression.Lz4FrameDecoder.decode in a Netty channel pipeline. SUSE Observability deploys this image with the stable/zookeeper Helm chart as a ZooKeeper server using the chart-rendered zoo.cfg. The supported default configuration does not set a Netty server connection factory, leaves client and quorum TLS disabled, and does not configure any Netty pipeline or Lz4FrameDecoder. ZooKeeper's active HTTP surfaces in this deployment are Jetty-based AdminServer and Prometheus metrics, not Netty. This statement does not apply if custom configuration starts Netty handlers/codecs from this image.",
+      "timestamp": "2026-05-08T11:45:00Z"
+    }
+  ],
+  "timestamp": "2026-05-08T11:45:00Z",
+  "last_updated": "2026-05-08T11:45:00Z"
+}
