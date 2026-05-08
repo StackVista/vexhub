@@ -2,6 +2,10 @@
   "version": 1,
   "packages": [
     {
+      "id": "pkg:maven/io.netty/netty-transport-native-epoll",
+      "location": "pkg/maven/io.netty/netty-transport-native-epoll/scan.openvex.json"
+    },
+    {
       "id": "pkg:oci/kafka?repository_url=quay.io%2Fstackstate%2Fkafka",
       "location": "pkg/oci/quay.io/stackstate/kafka/scan.openvex.json"
     },

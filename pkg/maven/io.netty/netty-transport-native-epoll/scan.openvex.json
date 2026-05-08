@@ -1,0 +1,27 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/maven/io.netty/netty-transport-native-epoll/scan.openvex.json",
+  "author": "SUSE Observability Security Engineering",
+  "role": "Document Creator",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-42577",
+        "aliases": [
+          "GHSA-rwm7-x88c-3g2p"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:maven/io.netty/netty-transport-native-epoll@4.1.133.Final"
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "Scanner metadata in stackgraph-hbase identifies io.netty:netty-transport-native-epoll 4.1.133.Final inside the HBase shaded Netty jar. The upstream Netty advisory and fix for CVE-2026-42577/GHSA-rwm7-x88c-3g2p describe a denial-of-service defect in the 4.2 epoll transport path. The Netty maintainer clarified on the fixing PR that only 4.2 and 5.0 have the problem, and the fix was merged to the 4.2 branch. The shipped shaded jar contains Netty 4.1.133.Final metadata and 4.1 epoll classes, not the 4.2-only vulnerable implementation. HBase may use epoll at runtime, so this is not a reachability claim; the not_affected assertion is that the vulnerable code is not present in the shipped 4.1.133.Final component. This statement does not apply if SUSE Observability moves this component to an affected 4.2.x or 5.0 pre-fix Netty version.",
+      "timestamp": "2026-05-08T09:00:00Z"
+    }
+  ],
+  "timestamp": "2026-05-08T09:00:00Z"
+}
