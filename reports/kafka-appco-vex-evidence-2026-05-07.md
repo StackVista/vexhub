@@ -64,10 +64,12 @@ The statements should be re-reviewed if any supported SUSE Observability deploym
 
 ## Local Validation
 
-The per-product OpenVEX files and generated Rancher-compatible index were
-checked with:
+The per-product OpenVEX files were regenerated with `vexctl` 0.4.1
+(`vexctl create` plus `vexctl add`) and the generated
+Rancher-compatible index was checked with:
 
 ```bash
+vexctl version
 python3 tools/build_index.py --check
 git diff --check
 trivy image --quiet --skip-db-update --scanners vuln --severity HIGH \
