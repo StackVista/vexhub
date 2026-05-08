@@ -32,7 +32,8 @@ the supported deployment and could not."
 
 - PR #2 head: `codex/vex-kafka-appco-cves` at `d92712a`
 - Author evidence report: [`reports/evidence/kafka-appco-vex-evidence-2026-05-07.md`](../evidence/kafka-appco-vex-evidence-2026-05-07.md)
-- `helm-charts` `master`: Kafka chart (`stable/kafka/templates/scripts-configmap.yaml`,
+- `helm-charts` `master` at `d6017cb76c19126cfc4ee27bb00c5f5edb17928c`:
+  Kafka chart (`stable/kafka/templates/scripts-configmap.yaml`,
   `stable/kafka/templates/statefulset.yaml`, `stable/kafka/values.yaml`)
 - `docker-images` `main`: `images/kafka/.trivyignore.yaml` (confirms
   existing image-gate exceptions for the Jetty, Plexus, and
@@ -40,6 +41,28 @@ the supported deployment and could not."
 - Upstream advisory text for each GHSA (technical scope per CVE)
 - Local Trivy 0.70.0 scan of `quay.io/stackstate/kafka:3.9.2-f6a6e1a0-main-35`
   (confirms the Netty JAR paths)
+
+## Primary deployment references
+
+The Helm chart evidence uses the GitHub mirror of `helm-charts` at commit
+`d6017cb76c19126cfc4ee27bb00c5f5edb17928c`, fetched from `origin/master` on
+2026-05-08. The key references are:
+
+- SUSE Observability includes the Kafka subchart:
+  [`stable/suse-observability/Chart.yaml#L33-L35`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/suse-observability/Chart.yaml#L33-L35).
+- The Kafka container command defaults to `/scripts/setup.sh`:
+  [`stable/kafka/values.yaml#L402-L405`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L402-L405), and the StatefulSet renders that command into the `kafka` container:
+  [`stable/kafka/templates/statefulset.yaml#L155-L166`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L155-L166).
+- `setup.sh` ends by starting the broker:
+  [`stable/kafka/templates/scripts-configmap.yaml#L209-L214`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/scripts-configmap.yaml#L209-L214).
+- ZooKeeper SASL defaults are empty:
+  [`stable/kafka/values.yaml#L273-L278`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L273-L278), and the StatefulSet only injects `KAFKA_ZOOKEEPER_USER` / `KAFKA_ZOOKEEPER_PASSWORD` when `zookeeperUser` is non-empty:
+  [`stable/kafka/templates/statefulset.yaml#L248-L256`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L248-L256).
+- ZooKeeper client TLS defaults to disabled:
+  [`stable/kafka/values.yaml#L351-L357`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L351-L357), and TLS material is only mounted/copied when TLS and an existing ZooKeeper TLS secret are configured:
+  [`statefulset.yaml#L430-L434`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L430-L434),
+  [`statefulset.yaml#L523-L528`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L523-L528), and
+  [`scripts-configmap.yaml#L189-L199`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/scripts-configmap.yaml#L189-L199).
 
 ## Method
 
@@ -65,18 +88,19 @@ primary sources confirms it.
 - **Trigger**: an active Jetty HTTP server processing untrusted
   requests.
 - **Broker reality**: chart default `command: [/scripts/setup.sh]`
-  (`stable/kafka/values.yaml:404-405`); `setup.sh` execs
-  `kafka-server-start.sh` (`scripts-configmap.yaml:214`). Kafka 3.9
-  broker in ZooKeeper mode does not start an embedded Jetty server.
-  JMX scrape is via the separate `bitnami/jmx-exporter` sidecar
-  image, not Jetty from this image
-  (`statefulset.yaml:444-479`). `jetty-http-9.4.57.v20241219.jar` is
+  ([`stable/kafka/values.yaml#L402-L405`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L402-L405)); the StatefulSet renders this command into the `kafka` container
+  ([`stable/kafka/templates/statefulset.yaml#L155-L166`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L155-L166)); and `setup.sh` execs
+  `kafka-server-start.sh`
+  ([`scripts-configmap.yaml#L209-L214`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/scripts-configmap.yaml#L209-L214)). Kafka 3.9
+  broker in ZooKeeper mode does not start an embedded Jetty server or
+  Kafka Connect REST worker. `jetty-http-9.4.57.v20241219.jar` is
   on the broker classpath (`images/kafka/.trivyignore.yaml:46-49`),
   but no broker class invokes the vulnerable parser.
 - **Falsification attempt**: probe every TCP port the kafka container
   binds for an HTTP-speaking listener. Container ports are Kafka
-  client/internal/external (TCP wire protocol) plus optional JMX RMI
-  on 5555 (`statefulset.yaml:272-275, 349-357`). JMX RMI is not Jetty.
+  client/internal/external (TCP wire protocol)
+  ([`statefulset.yaml#L349-L357`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L349-L357)) plus optional JMX RMI on 5555
+  ([`statefulset.yaml#L272-L275`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L272-L275)). JMX RMI is not Jetty.
   Could not construct a request path.
 - **Conclusion**: `vulnerable_code_not_in_execute_path` holds.
 
@@ -109,10 +133,12 @@ primary sources confirms it.
   ZKTrustManager is instantiated; attacker controls PTR for the
   target IP.
 - **Broker reality**: `auth.zookeeper.tls.enabled: false`
-  (`stable/kafka/values.yaml:357`). The chart wires
+  ([`stable/kafka/values.yaml#L351-L357`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L351-L357)). The chart wires
   `KAFKA_ZOOKEEPER_*` SSL env vars and the secret volume
-  conditionally on this flag (`statefulset.yaml:430-434`,
-  `scripts-configmap.yaml:189-199`). With defaults no
+  conditionally on this flag
+  ([`statefulset.yaml#L430-L434`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L430-L434),
+  [`statefulset.yaml#L523-L528`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L523-L528),
+  [`scripts-configmap.yaml#L189-L199`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/scripts-configmap.yaml#L189-L199)). With defaults no
   ZK SSLContext is built, so ZKTrustManager is never instantiated.
 - **Falsification attempt**: look for any non-conditional path that
   would build an SSL ZK client. None found.
@@ -127,11 +153,14 @@ primary sources confirms it.
   `ZKConfig`.
 - **Broker reality**: chart default `auth.sasl.jaas.zookeeperUser` and
   `zookeeperPassword` are empty strings
-  (`stable/kafka/values.yaml:275-278`); `KAFKA_ZOOKEEPER_USER` and
+  ([`stable/kafka/values.yaml#L273-L278`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L273-L278)); `KAFKA_ZOOKEEPER_USER` and
   `KAFKA_ZOOKEEPER_PASSWORD` are only injected when `zookeeperUser`
-  is non-empty (`statefulset.yaml:248-256`); ZK TLS material is only
+  is non-empty
+  ([`statefulset.yaml#L248-L256`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L248-L256)); ZK TLS material is only
   mounted when `auth.zookeeper.tls.enabled` and `existingSecret` are
-  both set (`statefulset.yaml:430-434`, `523-528`). So the broker's
+  both set
+  ([`statefulset.yaml#L430-L434`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L430-L434),
+  [`statefulset.yaml#L523-L528`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L523-L528)). So the broker's
   `ZKConfig` carries non-sensitive entries (`zookeeper.connect` and
   similar) only.
 - **Justification correction**: the original PR used
@@ -201,14 +230,19 @@ primary sources confirms it.
 ## Changes applied in this MR
 
 The two OpenVEX files were regenerated with `vexctl` 0.4.1 and
-`SOURCE_DATE_EPOCH=1778227200` (2026-05-08T08:00:00Z). The exact
-sequence is recorded below for reproducibility; it is not committed
-as a per-statement script (per the hub's no-script-per-statement
+`SOURCE_DATE_EPOCH=1778227200` (2026-05-08T08:00:00Z). The command
+pattern is recorded below for reproducibility; the temporary local
+wrapper used to keep the Quay and Rancher outputs identical is not
+committed as a per-statement script (per the hub's no-script-per-statement
 policy).
 
 Diffs vs. PR #2:
 
 - `pkg/oci/quay.io/stackstate/kafka/scan.openvex.json`
+  - CVE-2026-2332 impact statement: now names the SUSE Observability
+    Kafka subchart evidence and removes the distracting JMX exporter
+    sentence. The statement focuses on Kafka broker vs Kafka Connect
+    runtime posture.
   - CVE-2026-24308 justification:
     `inline_mitigations_already_exist` →
     `vulnerable_code_not_in_execute_path`.
@@ -232,7 +266,8 @@ Diffs vs. PR #2:
   — same edits, mirrored.
 
 The Jetty statement was lightly tightened to name `HttpParser` and
-clarify which Kafka components do and do not start Jetty.
+clarify that the broker deployment does not start Kafka Connect or
+another Jetty-backed HTTP service.
 
 `vexctl` regeneration commands (run from repo root):
 
@@ -288,6 +323,11 @@ behaviour is unaffected by the impact-statement edits.
   scanner intelligence sources (NVD or GHSA) if the 4.1.x detection
   is in fact a false positive. Tracking the resolution removes a
   noise source rather than just suppressing it.
+- **Remove Kafka Connect artifacts from the broker image**: Jetty and
+  plexus-utils appear to be present because the Kafka distribution
+  carries Kafka Connect/plugin tooling alongside the broker. A
+  broker-only image, if feasible, would remove this class of VEX work
+  instead of documenting that the extra code is not started.
 - **Annual review**: per `CONTRIBUTING.md`, this set of
   `vulnerable_code_not_in_execute_path` claims should be re-checked
   before 2027-05-08 to confirm the chart wiring (especially

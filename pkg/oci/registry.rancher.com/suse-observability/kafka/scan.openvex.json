@@ -24,7 +24,7 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "SUSE Observability deploys this image as a Kafka broker StatefulSet. The Kafka chart runs /scripts/setup.sh, which execs kafka-server-start.sh with server.properties. The Kafka broker in ZooKeeper mode does not start an embedded Jetty HTTP server; Jetty is used by Kafka Connect REST services, which the chart does not start. JMX metrics are scraped by a separate jmx-exporter sidecar image, not by Jetty from this image. The vulnerable HttpParser code path requires an active Jetty HTTP listener processing untrusted requests, which is not present. This statement does not apply to ad hoc use of this image for Kafka Connect or a custom command that starts Jetty-backed services.",
+      "impact_statement": "SUSE Observability deploys this image as a Kafka broker StatefulSet from the SUSE Observability Helm chart's Kafka subchart: the chart default command is /scripts/setup.sh, the StatefulSet renders that command into the kafka container, and setup.sh execs kafka-server-start.sh with server.properties. The supported broker runtime does not start Kafka Connect or another Jetty-backed HTTP service from this image. Jetty is present for Kafka Connect REST services, which this chart does not start. The vulnerable HttpParser code path requires an active Jetty HTTP listener processing untrusted requests, which is not present. This statement does not apply to ad hoc use of this image for Kafka Connect or a custom command that starts Jetty-backed services.",
       "timestamp": "2026-05-08T08:00:00Z"
     },
     {

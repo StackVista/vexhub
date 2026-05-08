@@ -15,9 +15,32 @@ It does not VEX the upstream AppCo source image directly. The docker-images reta
 
 - `vexhub` base: `c949ff3f5339d11ef9ef9622038b7346eec7936f`
 - `docker-images` `origin/main`: `e87c8d2fbad2abb7533778612282c5ff9e94928d`
-- `helm-charts` `origin/master`: `77c420897d4eaee15dae80f4c8c8ace99cd63e96`
+- `helm-charts` `origin/master`: `d6017cb76c19126cfc4ee27bb00c5f5edb17928c`
 - Local cve-reporter query at `2026-05-07T14:45:56Z`
 - User-provided AppCo attestation for `apache-kafka:3.9.2-13.5`
+
+## Primary Chart References
+
+The chart references below use the GitHub mirror of `helm-charts` at commit
+`d6017cb76c19126cfc4ee27bb00c5f5edb17928c`, fetched from `origin/master` on
+2026-05-08. They are durable links rather than clone-local relative paths:
+
+- SUSE Observability includes the Kafka subchart:
+  [`stable/suse-observability/Chart.yaml#L33-L35`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/suse-observability/Chart.yaml#L33-L35).
+- The Kafka container command defaults to `/scripts/setup.sh`:
+  [`stable/kafka/values.yaml#L402-L405`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L402-L405).
+- The StatefulSet renders that command into the `kafka` container:
+  [`stable/kafka/templates/statefulset.yaml#L155-L166`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L155-L166).
+- `setup.sh` starts the broker with `kafka-server-start.sh`:
+  [`stable/kafka/templates/scripts-configmap.yaml#L209-L214`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/scripts-configmap.yaml#L209-L214).
+- ZooKeeper SASL defaults are empty:
+  [`stable/kafka/values.yaml#L273-L278`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L273-L278), and the StatefulSet only injects the ZooKeeper SASL env vars when `zookeeperUser` is non-empty:
+  [`stable/kafka/templates/statefulset.yaml#L248-L256`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L248-L256).
+- ZooKeeper client TLS defaults to disabled:
+  [`stable/kafka/values.yaml#L351-L357`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/values.yaml#L351-L357), and TLS material is only mounted/copied when TLS and an existing ZooKeeper TLS secret are configured:
+  [`statefulset.yaml#L430-L434`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L430-L434),
+  [`statefulset.yaml#L523-L528`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/statefulset.yaml#L523-L528), and
+  [`scripts-configmap.yaml#L189-L199`](https://github.com/StackVista/helm-charts/blob/d6017cb76c19126cfc4ee27bb00c5f5edb17928c/stable/kafka/templates/scripts-configmap.yaml#L189-L199).
 
 ## Scanner Rows
 
@@ -46,7 +69,7 @@ exec /usr/share/kafka/bin/kafka-server-start.sh /usr/share/kafka/config/server.p
 
 There is no chart path that starts `connect-distributed.sh`, `connect-standalone.sh`, a Jetty-backed Kafka Connect REST worker, or Maven/Plexus archive extraction as part of the supported broker deployment.
 
-The Kafka Service exposes Kafka TCP listener ports only. JMX metrics are provided by a separate `jmx-exporter` sidecar image and service, not by Jetty from the Kafka image.
+The Kafka container exposes Kafka TCP listener ports only, plus optional JMX RMI when metrics are enabled. It does not expose a Jetty HTTP listener from this image.
 
 Default Kafka auth values are plaintext for client and inter-broker protocols. `auth.zookeeper.tls.enabled` defaults to `false`, and `auth.sasl.jaas.zookeeperUser` / `auth.sasl.jaas.zookeeperPassword` default to empty strings. ZooKeeper client TLS material is copied only when `auth.zookeeper.tls.enabled` and an existing ZooKeeper TLS secret are configured.
 
