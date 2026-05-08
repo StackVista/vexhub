@@ -81,7 +81,9 @@ vexhub/
     maven/                             pkg:maven/...
     oci/                               pkg:oci/... (image-scoped, one file per OCI product)
     apk/, rpm/, npm/, ...              one directory per PURL type as needed
-  reports/                             CSV exports for human review (future)
+  reports/                             Human-readable reports backing the statements
+    evidence/                            Author justification per VEX batch
+    security-reviews/                    Independent adversarial reviews of VEX batches
   docs/
     adr/                               Architecture decision records (future)
   tools/                               build_index.py + vexctl usage docs
@@ -117,6 +119,28 @@ hub source.
 The same Trivy invocation can subscribe to multiple hubs (Aqua's default,
 Rancher's, this hub) — each is consulted independently and statements are
 applied wherever PURLs match.
+
+## Reports
+
+Each VEX batch has two human-readable artefacts in `reports/`:
+
+- **`reports/evidence/<scope>-vex-evidence-<YYYY-MM-DD>.md`** — written
+  by the author of the VEX MR. Captures the chart values, runtime
+  command, and per-CVE reasoning that justifies each `not_affected`
+  claim. Reviewers should be able to re-derive the conclusion
+  directly from the evidence report without re-reading the codebase.
+- **`reports/security-reviews/<scope>-vex-security-review-<YYYY-MM-DD>.md`**
+  — written by an independent reviewer (different person from the
+  VEX author). Frames each statement adversarially: "what would
+  have to be true to falsify this?" then checks whether the
+  supported deployment satisfies those conditions, citing primary
+  sources (advisory technical scope, chart templates, default
+  values). Records every justification or impact-statement change
+  applied as a result.
+
+Both artefacts are required for HIGH/CRITICAL VEX batches in
+`pkg/oci/...`. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full
+flow and approval rules.
 
 ## Contributing
 
