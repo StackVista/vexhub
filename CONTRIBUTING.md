@@ -111,8 +111,11 @@ package across our portfolio.
 
 ### Security review (required for HIGH/CRITICAL OCI VEX)
 
-A separate person from the VEX author opens a follow-up MR stacked
-on the VEX MR that:
+A separate person from the VEX author reviews the VEX MR before
+merge. If the review happens on a temporary stacked MR, fold the
+review commits back into the original MR and retarget the final PR
+to `main` before merge so the hub lands one coherent change set.
+The reviewer:
 
 1. Adds a security review report at
    `reports/security-reviews/<scope>-vex-security-review-<YYYY-MM-DD>.md`.

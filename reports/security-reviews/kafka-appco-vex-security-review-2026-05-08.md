@@ -35,9 +35,11 @@ the supported deployment and could not."
 - `helm-charts` `master`: Kafka chart (`stable/kafka/templates/scripts-configmap.yaml`,
   `stable/kafka/templates/statefulset.yaml`, `stable/kafka/values.yaml`)
 - `docker-images` `main`: `images/kafka/.trivyignore.yaml` (confirms
-  vulnerable JARs ship under `usr/share/kafka/libs/`)
+  existing image-gate exceptions for the Jetty, Plexus, and
+  ZooKeeper JARs)
 - Upstream advisory text for each GHSA (technical scope per CVE)
 - Local Trivy 0.70.0 scan of `quay.io/stackstate/kafka:3.9.2-f6a6e1a0-main-35`
+  (confirms the Netty JAR paths)
 
 ## Method
 
@@ -133,19 +135,22 @@ primary sources confirms it.
   `ZKConfig` carries non-sensitive entries (`zookeeper.connect` and
   similar) only.
 - **Justification correction**: the original PR used
-  `inline_mitigations_already_exist`. There is no inline
-  mitigation — the logging code path may execute, but nothing
-  adversary-relevant is present in the configuration to leak. The
-  accurate OpenVEX justification is
-  `vulnerable_code_cannot_be_controlled_by_adversary`. The author's
-  conclusion stands; only the justification field is wrong.
-  **Applied in this MR.**
+  `inline_mitigations_already_exist`, and the stacked security review
+  briefly changed this to
+  `vulnerable_code_cannot_be_controlled_by_adversary`. Neither is the
+  best fit: the supported broker deployment does not rely on an
+  immutable inline mitigation, and a log-leak attacker does not need
+  to control the secret value. The accurate OpenVEX justification is
+  `vulnerable_code_not_in_execute_path`, scoped to the sensitive-value
+  leak path: `ZKConfig` may log non-sensitive connection settings, but
+  the default deployment does not populate credentials or key material
+  for it to expose. **Applied in this MR.**
 - **Falsification attempt**: identify a default-deployment value
   loaded into `ZKConfig` that an attacker could influence. The only
   ZK-client values the chart sets unconditionally are non-sensitive
   topology/timeout settings.
 - **Conclusion**: status `not_affected` is correct; justification
-  changed to `vulnerable_code_cannot_be_controlled_by_adversary`.
+  changed to `vulnerable_code_not_in_execute_path`.
 
 ### CVE-2026-42577 — `netty-transport-native-epoll` 4.1.125.Final — UPHELD with caveat
 
@@ -206,10 +211,11 @@ Diffs vs. PR #2:
 - `pkg/oci/quay.io/stackstate/kafka/scan.openvex.json`
   - CVE-2026-24308 justification:
     `inline_mitigations_already_exist` →
-    `vulnerable_code_cannot_be_controlled_by_adversary`.
+    `vulnerable_code_not_in_execute_path`.
   - CVE-2026-24308 impact statement: rewritten to make the
-    "no adversary-influenceable input" reasoning explicit (rather
-    than implying a non-existent inline mitigation).
+    "sensitive ZooKeeper configuration is not populated in the default
+    broker runtime" reasoning explicit without implying a
+    non-existent inline mitigation or an attacker-control condition.
   - CVE-2025-67030 impact statement: now names the specific
     vulnerable method (`Expand.extractFile`) so reviewers can verify
     the framing matches the upstream advisory without re-deriving.
@@ -217,16 +223,16 @@ Diffs vs. PR #2:
     `org.apache.zookeeper.common.ZKTrustManager` and the reverse-DNS
     fallback explicitly.
   - CVE-2026-42577 impact statement: appends a NOTE about the GHSA's
-    documented affected range (`<= 4.2.12.Final`, 4.2.x branch) and
-    flags the version-range question for upstream follow-up.
+    documented affected range (`>= 4.2.0.Final` and
+    `< 4.2.13.Final`) and flags the version-range question for
+    upstream follow-up.
   - CVE-2026-42583 impact statement: now names
     `Lz4FrameDecoder.decode` and contrasts with Kafka's `lz4-java`.
 - `pkg/oci/registry.rancher.com/suse-observability/kafka/scan.openvex.json`
   — same edits, mirrored.
 
-The other two statements (CVE-2026-2332, CVE-2026-2332 jetty path
-and CVE-2026-2332 framing) were lightly tightened to name `HttpParser`
-and clarify which Kafka components do/don't start Jetty.
+The Jetty statement was lightly tightened to name `HttpParser` and
+clarify which Kafka components do and do not start Jetty.
 
 `vexctl` regeneration commands (run from repo root):
 
@@ -260,7 +266,7 @@ Suppressed Vulnerabilities (Total: 6)
   io.netty:netty-codec                  CVE-2026-42583  not_affected  vulnerable_code_not_in_execute_path
   io.netty:netty-transport-native-epoll CVE-2026-42577  not_affected  vulnerable_code_not_in_execute_path
   org.apache.zookeeper:zookeeper        CVE-2026-24281  not_affected  vulnerable_code_not_in_execute_path
-  org.apache.zookeeper:zookeeper        CVE-2026-24308  not_affected  vulnerable_code_cannot_be_controlled_by_adversary
+  org.apache.zookeeper:zookeeper        CVE-2026-24308  not_affected  vulnerable_code_not_in_execute_path
   org.codehaus.plexus:plexus-utils      CVE-2025-67030  not_affected  vulnerable_code_not_in_execute_path
   org.eclipse.jetty:jetty-http          CVE-2026-2332   not_affected  vulnerable_code_not_in_execute_path
 ```
