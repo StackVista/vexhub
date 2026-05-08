@@ -24,8 +24,8 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "SUSE Observability deploys this image as a Kafka broker StatefulSet. The Kafka chart runs /scripts/setup.sh, and that script execs kafka-server-start.sh with server.properties. The chart does not start Kafka Connect, does not expose a Jetty REST listener from this image, and JMX metrics are served by a separate jmx-exporter sidecar image. This statement does not apply to ad hoc use of this image for Kafka Connect or a custom command that starts Jetty-backed services.",
-      "timestamp": "2026-05-08T05:03:13Z"
+      "impact_statement": "SUSE Observability deploys this image as a Kafka broker StatefulSet. The Kafka chart runs /scripts/setup.sh, which execs kafka-server-start.sh with server.properties. The Kafka broker (ZooKeeper mode) does not start an embedded Jetty HTTP server; Jetty is only used by Kafka Connect and Kafka REST workers, which the chart does not start. JMX metrics are scraped by a separate jmx-exporter sidecar image, not by Jetty from this image. The vulnerable HttpParser code path requires an active Jetty HTTP listener processing untrusted requests, which is not present. This statement does not apply to ad hoc use of this image for Kafka Connect, Kafka REST, or a custom command that starts Jetty-backed services.",
+      "timestamp": "2026-05-08T08:00:00Z"
     },
     {
       "vulnerability": {
@@ -46,8 +46,8 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "The reported plexus-utils issue is in archive extraction. SUSE Observability starts the image as a Kafka broker using kafka-server-start.sh and does not run Kafka Connect, plugin archive installation, Maven tooling, or any product workflow that extracts attacker-provided archives through plexus-utils inside the broker container. This statement does not apply to custom commands, manual operator sessions, or Kafka Connect deployments that use this image to unpack untrusted plugin archives.",
-      "timestamp": "2026-05-08T05:03:13Z"
+      "impact_statement": "The vulnerable code is in org.codehaus.plexus.util.Expand.extractFile (Zip Slip during archive extraction). SUSE Observability starts the image as a Kafka broker using kafka-server-start.sh. The broker startup path does not invoke Expand or any plexus-utils archive code; plexus-utils is on the classpath as a transitive dependency of Kafka Connect plugin tooling, which the chart does not start. This statement does not apply to custom commands, manual operator sessions, or Kafka Connect deployments that use this image to unpack untrusted plugin archives.",
+      "timestamp": "2026-05-08T08:00:00Z"
     },
     {
       "vulnerability": {
@@ -68,8 +68,8 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "This ZooKeeper finding is in TLS hostname verification through ZKTrustManager. The SUSE Observability Kafka chart defaults ZooKeeper client TLS to disabled and connects the brokers to the chart-managed ZooKeeper service through KAFKA_ZOOKEEPER_CONNECT without ZooKeeper TLS client material. The ZKTrustManager hostname-verification path is therefore not executed in the supported default broker deployment. This statement does not apply if auth.zookeeper.tls.enabled is enabled or if the image is run with custom ZooKeeper TLS client configuration.",
-      "timestamp": "2026-05-08T05:03:13Z"
+      "impact_statement": "The vulnerable code is in org.apache.zookeeper.common.ZKTrustManager hostname verification, which falls back to reverse DNS (PTR) when SAN validation fails. The SUSE Observability Kafka chart defaults auth.zookeeper.tls.enabled to false; the broker connects to ZooKeeper over plaintext via KAFKA_ZOOKEEPER_CONNECT and never builds a ZK client SSLContext. ZKTrustManager is therefore not instantiated. This statement does not apply if auth.zookeeper.tls.enabled is enabled or if the image is run with custom ZooKeeper TLS client configuration.",
+      "timestamp": "2026-05-08T08:00:00Z"
     },
     {
       "vulnerability": {
@@ -89,9 +89,9 @@
         }
       ],
       "status": "not_affected",
-      "justification": "inline_mitigations_already_exist",
-      "impact_statement": "This ZooKeeper finding concerns sensitive ZooKeeper client configuration values being logged. In the supported SUSE Observability Kafka broker deployment, ZooKeeper client TLS is disabled by default and auth.sasl.jaas.zookeeperUser/zookeeperPassword are empty, so the chart does not inject ZooKeeper client credentials or TLS secret paths into the broker's ZooKeeper client configuration. This statement does not apply to deployments that enable ZooKeeper SASL or ZooKeeper client TLS for Kafka brokers without re-validating the rendered configuration and log output.",
-      "timestamp": "2026-05-08T05:03:13Z"
+      "justification": "vulnerable_code_cannot_be_controlled_by_adversary",
+      "impact_statement": "The vulnerable code logs ZooKeeper client configuration values at INFO via ZKConfig. In the SUSE Observability Kafka broker deployment the chart does not inject any sensitive values into the broker's ZooKeeper client configuration: auth.sasl.jaas.zookeeperUser/zookeeperPassword default to empty strings (KAFKA_ZOOKEEPER_USER/PASSWORD are only set when zookeeperUser is non-empty), and auth.zookeeper.tls.enabled is false (so no TLS keystore/truststore paths are mounted or referenced). The logging code path may execute, but the only adversary-relevant input — credentials and key material — is absent, so there is nothing sensitive to leak. This statement does not apply to deployments that enable ZooKeeper SASL or ZooKeeper client TLS for Kafka brokers without re-validating the rendered configuration and log output.",
+      "timestamp": "2026-05-08T08:00:00Z"
     },
     {
       "vulnerability": {
@@ -112,8 +112,8 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "SUSE Observability starts this image as a Kafka broker. Kafka's broker listeners are configured through the chart's Kafka TCP listener settings and the chart does not configure ZooKeeper's Netty client socket implementation or Netty epoll transport for broker-to-ZooKeeper communication. The vulnerable Netty native epoll transport is present in the image but is not part of the broker execute path. This statement does not apply to custom commands or configuration that explicitly uses Netty epoll from this image.",
-      "timestamp": "2026-05-08T05:03:13Z"
+      "impact_statement": "The vulnerable code is in io.netty.channel.epoll (epollOutReady no-op when no pending flush, in the ALLOW_HALF_CLOSURE FIN+RST sequence). SUSE Observability starts this image as a Kafka broker. Kafka broker listeners use Java NIO, not Netty; the ZooKeeper client defaults to ClientCnxnSocketNIO. No part of the supported broker runtime instantiates io.netty.channel.epoll.* channels. NOTE: GHSA-rwm7-x88c-3g2p documents the affected range as netty-transport-native-epoll \u003c= 4.2.12.Final on the 4.2.x branch; the image ships 4.1.125.Final, which is not in the documented affected range, and scanner detection here may itself warrant upstream correction. The not_affected status is asserted on the deployment-context grounds either way. This statement does not apply to custom commands or configuration that explicitly uses Netty epoll from this image.",
+      "timestamp": "2026-05-08T08:00:00Z"
     },
     {
       "vulnerability": {
@@ -134,10 +134,10 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "SUSE Observability starts this image as a Kafka broker and does not run Kafka Connect, Jetty REST endpoints, Netty-based services, or ZooKeeper's Netty client socket implementation from this container. The vulnerable Netty codec package is present in the image but is not used by the supported broker runtime path. This statement does not apply to custom commands or configuration that explicitly uses Netty codecs from this image.",
-      "timestamp": "2026-05-08T05:03:13Z"
+      "impact_statement": "The vulnerable code is in io.netty.handler.codec.compression.Lz4FrameDecoder.decode (premature buffer allocation based on attacker-controlled header). SUSE Observability starts this image as a Kafka broker. The broker uses Java NIO directly for its listeners, not Netty; Kafka's own LZ4 message compression uses lz4-java rather than Netty's Lz4FrameDecoder. No part of the supported broker runtime instantiates a Netty pipeline containing Lz4FrameDecoder. This statement does not apply to custom commands or configuration that explicitly uses Netty codecs from this image.",
+      "timestamp": "2026-05-08T08:00:00Z"
     }
   ],
-  "timestamp": "2026-05-08T05:03:13Z",
-  "last_updated": "2026-05-08T05:03:13Z"
+  "timestamp": "2026-05-08T08:00:00Z",
+  "last_updated": "2026-05-08T08:00:00Z"
 }
