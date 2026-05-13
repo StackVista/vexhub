@@ -1,0 +1,37 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/stackstate-k8s-agent/CVE-2026-6100",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-6100"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:19f7fec3998de593824475bc0c933bc63c7452bb22877c0bf6ac455bd53ef06e?arch=arm64\u0026repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@bedd24d7?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:bedd24d7 on 2026-05-13. The embedded CPython 3.13.13 binary is present, but SUSE Observability agent source and packaged checks do not execute the vulnerable pattern: reusing lzma.LZMADecompressor, bz2.BZ2Decompressor, or gzip.GzipFile after MemoryError during decompression.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-6100 requires decompressor instance reuse after a MemoryError. Source review of stackstate-agent stackstate-7.71.2 and stackstate-agent-integrations found no affected Python decompressor API usage. Image inspection found only generic third-party one-shot or per-response decompression helpers; no packaged code catches MemoryError and resumes the same decompressor instance. A MemoryError propagates out of the check/request path and the affected decompressor object is discarded rather than reused.",
+      "timestamp": "2026-05-13T06:25:29.138046Z"
+    }
+  ],
+  "timestamp": "2026-05-13T06:25:29Z"
+}

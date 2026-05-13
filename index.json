@@ -1,4 +1,10 @@
 {
-  "updated_at": "2026-05-01T07:25:29Z",
-  "packages": []
+  "updated_at": "2026-05-13T06:26:45Z",
+  "packages": [
+    {
+      "id": "pkg:oci/stackstate-k8s-agent",
+      "location": "pkg/oci/quay.io/stackstate/stackstate-k8s-agent/scan.openvex.json",
+      "format": "openvex"
+    }
+  ]
 }
