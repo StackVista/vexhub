@@ -10,7 +10,7 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent@sha256:19f7fec3998de593824475bc0c933bc63c7452bb22877c0bf6ac455bd53ef06e?arch=arm64\u0026repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -18,7 +18,7 @@
           ]
         },
         {
-          "@id": "pkg:oci/stackstate-k8s-agent@bedd24d7?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent@bedd24d7",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
