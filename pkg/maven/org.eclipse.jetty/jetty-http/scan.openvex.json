@@ -1,0 +1,27 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/maven/org.eclipse.jetty/jetty-http/CVE-2024-6763",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2024-6763",
+        "aliases": [
+          "GHSA-qh8g-58pp-2wxh"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:maven/org.eclipse.jetty/jetty-http@9.4.60.sts1"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed StackGraph HBase images on 2026-05-14. The package is present through the embedded hbase-shaded-jetty jar, but current HBase source does not use org.eclipse.jetty.http.HttpURI as an application URL validation utility before handing the URL to another requester. The affected CVE-2024-6763 parser-confusion pattern is therefore not in the StackGraph HBase runtime execute path.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2024-6763 affects applications that use Jetty HttpURI as a URI or URL validation utility before another component, such as a browser, interprets the malformed URI differently. StackGraph embeds Jetty for HBase info server and servlet endpoints, and source review did not find the vulnerable HttpURI validation pattern in HBase master, regionserver, or mono StackGraph HBase runtime code. Re-review this statement if StackGraph or HBase adds application code that imports HttpURI for URL validation, exposes HBase info or REST endpoints to untrusted traffic, or replaces the embedded HBase shaded Jetty package.",
+      "timestamp": "2026-05-14T10:45:15Z"
+    }
+  ],
+  "timestamp": "2026-05-14T10:45:15Z"
+}

@@ -1,6 +1,11 @@
 {
-  "updated_at": "2026-05-15T13:45:08Z",
+  "updated_at": "2026-05-15T15:25:27Z",
   "packages": [
+    {
+      "id": "pkg:maven/org.eclipse.jetty/jetty-http",
+      "location": "pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json",
+      "format": "openvex"
+    },
     {
       "id": "pkg:oci/stackstate-k8s-agent",
       "location": "pkg/oci/quay.io/stackstate/stackstate-k8s-agent/scan.openvex.json",
