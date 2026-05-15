@@ -166,6 +166,25 @@
       "justification": "vulnerable_code_not_in_execute_path",
       "impact_statement": "The image embeds CPython built from the upstream tarball pinned at omnibus/config/software/python3.rb:3 (default_version \"3.13.13\"), which is below the fixed 3.15.0 line, and none of the patches in omnibus/config/patches/python3/ address ftplib (only CVE-2025-6965-sqlite-3.50.4.patch and CVE-2025-8194-tarfile.patch are applied). The vulnerable Lib/ftplib.py:ftpcp ships unmodified in /opt/stackstate-agent/embedded/lib/python3.13/ftplib.py. However, the sink is unreachable from any shipped execute path: a tree-wide grep for `ftplib`, `from ftplib`, `import ftplib`, `FTP_TLS`, `ftplib.`, and `ftpcp` across cmd/, pkg/, omnibus/python-scripts/, rtloader/, Dockerfiles/, and the embedded check wrappers returns zero hits. The single match on the literal string `ftp://` is at omnibus/python-scripts/packages.py:254, where it is a substring filter used to skip URL-style entries while parsing pip requirements files \u2014 no ftplib client is constructed and ftpcp is never invoked. The agent's first-party shipped Python under cmd/agent/dist/checks/ (network_checks.py, winwmi_check.py, prometheus_check/, libs/wmi/sampler.py), Dockerfiles/agent/secrets-helper/readsecret.py, and omnibus/python-scripts/{pre,post,packages}.py do not import ftplib, and the stackstate-agent-integrations bundle pinned at omnibus/config/software/stackstate-agent-integrations-py3.rb:36 (STACKSTATE_INTEGRATIONS_VERSION 7.71.2-3 from stackstate-deps.json:2) is Kubernetes/container/Prometheus-oriented with no FTP-based check. Independent of reachability, the ftpcp() SSRF requires the victim to actively call ftpcp() to relay a file between two attacker-influenced FTP servers (the bug is that ftpcp forwards the source server's PASV response into a PORT command on the target), which is a relay pattern the agent has no functional reason to perform. The image's exposed ports at Dockerfiles/agent/Dockerfile:74 are 8125/udp (DogStatsD) and 8126/tcp (trace-agent APM) \u2014 neither speaks FTP and neither can drive ftplib code. The container also runs non-root as USER 1000:1000 (Dockerfiles/agent/Dockerfile:71), but that is incidental; the determinative fact is that no shipped code path reaches ftpcp.",
       "action_statement": null
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-3298"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The image bundles CPython 3.13.13 via omnibus (omnibus/config/software/python3.rb:3 sets `default_version \"3.13.13\"`), which falls inside the affected range (>=3.11,<=3.14). However, CVE-2026-3298 is exclusively a Windows defect: the vulnerable sink `_overlapped_Overlapped_WSARecvFromInto_impl` lives in CPython's `Modules/overlapped.c`, a Win32-only extension that wraps the Winsock `WSARecvFrom` API and Windows `OVERLAPPED` structures. The companion Python wrapper `BaseProactorEventLoop.sock_recvfrom_into` in `Lib/asyncio/proactor_events.py` is only operative on Windows, where `ProactorEventLoop` is the default policy and the `_overlapped` C extension is built. The image under audit is a Linux container: the agent is produced from `Dockerfiles/agent/Dockerfile:1-5` (Ubuntu 20.04 builder) with the runtime stage based on `registry.suse.com/bci/bci-micro:latest` (Dockerfiles/agent/Dockerfile:38), and the omnibus Python recipe takes the Linux branch (`unless windows_target?` at omnibus/config/software/python3.rb:25, configure+make build path through line 82) \u2014 the Windows-only `else` branch (lines 83-147, which calls `PCbuild\\build.bat`) is not executed. Linux CPython builds do not compile `Modules/overlapped.c` and ship no `_overlapped` extension, so the vulnerable symbol is not present in the image's `embedded/lib/python3.13/lib-dynload/`. The only Python-side patches applied to this build are CVE-2025-6965 (sqlite) and CVE-2025-8194 (tarfile) per `omnibus/config/patches/python3/`; neither alters proactor/overlapped code paths. No Go source in the tree (e.g. `pkg/network/dns/driver_windows.go:33`, `pkg/network/driver/handle.go:159`) reaches CPython's overlapped module either, and those files are gated to Windows builds anyway. The image runs as USER 1000:1000 (Dockerfiles/agent/Dockerfile:74) on Linux kernels where `ProactorEventLoop` cannot be instantiated; an attacker has no path to invoke `sock_recvfrom_into` against the missing `_overlapped` extension.",
+      "action_statement": null
     }
   ],
   "timestamp": "2026-05-13T06:25:29Z"
