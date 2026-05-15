@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-13T06:26:45Z",
+  "updated_at": "2026-05-15T13:04:26Z",
   "packages": [
     {
       "id": "pkg:oci/stackstate-k8s-agent",
