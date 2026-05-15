@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/maven/org.eclipse.jetty/jetty-http/CVE-2024-6763",
   "author": "SUSE Observability Security Team",
-  "version": 1,
+  "version": 2,
   "statements": [
     {
       "vulnerability": {
@@ -17,11 +17,11 @@
         }
       ],
       "status": "not_affected",
-      "status_notes": "Reviewed StackGraph HBase images on 2026-05-14. The package is present through the embedded hbase-shaded-jetty jar, but current HBase source does not use org.eclipse.jetty.http.HttpURI as an application URL validation utility before handing the URL to another requester. The affected CVE-2024-6763 parser-confusion pattern is therefore not in the StackGraph HBase runtime execute path.",
-      "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "CVE-2024-6763 affects applications that use Jetty HttpURI as a URI or URL validation utility before another component, such as a browser, interprets the malformed URI differently. StackGraph embeds Jetty for HBase info server and servlet endpoints, and source review did not find the vulnerable HttpURI validation pattern in HBase master, regionserver, or mono StackGraph HBase runtime code. Re-review this statement if StackGraph or HBase adds application code that imports HttpURI for URL validation, exposes HBase info or REST endpoints to untrusted traffic, or replaces the embedded HBase shaded Jetty package.",
-      "timestamp": "2026-05-14T10:45:15Z"
+      "status_notes": "The CVE-2024-6763 fix has been backported to the StackState jetty-9.4.x branch and is included in the 9.4.60.sts1 build. The backport consists of commits 9d29061c750 (UriCompliance.USER_INFO violation, from upstream 12.0.x c880d9309b6), db8bb7a8631 (\"Fix CVE-2024-6763 (#12532)\" — full authority parsing hardening), and follow-up 89d2ac7c779 (\"Regular handling of bad URIs\", improving handling of #, ?, ; in authority, IPv6 validation, and scheme validation). All three are ancestors of the current HEAD used to produce 9.4.60.sts1. Grype continues to flag the package because it matches against the upstream advisory's \"fixed in\" version of 12.0.12 and only performs version-range comparison; it has no awareness of the 9.4.x backport.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The vulnerable HttpURI authority parsing code path patched upstream in Jetty 12.0.12 is not present in the 9.4.60.sts1 build: the strict authority character validation, USER_INFO violation tracking, IPv6 hardening, and percent-encoding validation introduced for CVE-2024-6763 are all included via backport. No additional mitigation or backport work is required. Re-review this statement if the embedded jetty-http jar is replaced with an unpatched 9.4.x build, or if a future StackState build of jetty-http drops these backport commits.",
+      "timestamp": "2026-05-15T00:00:00Z"
     }
   ],
-  "timestamp": "2026-05-14T10:45:15Z"
+  "timestamp": "2026-05-15T00:00:00Z"
 }
