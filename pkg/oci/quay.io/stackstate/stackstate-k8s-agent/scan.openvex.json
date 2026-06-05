@@ -26,6 +26,27 @@
     },
     {
       "vulnerability": {
+        "name": "CVE-2026-3276"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:cb4d9ce2 on 2026-06-05. The image embeds CPython 3.13.13 and the vulnerable unicodedata.normalize implementation is present, but no unauthenticated or remote adversary-controlled input path was found that can drive it with crafted Unicode.",
+      "justification": "vulnerable_code_cannot_be_controlled_by_adversary",
+      "impact_statement": "The image embeds CPython 3.13.13 via the omnibus build (omnibus/config/software/python3.rb:3) and the vulnerable stdlib implementation is present in /opt/stackstate-agent/embedded/. Source review of stackstate-agent cb4d9ce2e7 and stackstate-agent-integrations 7.71.2-3 found exactly one shipped first-party use of unicodedata.normalize: stackstate_checks_base/stackstate_checks/base/checks/base.py:559 inside AgentCheck.normalize(). The only production caller is _get_state_descriptor() at base.py:367-375, which normalizes the old-style check state descriptor string \"instance.<type>.<url>\". Metric submission paths do not call AgentCheck.normalize(): gauge/rate/count/monotonic_count/histogram submit metric names through _submit_metric()/aggregator, and tag normalization does not use unicodedata.normalize. The integration instance identity values reaching _get_state_descriptor() are local configuration or environment identity values: configured URLs for Dynatrace, ServiceNow, Splunk, and Zabbix; configured vSphere host; configured static topology/health file paths; or cluster/environment identity for kubelet and OpenMetrics. Third-party API responses and monitored service payloads were not found to flow into this sink. A privileged operator or cluster administrator with ability to alter agent configuration or cluster identity labels could provide a pathological string, and there is no generic length cap immediately before the normalize call, but that control is outside the remote or unauthenticated adversary model for this agent image. The supported runtime exposes DogStatsD and trace-agent ports, neither of which can influence the integration instance state descriptor.",
+      "action_statement": "Track a defense-in-depth hardening follow-up to bound integration instance state descriptor input before AgentCheck.normalize(), while keeping this finding VEXed because the vulnerable input is not adversary-controlled in supported deployments.",
+      "timestamp": "2026-06-05T15:39:39Z"
+    },
+    {
+      "vulnerability": {
         "name": "CVE-2025-12781"
       },
       "products": [
