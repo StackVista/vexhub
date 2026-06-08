@@ -190,6 +190,27 @@
     },
     {
       "vulnerability": {
+        "name": "CVE-2026-7774"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:cb4d9ce2 on 2026-06-08. The embedded CPython 3.13.13 tarfile implementation is present, but the supported k8s-agent runtime does not extract attacker-controlled tar archives.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-7774 affects CPython's tarfile.data_filter path traversal protection when extracting crafted tar archives through tarfile.extract(), tarfile.extractall(), or callers such as shutil.unpack_archive(). The image embeds CPython 3.13.13 under /opt/stackstate-agent/embedded/, so the vulnerable standard-library tarfile.py is physically present and Grype's CPE match is expected. Runtime inspection of quay.io/stackstate/stackstate-k8s-agent:cb4d9ce2 found no service startup script, cont-init script, agent entrypoint, or supported agent process that imports tarfile or calls tarfile.extract(), tarfile.extractall(), or shutil.unpack_archive() on external input. The supported agent runtime exposes DogStatsD on 8125/udp and the trace agent on 8126/tcp; neither endpoint accepts tar archives or drives Python archive extraction. The only meaningful extractall() path found in the image is in auxiliary OpenSCAP tooling, /opt/stackstate-agent/embedded/lib/python3.13/site-packages/oscap_docker_python/oscap_docker_util.py, which is reached by the oscap-docker CLI and extracts a tar stream returned by the local Docker daemon for an operator-selected container/image. That tooling is not invoked by the supported Kubernetes agent runtime and requires explicit local/operator execution with Docker access, so it is outside the remote or unauthenticated adversary model for the deployed agent image. Generic packaging/build helpers that also reference extractall() are similarly not part of the running agent service path.",
+      "action_statement": "Defense in depth: remove OpenSCAP/build-time helper tooling from the runtime image if it is not required by supported agent workflows, and re-evaluate this VEX statement when the embedded Python runtime is upgraded or the agent runtime starts invoking tar archive extraction.",
+      "timestamp": "2026-06-08T06:49:39Z"
+    },
+    {
+      "vulnerability": {
         "name": "CVE-2026-3298"
       },
       "products": [
