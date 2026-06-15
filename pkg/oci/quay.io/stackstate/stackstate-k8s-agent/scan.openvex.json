@@ -227,6 +227,27 @@
       "justification": "vulnerable_code_not_present",
       "impact_statement": "The image bundles CPython 3.13.13 via omnibus (omnibus/config/software/python3.rb:3 sets `default_version \"3.13.13\"`), which falls inside the affected range (>=3.11,<=3.14). However, CVE-2026-3298 is exclusively a Windows defect: the vulnerable sink `_overlapped_Overlapped_WSARecvFromInto_impl` lives in CPython's `Modules/overlapped.c`, a Win32-only extension that wraps the Winsock `WSARecvFrom` API and Windows `OVERLAPPED` structures. The companion Python wrapper `BaseProactorEventLoop.sock_recvfrom_into` in `Lib/asyncio/proactor_events.py` is only operative on Windows, where `ProactorEventLoop` is the default policy and the `_overlapped` C extension is built. The image under audit is a Linux container: the agent is produced from `Dockerfiles/agent/Dockerfile:1-5` (Ubuntu 20.04 builder) with the runtime stage based on `registry.suse.com/bci/bci-micro:latest` (Dockerfiles/agent/Dockerfile:38), and the omnibus Python recipe takes the Linux branch (`unless windows_target?` at omnibus/config/software/python3.rb:25, configure+make build path through line 82) \u2014 the Windows-only `else` branch (lines 83-147, which calls `PCbuild\\build.bat`) is not executed. Linux CPython builds do not compile `Modules/overlapped.c` and ship no `_overlapped` extension, so the vulnerable symbol is not present in the image's `embedded/lib/python3.13/lib-dynload/`. The only Python-side patches applied to this build are CVE-2025-6965 (sqlite) and CVE-2025-8194 (tarfile) per `omnibus/config/patches/python3/`; neither alters proactor/overlapped code paths. No Go source in the tree (e.g. `pkg/network/dns/driver_windows.go:33`, `pkg/network/driver/handle.go:159`) reaches CPython's overlapped module either, and those files are gated to Windows builds anyway. The image runs as USER 1000:1000 (Dockerfiles/agent/Dockerfile:74) on Linux kernels where `ProactorEventLoop` cannot be instantiated; an attacker has no path to invoke `sock_recvfrom_into` against the missing `_overlapped` extension.",
       "action_statement": null
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-9669"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:02f4adaa on 2026-06-10. The embedded CPython 3.13.13 is present, but no shipped code reuses a bz2.BZ2Decompressor instance after a decompression error, which CVE-2026-9669 requires.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-9669 requires an application to catch the OSError raised by a failed bz2.BZ2Decompressor.decompress() call and then call decompress() again on the same instance. Source review of stackstate-agent 02f4adaaf3e60296d0e419a3b5213bca1710e886 found no Python bz2 usage: the only bz2 matches are Go archive/bzip2 code paths compiled into Go binaries (not the embedded CPython) and developer-only invoke tasks under tasks/ that are not shipped in the image. stackstate-agent-integrations has no bz2 usage. Image inspection of /opt/stackstate-agent/embedded/lib/python3.13 and /opt/stackstate-agent/checks.d found BZ2Decompressor referenced only by the CPython standard library itself: zipfile creates a fresh decompressor per archive member (_get_decompressor), bz2.BZ2File via _compression.DecompressReader constructs a new decompressor at init, rewind, and next-stream boundaries, and tarfile maps the OSError to ReadError without reusing the failed decompressor instance. No catch-and-retry pattern over the same decompressor object exists in the shipped image. Worst-case impact of the upstream flaw is an out-of-bounds stack write crashing the process (denial of service), not code execution.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release containing the fix from python/cpython#150600, then retire this statement.",
+      "timestamp": "2026-06-10T14:41:05Z"
     }
   ],
   "timestamp": "2026-05-13T06:25:29Z"
