@@ -1,9 +1,14 @@
 {
-  "updated_at": "2026-06-10T14:41:05Z",
+  "updated_at": "2026-06-17T07:31:03Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
       "location": "pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/opentelemetry-target-allocator",
+      "location": "pkg/oci/quay.io/stackstate/opentelemetry-target-allocator/scan.openvex.json",
       "format": "openvex"
     },
     {
