@@ -66,6 +66,27 @@
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
       "impact_statement": "CVE-2026-42306 is a TOCTOU race in the Moby server's docker cp bind-mount handling: a container process can redirect a bind mount to an arbitrary host path between the daemon's path resolution and its mount syscall. The vulnerable code lives in the Docker Engine server (daemon/cluster/executor and the cp/mount path). The quay.io/stackstate/opentelemetry-target-allocator image ships only the targetallocator Go binary; it contains no dockerd, performs no bind-mount setup, and is not invoked as a Docker daemon. github.com/docker/docker is pulled in transitively through github.com/prometheus/prometheus/discovery, and per upstream open-telemetry/opentelemetry-operator#4926 only the client-side packages are used: \"It only uses the client side of the docker package, whereas the vulnerabilities affect the server side.\" The fix lives at the new github.com/moby/moby/v2 module path (Docker Engine 29.x / v2.0.0-beta.14); Prometheus has migrated in prometheus/prometheus#18433, and once the next prometheus-operator release picks up that Prometheus version and the OpenTelemetry Operator bumps to it, the docker/docker dependency will disappear from the target allocator entirely and this VEX will become moot."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-33997",
+        "aliases": [
+          "GHSA-pxq6-2prw-chj9"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-33997 is an off-by-one error in the Moby server's plugin privilege validation during docker plugin install: the daemon's privilege-set comparison can accept a privilege set that differs from the one approved by the user, and plugins requesting exactly one privilege are not compared at all. The vulnerable code lives in the Docker Engine server (the plugin install/privilege validation path in the daemon). The quay.io/stackstate/opentelemetry-target-allocator image ships only the targetallocator Go binary; it contains no dockerd, executes no docker plugin install flow, and is not invoked as a Docker daemon. github.com/docker/docker is pulled in transitively through github.com/prometheus/prometheus/discovery, and per upstream open-telemetry/opentelemetry-operator#4926 only the client-side packages are used: \"It only uses the client side of the docker package, whereas the vulnerabilities affect the server side.\" The fix lives at the new github.com/moby/moby/v2 module path (Docker Engine 29.3.1 / v2.0.0-beta.8); Prometheus has migrated in prometheus/prometheus#18433, and once the next prometheus-operator release picks up that Prometheus version and the OpenTelemetry Operator bumps to it, the docker/docker dependency will disappear from the target allocator entirely and this VEX will become moot."
     }
   ],
   "timestamp": "2026-06-17T00:00:00Z"
