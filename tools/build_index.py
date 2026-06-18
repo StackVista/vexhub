@@ -33,34 +33,22 @@ def _where(source: Path | None) -> str:
     return f" in {source}" if source else ""
 
 
-def _ensure_percent_encoded(value: str, key: str, purl: str, source: Path | None) -> None:
-    """Reject qualifier values that are not fully percent-encoded.
-
-    PURL qualifier values must percent-encode anything outside the RFC 3986
-    unreserved set (``[A-Za-z0-9-._~]``). For ``repository_url`` that means
-    every ``/`` must appear as ``%2F`` (and every ``:`` in a non-default
-    port as ``%3A``). We normalise by decoding then re-encoding with
-    ``quote(..., safe="")``; if the result differs from the input (case
-    insensitively, since ``%2f`` and ``%2F`` are equivalent), the input
-    was not properly encoded.
-    """
-    canonical = quote(unquote(value), safe="")
-    if canonical.lower() != value.lower():
-        sys.exit(
-            f"PURL qualifier {key}={value!r} in {purl!r}{_where(source)} "
-            f"is not properly percent-encoded. Expected {key}={canonical}."
-        )
-
-
 def _parse_purl(purl: str, source: Path | None) -> tuple[str, dict[str, str]]:
     """Parse a PURL into (head, qualifiers).
 
     ``head`` is ``pkg:<type>/<namespace>/<name>`` with version and subpath
-    stripped. ``qualifiers`` preserves the original (validated) encoding so
-    callers can re-emit byte-identical strings.
+    stripped. Qualifier values are returned **decoded** so callers can
+    canonicalise the on-wire encoding when emitting an index id.
 
-    Grammar enforced: ``pkg:type/namespace/name@version?qualifiers#subpath``
-    with qualifier values percent-encoded per RFC 3986.
+    Authors may write qualifier values in either form inside
+    ``scan.openvex.json`` -- ``repository_url=quay.io/stackstate/foo`` or
+    ``repository_url=quay.io%2Fstackstate%2Ffoo``. OpenVEX consumers
+    (Trivy's statement matcher, Grype, vexctl) normalise PURLs before
+    comparing, so both forms are equivalent at match time; we follow the
+    convention used by other public vexhubs and recommend the unencoded
+    form in VEX documents for readability. The ``index.json`` lookup is
+    string-based, so this script always emits the canonical percent-
+    encoded form there.
     """
     if not purl.startswith("pkg:"):
         sys.exit(f"{purl!r}{_where(source)} is not a PURL (must start with 'pkg:').")
@@ -85,8 +73,7 @@ def _parse_purl(purl: str, source: Path | None) -> tuple[str, dict[str, str]]:
                     f"PURL qualifier key {key!r} in {purl!r}{_where(source)} "
                     "is invalid (must be lowercase ASCII identifier)."
                 )
-            _ensure_percent_encoded(value, key, purl, source)
-            qualifiers[key] = value
+            qualifiers[key] = unquote(value)
     if "@" in head:
         head, _ = head.split("@", 1)
     return head, qualifiers
@@ -95,29 +82,26 @@ def _parse_purl(purl: str, source: Path | None) -> tuple[str, dict[str, str]]:
 def index_id_for_purl(purl: str, source: Path | None = None) -> str:
     """Return the canonical index id for a PURL.
 
-    Per the VEX Repository Specification, version, subpath, and qualifiers
-    are stripped from the index id; for ``pkg:oci/*`` PURLs the
-    ``repository_url`` qualifier MUST be preserved (and must be
-    percent-encoded) so Trivy can match the entry against the image PURL it
-    generates at scan time.
+    Per the VEX Repository Specification, version and subpath are stripped
+    from the index id. For ``pkg:oci/*`` PURLs the ``repository_url``
+    qualifier is preserved when present (and percent-encoded) so Trivy
+    can match the entry against the image PURL it generates at scan time;
+    when absent the index id is the bare ``pkg:oci/<name>`` form. Bare
+    OCI products are how Grype matches: its image PURL has no
+    ``repository_url`` qualifier, so a bare product entry in the VEX file
+    is what lets a Grype scan apply the statement. Statements that need
+    to land in both scanners should list both the qualified and the bare
+    form in ``products[]``.
     """
     head, qualifiers = _parse_purl(purl, source)
-    if head.startswith("pkg:oci/"):
-        if "repository_url" not in qualifiers:
-            sys.exit(
-                f"OCI PURL {purl!r}{_where(source)} is missing the required "
-                "'repository_url' qualifier. Per the VEX Repository "
-                "Specification, OCI product @id values must include "
-                "?repository_url=<registry>/<namespace>/<image> with "
-                "slashes percent-encoded as %2F."
-            )
+    if head.startswith("pkg:oci/") and "repository_url" in qualifiers:
         repo = qualifiers["repository_url"]
         if not repo:
             sys.exit(
                 f"OCI PURL {purl!r}{_where(source)} has an empty "
                 "'repository_url' qualifier."
             )
-        return f"{head}?repository_url={repo}"
+        return f"{head}?repository_url={quote(repo, safe='')}"
     return head
 
 

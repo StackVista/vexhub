@@ -13,18 +13,26 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io/stackstate/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         },
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com/suse-observability/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         }
@@ -43,18 +51,26 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io/stackstate/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         },
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com/suse-observability/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         }
@@ -73,18 +89,26 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io/stackstate/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         },
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com/suse-observability/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         }
@@ -103,18 +127,26 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io/stackstate/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         },
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com/suse-observability/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         }
@@ -133,18 +165,26 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io/stackstate/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         },
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com/suse-observability/opentelemetry-target-allocator",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
             }
           ]
         }
