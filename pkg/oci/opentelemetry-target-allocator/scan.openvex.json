@@ -8,7 +8,8 @@
       "vulnerability": {
         "name": "CVE-2026-34040",
         "aliases": [
-          "GHSA-x744-4wpc-v9h2"
+          "GHSA-x744-4wpc-v9h2",
+          "GO-2026-4887"
         ]
       },
       "products": [
@@ -122,7 +123,8 @@
       "vulnerability": {
         "name": "CVE-2026-33997",
         "aliases": [
-          "GHSA-pxq6-2prw-chj9"
+          "GHSA-pxq6-2prw-chj9",
+          "GO-2026-4883"
         ]
       },
       "products": [
