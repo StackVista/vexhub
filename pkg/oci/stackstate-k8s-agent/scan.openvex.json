@@ -1,6 +1,6 @@
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
-  "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/stackstate-k8s-agent/CVE-2026-6100",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
   "version": 1,
   "statements": [
@@ -10,7 +10,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -30,7 +38,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -51,7 +67,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -68,7 +92,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -86,7 +118,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -104,7 +144,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -121,7 +169,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -139,7 +195,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -157,7 +221,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -175,7 +247,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -194,7 +274,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -215,7 +303,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
@@ -234,7 +330,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/stackstate-k8s-agent",
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"

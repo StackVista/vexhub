@@ -1,6 +1,6 @@
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
-  "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/opentelemetry-target-allocator/docker-engine-server-side-not-affected",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/opentelemetry-target-allocator/docker-engine-server-side-not-affected",
   "author": "SUSE Observability Security Team",
   "version": 1,
   "statements": [
@@ -13,7 +13,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
@@ -35,7 +43,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
@@ -57,7 +73,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
@@ -79,7 +103,15 @@
       },
       "products": [
         {
-          "@id": "pkg:oci/opentelemetry-target-allocator",
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
@@ -91,6 +123,36 @@
       "justification": "vulnerable_code_not_in_execute_path",
       "status_notes": "Review by 2026-07-29 (6 weeks after 2026-06-17): re-check whether the next prometheus-operator release has dropped the legacy github.com/docker/docker dependency and the OpenTelemetry Operator has bumped to it; retire this statement once the dependency is gone.",
       "impact_statement": "CVE-2026-33997 is an off-by-one error in the Moby server's plugin privilege validation during docker plugin install: the daemon's privilege-set comparison can accept a privilege set that differs from the one approved by the user, and plugins requesting exactly one privilege are not compared at all. The vulnerable code lives in the Docker Engine server (the plugin install/privilege validation path in the daemon). The quay.io/stackstate/opentelemetry-target-allocator image ships only the targetallocator Go binary; it contains no dockerd, executes no docker plugin install flow, and is not invoked as a Docker daemon. github.com/docker/docker is pulled in transitively through github.com/prometheus/prometheus/discovery, and per upstream open-telemetry/opentelemetry-operator#4926 only the client-side packages are used: \"It only uses the client side of the docker package, whereas the vulnerabilities affect the server side.\" The fix lives at the new github.com/moby/moby/v2 module path (Docker Engine 29.3.1 / v2.0.0-beta.8); Prometheus has migrated in prometheus/prometheus#18433, and once the next prometheus-operator release picks up that Prometheus version and the OpenTelemetry Operator bumps to it, the docker/docker dependency will disappear from the target allocator entirely and this VEX will become moot."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-41568",
+        "aliases": [
+          "GHSA-vp62-88p7-qqf5"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "status_notes": "Review by 2026-07-29 (6 weeks after 2026-06-17): re-check whether the next prometheus-operator release has dropped the legacy github.com/docker/docker dependency and the OpenTelemetry Operator has bumped to it; retire this statement once the dependency is gone.",
+      "impact_statement": "CVE-2026-41568 is a TOCTOU symlink race in the Moby server's docker cp mountpoint setup: between GetResourcePath resolving the in-container destination and createIfNotExists materialising it via os.MkdirAll/os.OpenFile, a container process can swap a path component for a symlink, causing the daemon (running as host root) to create an empty file or directory at an arbitrary absolute host path. The vulnerable code lives in the Docker Engine server (daemon/archive.go and the docker cp mountpoint setup path), classified as CWE-61 / CWE-367. The quay.io/stackstate/opentelemetry-target-allocator image ships only the targetallocator Go binary; it contains no dockerd, performs no docker cp mountpoint setup, and is not invoked as a Docker daemon. github.com/docker/docker is pulled in transitively through github.com/prometheus/prometheus/discovery, and per upstream open-telemetry/opentelemetry-operator#4926 only the client-side packages are used: \"It only uses the client side of the docker package, whereas the vulnerabilities affect the server side.\" The fix lives at the new github.com/moby/moby/v2 module path (Docker Engine 29.5.1 / v2.0.0-beta.14); Prometheus has migrated in prometheus/prometheus#18433, and once the next prometheus-operator release picks up that Prometheus version and the OpenTelemetry Operator bumps to it, the docker/docker dependency will disappear from the target allocator entirely and this VEX will become moot."
     }
   ],
   "timestamp": "2026-06-17T00:00:00Z"
