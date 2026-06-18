@@ -1,6 +1,6 @@
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
-  "@id": "https://github.com/StackVista/vexhub/pkg/oci/quay.io/stackstate/opentelemetry-target-allocator/docker-engine-server-side-not-affected",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/opentelemetry-target-allocator/docker-engine-server-side-not-affected",
   "author": "SUSE Observability Security Team",
   "version": 1,
   "statements": [
@@ -14,6 +14,14 @@
       "products": [
         {
           "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
@@ -41,6 +49,14 @@
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
             }
           ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
         }
       ],
       "status": "not_affected",
@@ -58,6 +74,14 @@
       "products": [
         {
           "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
@@ -85,6 +109,14 @@
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
             }
           ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
         }
       ],
       "status": "not_affected",
@@ -102,6 +134,14 @@
       "products": [
         {
           "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
           "subcomponents": [
             {
               "@id": "pkg:golang/github.com/docker/docker@v28.5.2%2Bincompatible"

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T11:33:02Z",
+  "updated_at": "2026-06-18T11:53:07Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
@@ -8,12 +8,22 @@
     },
     {
       "id": "pkg:oci/opentelemetry-target-allocator?repository_url=quay.io%2Fstackstate%2Fopentelemetry-target-allocator",
-      "location": "pkg/oci/quay.io/stackstate/opentelemetry-target-allocator/scan.openvex.json",
+      "location": "pkg/oci/opentelemetry-target-allocator/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
+      "location": "pkg/oci/opentelemetry-target-allocator/scan.openvex.json",
       "format": "openvex"
     },
     {
       "id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-agent",
-      "location": "pkg/oci/quay.io/stackstate/stackstate-k8s-agent/scan.openvex.json",
+      "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
+      "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
       "format": "openvex"
     }
   ]

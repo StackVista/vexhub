@@ -75,7 +75,10 @@ package across our portfolio.
   the `repository_url` qualifier; the affected package is named in
   `subcomponents`. Because OCI PURLs are registry-coupled, list one
   product entry per distribution registry — typically both
-  `quay.io/stackstate/<image>` and the Rancher-registry copy.
+  `quay.io/stackstate/<image>` and the Rancher-registry copy
+  `registry.rancher.com/suse-observability/<image>`. The
+  `repository_url` value must be percent-encoded (every `/` as `%2F`)
+  per the PURL spec; `build_index.py` rejects unencoded values.
 
 ### Steps
 
@@ -85,10 +88,18 @@ package across our portfolio.
    [tools/README.md](./tools/README.md) for command examples.
    - Lane 1 path:
      `pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json`.
-   - Lane 2 path:
-     `pkg/oci/quay.io/stackstate/zookeeper/scan.openvex.json`
-     (and a sibling under the Rancher-registry path, or a single file
-     listing both in `products`).
+   - Lane 2 path (default, single file listing every registry as a
+     separate product): `pkg/oci/<image>/scan.openvex.json`, e.g.
+     `pkg/oci/zookeeper/scan.openvex.json`. Drop the registry and
+     namespace segments from the path — they no longer identify the
+     file once `products` covers multiple registries; the registry
+     identity lives in each product's `repository_url` qualifier.
+   - Sibling-file alternative: only when the registry copies need
+     distinct reasoning, file
+     `pkg/oci/quay.io/stackstate/<image>/scan.openvex.json` and
+     `pkg/oci/registry.rancher.com/suse-observability/<image>/scan.openvex.json`
+     separately. Avoid this when the assertion is identical across
+     registries — duplication invites drift.
 2. Run `python3 tools/build_index.py` to regenerate `index.json`. CI
    asserts the on-disk index matches the `pkg/` tree
    (`tools/build_index.py --check`).
