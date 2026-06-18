@@ -1,9 +1,14 @@
 {
-  "updated_at": "2026-06-18T11:53:07Z",
+  "updated_at": "2026-06-18T14:55:20Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
       "location": "pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/opentelemetry-target-allocator",
+      "location": "pkg/oci/opentelemetry-target-allocator/scan.openvex.json",
       "format": "openvex"
     },
     {
@@ -14,6 +19,11 @@
     {
       "id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
       "location": "pkg/oci/opentelemetry-target-allocator/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-agent",
+      "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
       "format": "openvex"
     },
     {
