@@ -24,13 +24,34 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def index_id_for_purl(purl: str) -> str:
-    """Return the canonical index id for a PURL: version and qualifiers stripped."""
+def index_id_for_purl(purl: str, source: Path | None = None) -> str:
+    """Return the canonical index id for a PURL.
+
+    Per the VEX Repository Specification, version and subpath are stripped;
+    for ``pkg:oci/*`` PURLs the ``repository_url`` qualifier MUST be preserved
+    so Trivy can match the entry against the image PURL it generates at scan
+    time. Other qualifiers are dropped.
+    """
     head = purl
+    qualifier_str = ""
     if "?" in head:
-        head, _ = head.split("?", 1)
+        head, qualifier_str = head.split("?", 1)
     if "@" in head:
         head, _ = head.split("@", 1)
+    if head.startswith("pkg:oci/"):
+        repo = next(
+            (q for q in qualifier_str.split("&") if q.startswith("repository_url=")),
+            None,
+        )
+        if not repo:
+            where = f" in {source}" if source else ""
+            sys.exit(
+                f"OCI PURL {purl!r}{where} is missing the required "
+                "'repository_url' qualifier. Per the VEX Repository "
+                "Specification, OCI product @id values must include "
+                "?repository_url=<registry>/<namespace>/<image>."
+            )
+        return f"{head}?{repo}"
     return head
 
 
@@ -54,7 +75,7 @@ def collect_packages(hub_root: Path) -> list[dict]:
                 if pid and pid.startswith("pkg:"):
                     purls.add(pid)
         for purl in sorted(purls):
-            pid = index_id_for_purl(purl)
+            pid = index_id_for_purl(purl, source=vex_file)
             existing = entries.get(pid)
             if existing and existing["location"] != rel_location:
                 sys.exit(
