@@ -456,6 +456,43 @@
       "impact_statement": "CVE-2026-9669 requires an application to catch the OSError raised by a failed bz2.BZ2Decompressor.decompress() call and then call decompress() again on the same instance. Source review of stackstate-agent 02f4adaaf3e60296d0e419a3b5213bca1710e886 found no Python bz2 usage: the only bz2 matches are Go archive/bzip2 code paths compiled into Go binaries (not the embedded CPython) and developer-only invoke tasks under tasks/ that are not shipped in the image. stackstate-agent-integrations has no bz2 usage. Image inspection of /opt/stackstate-agent/embedded/lib/python3.13 and /opt/stackstate-agent/checks.d found BZ2Decompressor referenced only by the CPython standard library itself: zipfile creates a fresh decompressor per archive member (_get_decompressor), bz2.BZ2File via _compression.DecompressReader constructs a new decompressor at init, rewind, and next-stream boundaries, and tarfile maps the OSError to ReadError without reusing the failed decompressor instance. No catch-and-retry pattern over the same decompressor object exists in the shipped image. Worst-case impact of the upstream flaw is an out-of-bounds stack write crashing the process (denial of service), not code execution.",
       "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release containing the fix from python/cpython#150600, then retire this statement.",
       "timestamp": "2026-06-10T14:41:05Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-12003"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed registry.rancher.com/suse-observability/stackstate-k8s-agent:20c2b7aa on 2026-06-19. The image embeds CPython 3.13.13, but the supported Linux container runtime does not allow an adversary to create or control the source-tree landmark path required by CVE-2026-12003.",
+      "justification": "vulnerable_code_cannot_be_controlled_by_adversary",
+      "impact_statement": "CVE-2026-12003 is a CPython getpath.py search-path confusion issue where the interpreter may treat a release install as an in-tree build when a Modules/setup.local landmark is found relative to VPATH, causing an alternate Lib directory to be discovered. Upstream describes the practical risk around Windows legacy all-users installer layouts where VPATH is set to ..\\.. and low-privileged users may create directories two levels above the Python install. The stackstate-k8s-agent image is a Linux container and the embedded interpreter is installed at /opt/stackstate-agent/embedded/bin/python3.13. Runtime inspection of registry.rancher.com/suse-observability/stackstate-k8s-agent:20c2b7aa showed sys.platform is linux, sys.path resolves to /opt/stackstate-agent/embedded/lib/python3.13 and site-packages, no Modules/setup.local or pybuilddir.txt landmark exists under /opt/stackstate-agent, and sysconfig exposes no VPATH/BUILDDIR value for this installed interpreter. The container runs as the non-root stackstate-agent user (uid/gid 1000), while /opt/stackstate-agent, /opt/stackstate-agent/embedded, embedded/bin, and embedded/lib are root-owned and not writable by that user. An unauthenticated or remote adversary therefore cannot create the Modules/setup.local landmark or an alternate Lib tree in the embedded install path, and the Windows legacy-installer attack condition is absent from the supported Linux container deployment.",
+      "action_statement": "Upgrade the embedded CPython runtime when the 3.13 backport for python/cpython#151545 is merged and released in a 3.13.x patch version, then retire this statement. As of 2026-06-19, the upstream 3.13 backport python/cpython#151566 is still open and the v3.13.14 tag predates the fix.",
+      "timestamp": "2026-06-19T05:42:17Z"
     }
   ],
   "timestamp": "2026-05-13T06:25:29Z"
