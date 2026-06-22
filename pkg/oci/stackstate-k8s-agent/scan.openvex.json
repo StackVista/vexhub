@@ -470,7 +470,7 @@
           "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/cli@v29.2.0%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/cli@v29.2.1%2Bincompatible"
             }
           ]
         },
@@ -478,7 +478,7 @@
           "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/cli@v29.2.0%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/cli@v29.2.1%2Bincompatible"
             }
           ]
         },
@@ -486,7 +486,7 @@
           "@id": "pkg:oci/stackstate-k8s-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/github.com/docker/cli@v29.2.0%2Bincompatible"
+              "@id": "pkg:golang/github.com/docker/cli@v29.2.1%2Bincompatible"
             }
           ]
         }
@@ -507,7 +507,7 @@
           "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
           "subcomponents": [
             {
-              "@id": "pkg:generic/python@3.12.11"
+              "@id": "pkg:generic/python@3.13.13"
             }
           ]
         },
@@ -515,7 +515,7 @@
           "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
           "subcomponents": [
             {
-              "@id": "pkg:generic/python@3.12.11"
+              "@id": "pkg:generic/python@3.13.13"
             }
           ]
         },
@@ -523,7 +523,7 @@
           "@id": "pkg:oci/stackstate-k8s-agent",
           "subcomponents": [
             {
-              "@id": "pkg:generic/python@3.12.11"
+              "@id": "pkg:generic/python@3.13.13"
             }
           ]
         }
