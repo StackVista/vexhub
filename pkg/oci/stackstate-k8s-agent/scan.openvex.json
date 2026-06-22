@@ -456,6 +456,84 @@
       "impact_statement": "CVE-2026-9669 requires an application to catch the OSError raised by a failed bz2.BZ2Decompressor.decompress() call and then call decompress() again on the same instance. Source review of stackstate-agent 02f4adaaf3e60296d0e419a3b5213bca1710e886 found no Python bz2 usage: the only bz2 matches are Go archive/bzip2 code paths compiled into Go binaries (not the embedded CPython) and developer-only invoke tasks under tasks/ that are not shipped in the image. stackstate-agent-integrations has no bz2 usage. Image inspection of /opt/stackstate-agent/embedded/lib/python3.13 and /opt/stackstate-agent/checks.d found BZ2Decompressor referenced only by the CPython standard library itself: zipfile creates a fresh decompressor per archive member (_get_decompressor), bz2.BZ2File via _compression.DecompressReader constructs a new decompressor at init, rewind, and next-stream boundaries, and tarfile maps the OSError to ReadError without reusing the failed decompressor instance. No catch-and-retry pattern over the same decompressor object exists in the shipped image. Worst-case impact of the upstream flaw is an out-of-bounds stack write crashing the process (denial of service), not code execution.",
       "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release containing the fix from python/cpython#150600, then retire this statement.",
       "timestamp": "2026-06-10T14:41:05Z"
+    },
+    {
+      "vulnerability": {
+        "name": "GO-2026-4610",
+        "aliases": [
+          "CVE-2025-15558",
+          "GHSA-p436-gjf2-799p"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.2.1%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.2.1%2Bincompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.2.1%2Bincompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:e707010c-amd64 on 2026-06-22. The vulnerable github.com/docker/cli/cli-plugins/manager.defaultSystemPluginDirs symbol is not reachable in this Linux container.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "GO-2026-4610 (CVE-2025-15558, GHSA-p436-gjf2-799p) is a Windows-only uncontrolled search path element vulnerability in github.com/docker/cli: the affected unexported symbol defaultSystemPluginDirs in the cli-plugins/manager package lists a Windows-style search path (Program Files, AppData/Local) for CLI plugin discovery, and a low-privileged local user on Windows can plant a malicious plugin in one of those directories and have the docker CLI execute it as a privileged user. The stackstate-k8s-agent image is built on registry.suse.com/bci/bci-micro:latest (SUSE Linux Enterprise 15 SP7 Micro, a Linux container), and the github.com/docker/cli v29.2.0+incompatible module is statically linked into the agent and installer Go binaries at /opt/stackstate-agent/bin/agent/agent and /opt/stackstate-agent/bin/installer/installer (verified via grype SBOM locations). Source review of stackstate-agent cef227ab38 (stackstate-7.78.2) and the indirect dependency declaration in go.mod (github.com/docker/cli v29.2.1+incompatible // indirect) shows that no first-party Go code imports github.com/docker/cli/cli-plugins/manager or any cli-plugins/* package: the only direct reference to github.com/docker/cli in the tree is test/e2e-framework/testing/utils/e2e/client/docker.go:20 importing cli/connhelper, which is not shipped into the runtime image (the e2e-framework module lives under test/e2e-framework/ and is not referenced by Dockerfiles/agent/Dockerfile, which extracts only /opt/stackstate-agent from the .deb). On Linux, the defaultSystemPluginDirs symbol either resolves to a build-tag-excluded Windows implementation or is never called by the runtime paths used by the agent (the agent does not exec docker CLI plugins); even if the symbol were present in the binary, the Windows-specific search path would not be consulted on Linux. There is no shipped agent code path that executes docker CLI plugins against an attacker-controllable plugin directory, and the vulnerable Windows directory enumeration is not performed in this image.",
+      "action_statement": "Track upstream Docker CLI releases and bump github.com/docker/cli past the fix once a 3.x release that includes the Linux-side defaultSystemPluginDirs clean-up is consumed by the indirect dependency. Re-review this statement if the agent starts invoking docker CLI plugins or if Windows-side docker/cli code becomes reachable from a Linux deployment.",
+      "timestamp": "2026-06-22T10:00:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-12003"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:e707010c-amd64 on 2026-06-22. The image embeds CPython 3.12.11, but the supported Linux container runtime does not allow an adversary to create or control the source-tree landmark path required by CVE-2026-12003.",
+      "justification": "vulnerable_code_cannot_be_controlled_by_adversary",
+      "impact_statement": "CVE-2026-12003 is a CPython getpath.py search-path confusion issue where the interpreter may treat a release install as an in-tree build when a Modules/setup.local landmark is found relative to VPATH, causing an alternate Lib directory to be discovered at startup. Upstream describes the practical risk around Windows legacy all-users installer layouts where VPATH is set to '..\\\\..' and the legacy installer places python.exe two levels deep inside a Windows directory, allowing a low-privileged user to create a Modules directory two levels above the install (e.g. in the C: drive root) and ship a Modules/setup.local that drags in a malicious Lib tree. The stackstate-k8s-agent image is a Linux container built on registry.suse.com/bci/bci-micro:latest (SUSE Linux Enterprise 15 SP7 Micro). Runtime inspection of the embedded interpreter at /opt/stackstate-agent/embedded/bin/python3.12 shows sys.platform is linux, sys.path resolves to /opt/stackstate-agent/embedded/lib/python3.12 plus the corresponding site-packages and lib-dynload directories, and there is no pybuilddir.txt or Modules/setup.local landmark under /opt/stackstate-agent/. The container runs as the non-root stackstate-agent user (UID 1000) while /opt/stackstate-agent, /opt/stackstate-agent/embedded, embedded/bin, and embedded/lib are root-owned and not writable by that user. The Windows legacy-installer attack condition is therefore absent from the supported Linux container deployment: the VPATH-derived landmark resolution in getpath.py is a Windows-specific path-handling code path, there is no Windows drive root or per-machine ProgramFiles equivalent that an unprivileged in-container user can write to, and no source-tree layout to pivot from. The same logic extends to the current 3.13.13 build (omnibus/config/software/python3.rb:3) once it ships, since the Linux container runtime still cannot host the Windows-legacy-installer layout that the CVE requires. The only attack surface the upstream advisory describes (low-privilege user creating Modules/setup.local above the install on a writable Windows drive) is not reproducible inside the BCI-micro rootfs the agent ships in.",
+      "action_statement": "Upgrade the embedded CPython runtime when the 3.13 backport for python/cpython#151545 is merged and released in a 3.13.x patch version, then retire this statement. As of 2026-06-22, the upstream 3.13 backport python/cpython#151566 is still open and the v3.13.14 tag predates the fix. Re-review this VEX if the agent runtime starts embedding a Windows CPython build or if the Linux container layout changes to make /opt/stackstate-agent/embedded writable by a non-root user.",
+      "timestamp": "2026-06-22T10:00:00Z"
     }
   ],
   "timestamp": "2026-05-13T06:25:29Z"
