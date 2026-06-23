@@ -1,0 +1,169 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/sts-toolbox/GO-2026-4610",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "GO-2026-4610",
+        "aliases": [
+          "CVE-2025-15558",
+          "GHSA-p436-gjf2-799p"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/container-tools?repository_url=quay.io/stackstate/container-tools",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/container-tools?repository_url=registry.rancher.com/suse-observability/container-tools",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/container-tools",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-correlate?repository_url=quay.io/stackstate/stackstate-correlate",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-correlate?repository_url=registry.rancher.com/suse-observability/stackstate-correlate",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-correlate",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-kafka-to-es?repository_url=quay.io/stackstate/stackstate-kafka-to-es",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-kafka-to-es?repository_url=registry.rancher.com/suse-observability/stackstate-kafka-to-es",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-kafka-to-es",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-receiver?repository_url=quay.io/stackstate/stackstate-receiver",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-receiver?repository_url=registry.rancher.com/suse-observability/stackstate-receiver",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-receiver",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-server?repository_url=quay.io/stackstate/stackstate-server",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-server?repository_url=registry.rancher.com/suse-observability/stackstate-server",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-server",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/vmbackup?repository_url=quay.io/stackstate/vmbackup",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/vmbackup?repository_url=registry.rancher.com/suse-observability/vmbackup",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/vmbackup",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/cli@v29.4.1+incompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "status_notes": "Reviewed sts-toolbox at StackVista/sts-toolbox acff6743d669 on 2026-06-22. The latest master build embeds github.com/docker/cli v29.4.1+incompatible through kops/go-containerregistry Docker config handling. GO-2026-4610 is fixed upstream starting with github.com/docker/cli v29.2.0 and only affects Windows binaries acting as a Docker CLI plugin manager.",
+      "impact_statement": "The vulnerable Docker CLI plugin-manager code is not present in the sts-toolbox binaries bundled into these images. Source and module review showed the dependency path is github.com/StackVista/sts-toolbox/internal/kops -> k8s.io/kops/upup/pkg/fi/cloudup -> k8s.io/kops/pkg/assets -> github.com/google/go-containerregistry/pkg/authn -> github.com/docker/cli/cli/config. A package-level dependency listing for the built sts-toolbox binary includes only github.com/docker/cli/cli/config, cli/config/configfile, cli/config/credentials, cli/config/memorystore, and cli/config/types; it does not include github.com/docker/cli/cli-plugins/manager or other cli-plugins packages. The sts-toolbox GoReleaser configuration builds darwin_amd64, darwin_arm64, linux_amd64, and linux_arm64 binaries, with windows_amd64 explicitly commented out, and the container images consume the linux binaries. The upstream advisory for CVE-2025-15558 / GHSA-p436-gjf2-799p states that non-Windows binaries and projects not using the Docker CLI plugin-manager code are not impacted. Grype 0.112.0 continues to report GO-2026-4610 for v29.4.1, v29.6.0, and even the exact patched v29.2.0 version because its govulndb match details use the incorrect disjunctive constraint '<29.2.0+incompatible||>=19.03.0+incompatible'; this VEX documents the product-specific non-affected state for the sts-toolbox copies in SUSE Observability images.",
+      "timestamp": "2026-06-22T06:54:50Z"
+    }
+  ],
+  "timestamp": "2026-06-22T06:54:50Z"
+}

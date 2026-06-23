@@ -1,9 +1,24 @@
 {
-  "updated_at": "2026-06-18T14:55:20Z",
+  "updated_at": "2026-06-22T06:55:28Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
       "location": "pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/container-tools",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/container-tools?repository_url=quay.io%2Fstackstate%2Fcontainer-tools",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/container-tools?repository_url=registry.rancher.com%2Fsuse-observability%2Fcontainer-tools",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
       "format": "openvex"
     },
     {
@@ -22,6 +37,21 @@
       "format": "openvex"
     },
     {
+      "id": "pkg:oci/stackstate-correlate",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-correlate?repository_url=quay.io%2Fstackstate%2Fstackstate-correlate",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-correlate?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-correlate",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
       "id": "pkg:oci/stackstate-k8s-agent",
       "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
       "format": "openvex"
@@ -34,6 +64,66 @@
     {
       "id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
       "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-kafka-to-es",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-kafka-to-es?repository_url=quay.io%2Fstackstate%2Fstackstate-kafka-to-es",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-kafka-to-es?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-kafka-to-es",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-receiver",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-receiver?repository_url=quay.io%2Fstackstate%2Fstackstate-receiver",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-receiver?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-receiver",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-server",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-server?repository_url=quay.io%2Fstackstate%2Fstackstate-server",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-server?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-server",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/vmbackup",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/vmbackup?repository_url=quay.io%2Fstackstate%2Fvmbackup",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/vmbackup?repository_url=registry.rancher.com%2Fsuse-observability%2Fvmbackup",
+      "location": "pkg/oci/sts-toolbox/scan.openvex.json",
       "format": "openvex"
     }
   ]
