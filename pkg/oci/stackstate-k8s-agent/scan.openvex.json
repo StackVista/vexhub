@@ -459,6 +459,117 @@
     },
     {
       "vulnerability": {
+        "name": "CVE-2026-0864"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:cef227ab on 2026-06-29. The embedded CPython 3.13.13 configparser implementation is present, but no supported agent runtime path writes ConfigParser files from adversary-controlled multiline values.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-0864 affects CPython configparser when an application writes configuration files containing multiline values with carriage returns controlled by an attacker, allowing unexpected keys or values to be injected into the generated config file. The stackstate-k8s-agent image embeds CPython 3.13.13 from omnibus/config/software/python3.rb:3 and the standard-library configparser module is therefore physically present. Source review of stackstate-agent cef227ab38 found no shipped runtime import of configparser or ConfigParser: the only ConfigParser hits are in pkg/config/legacy/tests/config.py, a legacy test file that is not packaged into the Kubernetes agent image. The Docker image extracts the .deb payload and copies the runtime files under /opt/stackstate-agent plus Dockerfiles/agent entrypoint/probe/secrets-helper scripts; the shipped Python wrappers under cmd/agent/dist/checks, Dockerfiles/agent/secrets-helper/readsecret.py, and omnibus/python-scripts do not import configparser or write INI files. The agent's supported configuration path is YAML/env-driven Go configuration, and the exposed runtime ports (DogStatsD 8125/udp and trace-agent 8126/tcp) do not accept configparser data or drive config file generation. Because no supported running path invokes ConfigParser.write() on attacker-controlled multiline values, the vulnerable sink cannot be reached in this image.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release containing the configparser fix from python/cpython#151559, then retire this statement. Re-review if supported agent runtime code starts generating INI files with Python configparser.",
+      "timestamp": "2026-06-29T14:50:30Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-11940"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:cef227ab on 2026-06-29. The embedded CPython 3.13.13 tarfile implementation is present, but the supported Kubernetes agent runtime does not extract attacker-controlled tar archives.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-11940 is a CPython tarfile.data_filter / tar_filter bypass where a crafted archive can use a hardlink to a deeper symlink to escape the extraction destination, enabling out-of-destination file reads or writes. The image embeds CPython 3.13.13 from omnibus/config/software/python3.rb:3, so Lib/tarfile.py is present under /opt/stackstate-agent/embedded/lib/python3.13. Source review of stackstate-agent cef227ab38 found no shipped runtime code path that imports tarfile or calls tarfile.extract(), tarfile.extractall(), or shutil.unpack_archive() on external input. The tarfile/import and extraction hits in the repository are developer/test tooling such as tasks/coverage.py, tasks/kmt.py, tasks/libs/common/junit_upload_core.py, and cmd/system-probe/subcommands/usm/debug_scripts/usm_leak_detector/backends/bpftool_downloader.py; these are not part of the supported stackstate-k8s-agent container runtime extracted by Dockerfiles/agent/Dockerfile. The shipped Python surface under cmd/agent/dist/checks, Dockerfiles/agent/secrets-helper/readsecret.py, and omnibus/python-scripts does not import tarfile, and the supported agent service ports (DogStatsD 8125/udp and trace-agent 8126/tcp) do not accept tar archives or invoke archive extraction. Therefore an adversary cannot drive the vulnerable tarfile extraction sink in the deployed k8s-agent image.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release containing the tarfile fix from python/cpython#151559, then retire this statement. Re-review if supported agent runtime code starts extracting tar archives.",
+      "timestamp": "2026-06-29T14:50:30Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-11972"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:cef227ab on 2026-06-29. The embedded CPython 3.13.13 tarfile implementation is present, but no supported agent runtime path opens attacker-controlled tar archives in streaming mode.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-11972 affects CPython's tarfile module when parsing archives opened in streaming mode (mode=\"r|\") because EOF handling can make archive parsing take exponentially longer. The image embeds CPython 3.13.13 from omnibus/config/software/python3.rb:3, so the affected standard library module is present. Source review of stackstate-agent cef227ab38 found no shipped runtime path that imports tarfile or opens tar archives in streaming mode. Repository hits for tarfile and archive extraction are developer/test tooling not packaged into the stackstate-k8s-agent runtime image; the shipped Python wrappers under cmd/agent/dist/checks, Dockerfiles/agent/secrets-helper/readsecret.py, and omnibus/python-scripts do not import tarfile. The supported agent runtime listens on DogStatsD 8125/udp and trace-agent 8126/tcp and does not accept tar archives, so an adversary cannot supply a crafted streaming tar archive to the vulnerable parser in this image.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release containing the streaming tarfile EOF fix from python/cpython#151982, then retire this statement. Re-review if supported agent runtime code starts parsing tar archives.",
+      "timestamp": "2026-06-29T14:50:30Z"
+    },
+    {
+      "vulnerability": {
         "name": "GO-2026-4610",
         "aliases": [
           "CVE-2025-15558",
