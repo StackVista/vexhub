@@ -1,6 +1,11 @@
 {
-  "updated_at": "2026-07-01T09:12:04Z",
+  "updated_at": "2026-07-01T11:03:46Z",
   "packages": [
+    {
+      "id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
       "location": "pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json",
