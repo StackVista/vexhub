@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-30T15:45:15Z",
+  "updated_at": "2026-07-01T09:12:04Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
@@ -22,6 +22,81 @@
       "format": "openvex"
     },
     {
+      "id": "pkg:oci/elasticsearch",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/elasticsearch?repository_url=quay.io%2Fstackstate%2Felasticsearch",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/elasticsearch?repository_url=registry.rancher.com%2Fsuse-observability%2Felasticsearch",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hadoop",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hadoop?repository_url=quay.io%2Fstackstate%2Fhadoop",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hadoop?repository_url=registry.rancher.com%2Fsuse-observability%2Fhadoop",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hbase-master",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hbase-master?repository_url=quay.io%2Fstackstate%2Fhbase-master",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hbase-master?repository_url=registry.rancher.com%2Fsuse-observability%2Fhbase-master",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hbase-regionserver",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hbase-regionserver?repository_url=quay.io%2Fstackstate%2Fhbase-regionserver",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/hbase-regionserver?repository_url=registry.rancher.com%2Fsuse-observability%2Fhbase-regionserver",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/kafka",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/kafka?repository_url=quay.io%2Fstackstate%2Fkafka",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/kafka?repository_url=registry.rancher.com%2Fsuse-observability%2Fkafka",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
       "id": "pkg:oci/opentelemetry-target-allocator",
       "location": "pkg/oci/opentelemetry-target-allocator/scan.openvex.json",
       "format": "openvex"
@@ -34,6 +109,51 @@
     {
       "id": "pkg:oci/opentelemetry-target-allocator?repository_url=registry.rancher.com%2Fsuse-observability%2Fopentelemetry-target-allocator",
       "location": "pkg/oci/opentelemetry-target-allocator/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/s3proxy",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/s3proxy?repository_url=quay.io%2Fstackstate%2Fs3proxy",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/s3proxy?repository_url=registry.rancher.com%2Fsuse-observability%2Fs3proxy",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackgraph-console",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackgraph-console?repository_url=quay.io%2Fstackstate%2Fstackgraph-console",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackgraph-console?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackgraph-console",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackgraph-hbase",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackgraph-hbase?repository_url=quay.io%2Fstackstate%2Fstackgraph-hbase",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackgraph-hbase?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackgraph-hbase",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
       "format": "openvex"
     },
     {
@@ -112,6 +232,21 @@
       "format": "openvex"
     },
     {
+      "id": "pkg:oci/tephra-server",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/tephra-server?repository_url=quay.io%2Fstackstate%2Ftephra-server",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/tephra-server?repository_url=registry.rancher.com%2Fsuse-observability%2Ftephra-server",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
       "id": "pkg:oci/vmbackup",
       "location": "pkg/oci/sts-toolbox/scan.openvex.json",
       "format": "openvex"
@@ -124,6 +259,21 @@
     {
       "id": "pkg:oci/vmbackup?repository_url=registry.rancher.com%2Fsuse-observability%2Fvmbackup",
       "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/zookeeper",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/zookeeper?repository_url=quay.io%2Fstackstate%2Fzookeeper",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/zookeeper?repository_url=registry.rancher.com%2Fsuse-observability%2Fzookeeper",
+      "location": "pkg/oci/jackson-databind/scan.openvex.json",
       "format": "openvex"
     }
   ]

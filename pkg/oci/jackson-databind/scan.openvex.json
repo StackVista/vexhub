@@ -1,0 +1,265 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/jackson-databind/CVE-2026-54515",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-54515",
+        "aliases": [
+          "GHSA-5jmj-h7xm-6q6v"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/elasticsearch?repository_url=quay.io/stackstate/elasticsearch",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/elasticsearch?repository_url=registry.rancher.com/suse-observability/elasticsearch",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/elasticsearch",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hadoop?repository_url=quay.io/stackstate/hadoop",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hadoop?repository_url=registry.rancher.com/suse-observability/hadoop",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hadoop",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hbase-master?repository_url=quay.io/stackstate/hbase-master",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hbase-master?repository_url=registry.rancher.com/suse-observability/hbase-master",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hbase-master",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hbase-regionserver?repository_url=quay.io/stackstate/hbase-regionserver",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hbase-regionserver?repository_url=registry.rancher.com/suse-observability/hbase-regionserver",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/hbase-regionserver",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/kafka?repository_url=quay.io/stackstate/kafka",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/kafka?repository_url=registry.rancher.com/suse-observability/kafka",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/kafka",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/s3proxy?repository_url=quay.io/stackstate/s3proxy",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/s3proxy?repository_url=registry.rancher.com/suse-observability/s3proxy",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/s3proxy",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackgraph-console?repository_url=quay.io/stackstate/stackgraph-console",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackgraph-console?repository_url=registry.rancher.com/suse-observability/stackgraph-console",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackgraph-console",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackgraph-hbase?repository_url=quay.io/stackstate/stackgraph-hbase",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackgraph-hbase?repository_url=registry.rancher.com/suse-observability/stackgraph-hbase",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackgraph-hbase",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/tephra-server?repository_url=quay.io/stackstate/tephra-server",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/tephra-server?repository_url=registry.rancher.com/suse-observability/tephra-server",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/tephra-server",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/zookeeper?repository_url=quay.io/stackstate/zookeeper",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/zookeeper?repository_url=registry.rancher.com/suse-observability/zookeeper",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/zookeeper",
+          "subcomponents": [
+            {
+              "@id": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.0"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "status_notes": "Reviewed cve-reporter output from GitHub Actions run 28497520040 for dev charts stackstate-internal/suse-observability 2.10.3-pre.7 and stackstate-internal/suse-observability-agent 1.5.13. Trivy reports CVE-2026-54515 against jackson-databind 2.22.0 in StackGraph images and docker-images Java runtime images: elasticsearch, hadoop, kafka, s3proxy, and zookeeper. The upstream advisory describes a BeanDeserializerBase contextualization bug that requires per-property @JsonIgnoreProperties exclusions together with @JsonFormat(ACCEPT_CASE_INSENSITIVE_PROPERTIES), or equivalent case-insensitive Jackson property deserialization.",
+      "impact_statement": "A clean dependency upgrade is not currently available: Maven Central metadata for com.fasterxml.jackson.core:jackson-databind lists 2.22.0 as the newest published 2.x artifact as of 2026-07-01, while the advisory fixed lines 2.18.9, 2.21.5, 2.22.1, and 3.1.4 are not resolvable. Runtime reachability review found no use of the vulnerable annotation/feature combination in StackGraph, docker-images recipes, or the patched TinkerPop fork: recursive searches for JsonIgnoreProperties, JsonFormat, ACCEPT_CASE_INSENSITIVE_PROPERTIES, MapperFeature.ACCEPT_CASE_INSENSITIVE, and equivalent case-insensitive Jackson configuration across repos/stackgraph, repos/docker-images, and repos/tinkerpop returned no production code path that combines ignored properties with case-insensitive Jackson property binding. Upstream source review for the exact versions packaged by docker-images found the same: Kafka 3.9.2 and Hadoop 3.5.0 contain @JsonIgnoreProperties uses, but no Jackson JsonFormat or ACCEPT_CASE_INSENSITIVE_PROPERTIES usage; ZooKeeper 3.9.5 and the S3Proxy fork commit 7925896cf3f6d48cee3c9de5ae80cd5a24ddbdab contain no matching Jackson annotation/configuration hits; the Elasticsearch 8.19.16 modules that contain the flagged jars have no matching Jackson annotation/configuration hits. HBase REST has unrelated ObjectMapper use, but SUSE Observability deploys HBase master and regionserver images from the StackGraph hbase Dockerfile, not the HBase REST server. The StackGraph console image carries gremlin-shaded, but the patched TinkerPop fork likewise has no production use of the vulnerable @JsonIgnoreProperties plus per-property case-insensitive deserialization path. Therefore the vulnerable jackson-databind code is present on disk in these images, but the vulnerable code path is not reached by the supported SUSE Observability runtime configuration. This statement is deliberately image-scoped to the affected SUSE Observability images instead of package-scoped for every possible jackson-databind 2.22.0 consumer.",
+      "action_statement": "Track upstream Jackson publication of 2.18.9, 2.21.5, 2.22.1, 3.1.4, or another compatible fixed release. Once a fixed artifact is published and compatible, replace this VEX with dependency bumps in StackGraph/TinkerPop shaded artifacts and the docker-images Jackson patch pins.",
+      "timestamp": "2026-07-01T07:41:20Z"
+    }
+  ],
+  "timestamp": "2026-07-01T07:41:20Z"
+}
