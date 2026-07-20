@@ -745,7 +745,87 @@
       "impact_statement": "CVE-2026-12003 is a CPython getpath.py search-path confusion issue where the interpreter may treat a release install as an in-tree build when a Modules/setup.local landmark is found relative to VPATH, causing an alternate Lib directory to be discovered at startup. Upstream describes the practical risk around Windows legacy all-users installer layouts where VPATH is set to '..\\\\..' and the legacy installer places python.exe two levels deep inside a Windows directory, allowing a low-privileged user to create a Modules directory two levels above the install (e.g. in the C: drive root) and ship a Modules/setup.local that drags in a malicious Lib tree. The stackstate-k8s-agent image is a Linux container built on registry.suse.com/bci/bci-micro:latest (SUSE Linux Enterprise 15 SP7 Micro). Runtime inspection of the current embedded interpreter at /opt/stackstate-agent/embedded/bin/python3.13 shows sys.platform is linux, sys.path resolves to /opt/stackstate-agent/embedded/lib/python3.13 plus the corresponding site-packages and lib-dynload directories, and there is no pybuilddir.txt or Modules/setup.local landmark under /opt/stackstate-agent/. The container runs as the non-root stackstate-agent user (UID 1000) while /opt/stackstate-agent, /opt/stackstate-agent/embedded, embedded/bin, and embedded/lib are root-owned and not writable by that user. The Windows legacy-installer attack condition is therefore absent from the supported Linux container deployment: the VPATH-derived landmark resolution in getpath.py is a Windows-specific path-handling code path, there is no Windows drive root or per-machine ProgramFiles equivalent that an unprivileged in-container user can write to, and no source-tree layout to pivot from. The same logic applies to the current 3.13.14 build, since the Linux container runtime still cannot host the Windows-legacy-installer layout that the CVE requires. The only attack surface the upstream advisory describes (low-privilege user creating Modules/setup.local above the install on a writable Windows drive) is not reproducible inside the BCI-micro rootfs the agent ships in. The 2026-06-30 cve-reporter scan of quay.io/stackstate/stackstate-k8s-agent:5bc56023 reports the same finding against pkg:generic/python@3.13.14 at /opt/stackstate-agent/embedded/bin/python3.13; the source, packaging, and supported-runtime reachability analysis above remains valid for the current 3.13.14 build.",
       "action_statement": "Upgrade the embedded CPython runtime when a compatible 3.13.x patch release fixes CVE-2026-12003, then retire this statement. The 2026-06-30 cve-reporter scan reports no fixed 3.13.x version for python@3.13.14. Re-review this VEX if the agent runtime starts embedding a Windows CPython build or if the Linux container layout changes to make /opt/stackstate-agent/embedded writable by a non-root user.",
       "timestamp": "2026-06-30T15:44:21Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-15308",
+        "aliases": [
+          "GHSA-7qj2-q5c8-cxx5"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:3ce0270e and source commit 3ce0270ebe on 2026-07-20. The embedded CPython 3.13.13 runtime is present, but the exact agent source and pinned integrations do not use html.parser.HTMLParser.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-15308 requires application code to incrementally feed adversary-controlled HTML into html.parser.HTMLParser. Full source searches of the exact agent release and its pinned integrations found no import or use of html.parser or HTMLParser. The agent does not expose an HTML parsing service. The affected standard-library module is present in the embedded runtime but is not executed by the supported product.",
+      "action_statement": "Upgrade the embedded CPython runtime when a compatible 3.13.x patch release fixes CVE-2026-15308, then retire this statement. Re-review if shipped agent or integration code begins using html.parser.HTMLParser.",
+      "timestamp": "2026-07-20T07:19:56Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-4360",
+        "aliases": [
+          "GHSA-gf2w-jqmq-fcm8"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.13"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:3ce0270e and source commit 3ce0270ebe on 2026-07-20. The only shipped runtime tar extraction path excludes hardlinks before calling tarfile.extract().",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-4360 affects tarfile.extract() handling of hardlinks. The sole shipped runtime extraction path iterates archive members, accepts only a member for which TarInfo.isfile() is true, renames the selected regular file to the fixed basename bpftool, and extracts only that member. Tar hardlinks have LNKTYPE and do not satisfy isfile(), so the vulnerable hardlink branch cannot be reached. Other repository extraction calls are build or test tooling and are not part of the agent runtime image.",
+      "action_statement": "Upgrade the embedded CPython runtime when a compatible 3.13.x patch release fixes CVE-2026-4360, then retire this statement. Re-review if shipped agent code adds another tar extraction path or permits hardlink members.",
+      "timestamp": "2026-07-20T07:19:56Z"
     }
   ],
-  "timestamp": "2026-06-30T15:44:21Z"
+  "timestamp": "2026-07-20T07:19:56Z"
 }
