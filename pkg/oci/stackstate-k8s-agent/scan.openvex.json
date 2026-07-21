@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 1,
+  "version": 2,
   "statements": [
     {
       "vulnerability": {
@@ -825,7 +825,151 @@
       "impact_statement": "CVE-2026-4360 affects tarfile.extract() handling of hardlinks. The sole shipped runtime extraction path iterates archive members, accepts only a member for which TarInfo.isfile() is true, renames the selected regular file to the fixed basename bpftool, and extracts only that member. Tar hardlinks have LNKTYPE and do not satisfy isfile(), so the vulnerable hardlink branch cannot be reached. Other repository extraction calls are build or test tooling and are not part of the agent runtime image.",
       "action_statement": "Upgrade the embedded CPython runtime when a compatible 3.13.x patch release fixes CVE-2026-4360, then retire this statement. Re-review if shipped agent code adds another tar extraction path or permits hardlink members.",
       "timestamp": "2026-07-20T07:19:56Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-50195",
+        "aliases": [
+          "GHSA-cvxm-645q-p574"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.suse.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:3ce0270e and source commit 3ce0270ebe on 2026-07-21. Grype 0.112.0 reports the advisory against github.com/containerd/containerd v1.7.33 in /opt/stackstate-agent/bin/agent/agent, but the upstream affected package is the distinct github.com/containerd/containerd/v2 module.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "CVE-2026-50195 affects only github.com/containerd/containerd/v2 versions in the 2.1, 2.2, and 2.3 release lines. The agent binary links github.com/containerd/containerd v1.7.33, whose Go module path does not contain the /v2 major-version suffix. Go major versions two and later use distinct module paths, and the affected /v2 component is not linked into this binary. The Grype finding results from matching the /v2 advisory to the major-v1 module after module-path normalization.",
+      "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the agent starts linking github.com/containerd/containerd/v2 in an affected release line.",
+      "timestamp": "2026-07-21T11:16:37Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-53492",
+        "aliases": [
+          "GHSA-33vj-92qq-66hc"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.suse.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:3ce0270e and source commit 3ce0270ebe on 2026-07-21. Grype 0.112.0 reports the advisory against github.com/containerd/containerd v1.7.33 in /opt/stackstate-agent/bin/agent/agent, but the upstream affected package is the distinct github.com/containerd/containerd/v2 module.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "CVE-2026-53492 affects only github.com/containerd/containerd/v2 versions in the 2.1, 2.2, and 2.3 release lines. The agent binary links github.com/containerd/containerd v1.7.33, whose Go module path does not contain the /v2 major-version suffix. Go major versions two and later use distinct module paths, and the affected /v2 component is not linked into this binary. The Grype finding results from matching the /v2 advisory to the major-v1 module after module-path normalization.",
+      "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the agent starts linking github.com/containerd/containerd/v2 in an affected release line.",
+      "timestamp": "2026-07-21T11:16:37Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-53489",
+        "aliases": [
+          "GHSA-rgh6-rfwx-v388"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.suse.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:3ce0270e and source commit 3ce0270ebe on 2026-07-21. Grype 0.112.0 reports the advisory against github.com/containerd/containerd v1.7.33 in /opt/stackstate-agent/bin/agent/agent, but the upstream affected package is the distinct github.com/containerd/containerd/v2 module.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "CVE-2026-53489 affects only github.com/containerd/containerd/v2 versions in the 2.1, 2.2, and 2.3 release lines. The agent binary links github.com/containerd/containerd v1.7.33, whose Go module path does not contain the /v2 major-version suffix. Go major versions two and later use distinct module paths, and the affected /v2 component is not linked into this binary. The Grype finding results from matching the /v2 advisory to the major-v1 module after module-path normalization.",
+      "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the agent starts linking github.com/containerd/containerd/v2 in an affected release line.",
+      "timestamp": "2026-07-21T11:16:37Z"
     }
   ],
-  "timestamp": "2026-07-20T07:19:56Z"
+  "timestamp": "2026-07-21T11:16:37Z"
 }

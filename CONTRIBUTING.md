@@ -76,9 +76,12 @@ package across our portfolio.
   `subcomponents`. Because OCI PURLs are registry-coupled, list one
   product entry per distribution registry — typically both
   `quay.io/stackstate/<image>` and the Rancher-registry copy
-  `registry.rancher.com/suse-observability/<image>`. The
-  `repository_url` value must be percent-encoded (every `/` as `%2F`)
-  per the PURL spec; `build_index.py` rejects unencoded values.
+  `registry.rancher.com/suse-observability/<image>`. Also list the bare
+  `pkg:oci/<image>` product with the same subcomponent: Grype generates
+  a bare image PURL and needs that entry to match the statement. For
+  readability, `repository_url` values may contain literal `/`
+  characters; `build_index.py` canonicalizes them to percent-encoded
+  values in `index.json` for Trivy's repository lookup.
 
 ### Steps
 
