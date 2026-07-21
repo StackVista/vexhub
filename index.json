@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-20T07:28:21Z",
+  "updated_at": "2026-07-21T11:26:34Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
@@ -184,6 +184,31 @@
     {
       "id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-agent",
       "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.suse.com%2Fsuse-observability%2Fstackstate-k8s-agent",
+      "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-process-agent",
+      "location": "pkg/oci/stackstate-k8s-process-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-process-agent?repository_url=quay.io%2Fstackstate%2Fstackstate-k8s-process-agent",
+      "location": "pkg/oci/stackstate-k8s-process-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-process-agent?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-k8s-process-agent",
+      "location": "pkg/oci/stackstate-k8s-process-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-process-agent?repository_url=registry.suse.com%2Fsuse-observability%2Fstackstate-k8s-process-agent",
+      "location": "pkg/oci/stackstate-k8s-process-agent/scan.openvex.json",
       "format": "openvex"
     },
     {
