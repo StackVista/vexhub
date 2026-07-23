@@ -1,0 +1,27 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/maven/org.eclipse.jetty/jetty-security/CVE-2026-10050",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-10050",
+        "aliases": [
+          "GHSA-2fvj-hgj9-j2gr"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:maven/org.eclipse.jetty/jetty-security@9.4.60.sts1"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Trivy attributes CVE-2026-10050 to org.eclipse.jetty:jetty-security based on Maven package metadata. The upstream advisory identifies the affected implementation as org.eclipse.jetty.client.util.DigestAuthentication.apply() in the separate jetty-client module. The HBase shaded Jetty artifact is built from an explicit server-side module set that does not include jetty-client. Inspection of hbase-shaded-jetty-4.1.14.sts.20260717.b8d71bd.jar from the current public hbase-master:2.5-8.1.11 image found no DigestAuthentication class and no Jetty client package entries.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The vulnerable Jetty HTTP client digest-authentication code is not present in this Maven component or in the HBase shaded artifact shipped by SUSE Observability. No request containing attacker-controlled non-Latin digest credentials can reach the affected implementation because that implementation is absent. Re-review this statement if hbase-thirdparty adds jetty-client to hbase-shaded-jetty or if jetty-security 9.4.60.sts1 is replaced by a differently assembled artifact.",
+      "timestamp": "2026-07-23T07:12:35Z"
+    }
+  ],
+  "timestamp": "2026-07-23T07:12:35Z"
+}
