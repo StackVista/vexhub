@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-23T07:12:57Z",
+  "updated_at": "2026-07-23T07:25:35Z",
   "packages": [
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
