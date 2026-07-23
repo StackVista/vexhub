@@ -3,6 +3,12 @@
 This hub holds OpenVEX statements about CVEs in SUSE Observability
 product images.
 
+For judgment-driven SUSE Observability statements, this is the first
+publication target. A reviewed merge lets our dual-hub image pipeline
+apply the decision immediately. The same evidence must then be migrated
+through `rancher/image-scanning` into `rancher/vexhub`; that follow-up is
+required, but Rancher's review queue does not gate our builds.
+
 ## Is this the right hub for the statement?
 
 Before authoring, check whether your CVE is already (or should be)
@@ -13,9 +19,9 @@ covered by an upstream VEX pipeline:
   repos with `govulncheck` and publishes the generated VEX
   statements into [rancher/vexhub](https://github.com/rancher/vexhub).
   It is also being extended to scan our re-tagged container images.
-  If your CVE is in a Go module that pipeline already covers (or
-  could cover by adding the repo to its `vex/repos.txt`), defer
-  there — don't duplicate the statement here.
+  If a source-level result is already generated and published there,
+  do not duplicate it here. Judgment-driven statements authored here
+  still need a Rancher migration issue after internal publication.
 - **[aquasecurity/vexhub](https://github.com/aquasecurity/vexhub)** —
   the default Aqua-curated hub, populated by upstream package
   maintainers themselves. If the maintainer of the affected package
@@ -113,6 +119,11 @@ package across our portfolio.
    *every* image where the package appears.
 4. CODEOWNERS will route the PR to the security team and the relevant
    product team. Both approvals are required for HIGH/CRITICAL CVEs.
+5. After merge, verify Trivy and Grype consume the statement through
+   `StackVista/image-pipeline`.
+6. Create the matching `rancher/image-scanning` issue and link its
+   generated PRs back to the internal PR or Jira ticket. Track the
+   migration through merge in `rancher/vexhub` and verify scanner parity.
 
 VEX statements typically do not expire. Annual review is recommended
 for `vulnerable_code_not_in_execute_path` claims to confirm the

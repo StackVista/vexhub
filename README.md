@@ -28,6 +28,14 @@ the generated VEX statements into
 [rancher/vexhub](https://github.com/rancher/vexhub) (also visible
 at [scans.rancher.com](https://scans.rancher.com/)).
 
+SUSE Observability's image pipeline consumes both this hub and
+`rancher/vexhub`. Judgment-driven statements are reviewed and published
+here first so our builds do not depend on Rancher's review latency. The
+same evidence is then migrated through `rancher/image-scanning`; Rancher
+publication remains required for customer-facing parity.
+The canonical dual-hub consumer configuration lives in
+[`StackVista/image-pipeline/vex/repository.yaml`](https://github.com/StackVista/image-pipeline/blob/main/vex/repository.yaml).
+
 We focus on what their automation can't easily produce:
 
 - **Deployment-context statements** - helm chart config, network
