@@ -1,0 +1,66 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/golang/github.com/containerd/containerd/v1.7.33",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-50195",
+        "aliases": [
+          "GHSA-cvxm-645q-p574"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "The advisory affects the distinct github.com/containerd/containerd/v2 module. Grype 0.112.0 incorrectly reports it against github.com/containerd/containerd v1.7.33 after major-version module-path normalization.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "CVE-2026-50195 affects containerd release lines using the github.com/containerd/containerd/v2 Go module path. The subject is the major-v1 module github.com/containerd/containerd at v1.7.33. Go modules with major versions two and later use distinct module paths, so the affected /v2 code is not present in this package version.",
+      "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the subject changes to the /v2 module.",
+      "timestamp": "2026-07-28T08:03:20Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-53492",
+        "aliases": [
+          "GHSA-33vj-92qq-66hc"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "The advisory affects the distinct github.com/containerd/containerd/v2 module. Grype 0.112.0 incorrectly reports it against github.com/containerd/containerd v1.7.33 after major-version module-path normalization.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "CVE-2026-53492 affects containerd release lines using the github.com/containerd/containerd/v2 Go module path. The subject is the major-v1 module github.com/containerd/containerd at v1.7.33. Go modules with major versions two and later use distinct module paths, so the affected /v2 code is not present in this package version.",
+      "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the subject changes to the /v2 module.",
+      "timestamp": "2026-07-28T08:03:20Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-53489",
+        "aliases": [
+          "GHSA-rgh6-rfwx-v388"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:golang/github.com/containerd/containerd@v1.7.33"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "The advisory affects the distinct github.com/containerd/containerd/v2 module. Grype 0.112.0 incorrectly reports it against github.com/containerd/containerd v1.7.33 after major-version module-path normalization.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "CVE-2026-53489 affects containerd release lines using the github.com/containerd/containerd/v2 Go module path. The subject is the major-v1 module github.com/containerd/containerd at v1.7.33. Go modules with major versions two and later use distinct module paths, so the affected /v2 code is not present in this package version.",
+      "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the subject changes to the /v2 module.",
+      "timestamp": "2026-07-28T08:03:20Z"
+    }
+  ],
+  "timestamp": "2026-07-28T08:03:20Z"
+}
