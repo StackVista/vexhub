@@ -1,6 +1,11 @@
 {
-  "updated_at": "2026-07-23T07:25:35Z",
+  "updated_at": "2026-07-28T08:03:56Z",
   "packages": [
+    {
+      "id": "pkg:golang/github.com/containerd/containerd",
+      "location": "pkg/golang/github.com/containerd/containerd/scan.openvex.json",
+      "format": "openvex"
+    },
     {
       "id": "pkg:maven/org.eclipse.jetty/jetty-http",
       "location": "pkg/maven/org.eclipse.jetty/jetty-http/scan.openvex.json",
