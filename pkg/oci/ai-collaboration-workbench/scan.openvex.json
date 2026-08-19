@@ -1,0 +1,123 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/oci/ai-collaboration-workbench/docker-engine-server-side-not-affected",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2026-34040",
+        "aliases": [
+          "GHSA-x744-4wpc-v9h2",
+          "GO-2026-4887"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:golang/github.com/anchore/grype",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/docker/buildx@v0.36.1+dirty",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/docker/compose/v5@v5.5.0",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "status_notes": "Review by 2026-09-30: re-check whether current Grype, Buildx, and Compose releases have migrated from github.com/docker/docker to github.com/moby/moby/v2; retire this statement once the legacy dependency is gone.",
+      "impact_statement": "CVE-2026-34040 is an authorization-plugin bypass in the Moby server's API request handling. The ai-collaboration-workbench image contains no Docker daemon and uses Docker only as a client of the daemon supplied through DOCKER_HOST. github.com/docker/docker is linked into the Grype, Buildx, and Compose client binaries, whose source-build dependency checks reject github.com/docker/docker/api/server and github.com/docker/docker/daemon packages. The authorization-plugin request path is therefore absent from the image's executable code."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-41567",
+        "aliases": [
+          "GHSA-x86f-5xw2-fm2r"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:golang/github.com/anchore/grype",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/docker/buildx@v0.36.1+dirty",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/docker/compose/v5@v5.5.0",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "status_notes": "Review by 2026-09-30: re-check whether current Grype, Buildx, and Compose releases have migrated from github.com/docker/docker to github.com/moby/moby/v2; retire this statement once the legacy dependency is gone.",
+      "impact_statement": "CVE-2026-41567 is in the Moby daemon's PUT /containers/{id}/archive implementation, where the server can resolve archive-decompression helpers from a container filesystem. The ai-collaboration-workbench image contains no Docker daemon and uses Docker only as a client of the daemon supplied through DOCKER_HOST. github.com/docker/docker is linked into the Grype, Buildx, and Compose client binaries, whose source-build dependency checks reject github.com/docker/docker/api/server and github.com/docker/docker/daemon packages. The vulnerable daemon archive-upload path is therefore absent from the image's executable code."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-42306",
+        "aliases": [
+          "GHSA-rg2x-37c3-w2rh"
+        ]
+      },
+      "products": [
+        {
+          "@id": "pkg:golang/github.com/anchore/grype",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/docker/buildx@v0.36.1+dirty",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:golang/github.com/docker/compose/v5@v5.5.0",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/github.com/docker/docker@v28.5.2+incompatible"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "status_notes": "Review by 2026-09-30: re-check whether current Grype, Buildx, and Compose releases have migrated from github.com/docker/docker to github.com/moby/moby/v2; retire this statement once the legacy dependency is gone.",
+      "impact_statement": "CVE-2026-42306 is a race in the Moby daemon's docker cp bind-mount setup that can redirect a mount to a host path. The ai-collaboration-workbench image contains no Docker daemon and uses Docker only as a client of the daemon supplied through DOCKER_HOST. github.com/docker/docker is linked into the Grype, Buildx, and Compose client binaries, whose source-build dependency checks reject github.com/docker/docker/api/server and github.com/docker/docker/daemon packages. The vulnerable bind-mount and archive-server path is therefore absent from the image's executable code."
+    }
+  ]
+}

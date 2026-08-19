@@ -1,9 +1,24 @@
 {
-  "updated_at": "2026-08-19T06:49:38Z",
+  "updated_at": "2026-08-19T09:27:21Z",
   "packages": [
+    {
+      "id": "pkg:golang/github.com/anchore/grype",
+      "location": "pkg/oci/ai-collaboration-workbench/scan.openvex.json",
+      "format": "openvex"
+    },
     {
       "id": "pkg:golang/github.com/containerd/containerd",
       "location": "pkg/golang/github.com/containerd/containerd/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:golang/github.com/docker/buildx",
+      "location": "pkg/oci/ai-collaboration-workbench/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:golang/github.com/docker/compose/v5",
+      "location": "pkg/oci/ai-collaboration-workbench/scan.openvex.json",
       "format": "openvex"
     },
     {
