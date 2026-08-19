@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/maven/org.eclipse.jetty/jetty-http/CVE-2024-6763",
   "author": "SUSE Observability Security Team",
-  "version": 3,
+  "version": 4,
   "statements": [
     {
       "vulnerability": {
@@ -17,14 +17,17 @@
         },
         {
           "@id": "pkg:maven/org.eclipse.jetty/jetty-http@9.4.63.sts1"
+        },
+        {
+          "@id": "pkg:maven/org.eclipse.jetty/jetty-http@9.4.63.sts3"
         }
       ],
       "status": "not_affected",
-      "status_notes": "The CVE-2024-6763 fix is backported in StackVista/jetty.project commit db8bb7a8631 (\"Fix CVE-2024-6763 (#12532)\"), which adds USER_INFO violation tracking, strict authority and percent-encoding validation, and bad-authority regression tests. Follow-up commit 89d2ac7c779 (\"Regular handling of bad URIs (#14011)\") adds consistent bad-URI handling and regression tests for user-info/host confusion forms. Both commits are ancestors of the jetty-9.4.60.sts1 and jetty-9.4.63.sts1 release tags. The signed jetty-9.4.63.sts1 tag resolves to commit 7bafbcf1a588fbd3a8b393bdad32ff88f6076b00. The current StackVista/docker-images Hadoop build explicitly fetches and replaces jetty-http with 9.4.63.sts1. Trivy and Grype continue to report this package because their upstream version ranges do not recognize the 9.4.x backport.",
+      "status_notes": "The CVE-2024-6763 fix is backported in StackVista/jetty.project commit db8bb7a8631 (\"Fix CVE-2024-6763 (#12532)\"), which adds USER_INFO violation tracking, strict authority and percent-encoding validation, and bad-authority regression tests. Follow-up commit 89d2ac7c779 (\"Regular handling of bad URIs (#14011)\") adds consistent bad-URI handling and regression tests for user-info/host confusion forms. Both commits are ancestors of the jetty-9.4.60.sts1, jetty-9.4.63.sts1 and jetty-9.4.63.sts3 release tags. The signed jetty-9.4.63.sts1 tag resolves to commit 7bafbcf1a588fbd3a8b393bdad32ff88f6076b00 and the signed jetty-9.4.63.sts3 tag to commit 1a591e13d7864190b647fe97b30678b7fee4f5c0. 9.4.63.sts3 is the first release published to AWS CodeArtifact rather than the GitLab Maven registry; it carries the same backported source as sts1, differing only in which reactor modules the release publishes. The StackVista/docker-images Hadoop build fetches and replaces jetty-http with 9.4.63.sts1 today and moves to 9.4.63.sts3 when its pin is bumped. Trivy and Grype continue to report this package because their upstream version ranges do not recognize the 9.4.x backport.",
       "justification": "vulnerable_code_not_present",
-      "impact_statement": "The vulnerable HttpURI authority parsing code patched upstream in Jetty 12.0.12 has been replaced by the backported hardened implementation in the exact 9.4.60.sts1 and 9.4.63.sts1 artifacts named above. These builds include strict authority character and percent-encoding validation, USER_INFO violation tracking, IPv6 hardening, and regression coverage for authority-confusion inputs. Re-review this statement for every future StackVista Jetty version; it deliberately does not cover arbitrary 9.4.x builds.",
-      "timestamp": "2026-07-27T09:35:50Z"
+      "impact_statement": "The vulnerable HttpURI authority parsing code patched upstream in Jetty 12.0.12 has been replaced by the backported hardened implementation in the exact 9.4.60.sts1, 9.4.63.sts1 and 9.4.63.sts3 artifacts named above. These builds include strict authority character and percent-encoding validation, USER_INFO violation tracking, IPv6 hardening, and regression coverage for authority-confusion inputs. Re-review this statement for every future StackVista Jetty version; it deliberately does not cover arbitrary 9.4.x builds.",
+      "timestamp": "2026-08-19T06:48:40Z"
     }
   ],
-  "timestamp": "2026-07-27T09:35:50Z"
+  "timestamp": "2026-08-19T06:48:40Z"
 }
