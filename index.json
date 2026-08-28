@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T14:55:28Z",
+  "updated_at": "2026-08-28T20:39:00Z",
   "packages": [
     {
       "id": "pkg:golang/github.com/containerd/containerd",
@@ -277,7 +277,7 @@
       "format": "openvex"
     },
     {
-      "id": "pkg:oci/sts-opentelemetry-collector?repository_url=registry.rancher.com%2Fstackstate%2Fsts-opentelemetry-collector",
+      "id": "pkg:oci/sts-opentelemetry-collector?repository_url=registry.rancher.com%2Fsuse-observability%2Fsts-opentelemetry-collector",
       "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
       "format": "openvex"
     },

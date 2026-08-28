@@ -18,7 +18,7 @@
           ]
         },
         {
-          "@id": "pkg:oci/sts-opentelemetry-collector?repository_url=registry.rancher.com/stackstate/sts-opentelemetry-collector",
+          "@id": "pkg:oci/sts-opentelemetry-collector?repository_url=registry.rancher.com/suse-observability/sts-opentelemetry-collector",
           "subcomponents": [
             {
               "@id": "pkg:golang/golang.org/x/crypto"
@@ -36,9 +36,9 @@
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_present",
-      "status_notes": "Reviewed both collector distributions built from sts-opentelemetry-collector main at 3335f8b287a3a7f60b40ab24d1ace6bc04bfe737. Scanners report the parent golang.org/x/crypto module, but none of the openpgp packages the advisory names are linked into either binary.",
-      "impact_statement": "GO-2026-5932 has no fixed version: it declares the deprecated golang.org/x/crypto/openpgp tree unsafe by design, so the affected range is introduced-at-0 with no fix event and no upgrade can clear it. The advisory's affected imports are golang.org/x/crypto/openpgp and its packet, armor, clearsign, errors, elgamal and s2k subpackages. The Go package paths recorded in /usr/bin/sts-opentelemetry-collector and /usr/bin/sts-opentelemetry-agent-collector cover 27 and 26 x/crypto packages respectively — bcrypt, blowfish, chacha20, chacha20poly1305, cryptobyte, hkdf, pbkdf2 (server only), pkcs12 and their internals — and none under openpgp. The module is an indirect requirement pulled in for those packages, so it cannot be dropped, and the reported finding is module-level attribution rather than presence of the vulnerable code.",
-      "action_statement": "sts-opentelemetry-collector CI runs scripts/check_no_openpgp.sh against both built binaries and blocks publication if an openpgp package enters either link graph, so this statement is withdrawn automatically rather than by review. Retire it when scanner matching for this advisory becomes package-aware, or if upstream ever publishes a fixed x/crypto release.",
+      "status_notes": "Reviewed both collector distributions on linux/amd64 and linux/arm64, built from sts-opentelemetry-collector main at 3335f8b287a3a7f60b40ab24d1ace6bc04bfe737. Scanners report the parent golang.org/x/crypto module, but none of the openpgp packages the advisory names are linked into any of the four published binaries.",
+      "impact_statement": "GO-2026-5932 has no fixed version: it declares the deprecated golang.org/x/crypto/openpgp tree unsafe by design, so the affected range is introduced-at-0 with no fix event and no upgrade can clear it. The advisory's affected imports are golang.org/x/crypto/openpgp and its packet, armor, clearsign, errors, elgamal and s2k subpackages. The Go package paths recorded in /usr/bin/sts-opentelemetry-collector and /usr/bin/sts-opentelemetry-agent-collector cover 27 and 26 x/crypto packages on linux/amd64 and 25 and 24 on linux/arm64 — bcrypt, blowfish, chacha20, chacha20poly1305, cryptobyte, hkdf, pbkdf2 (server only), pkcs12 and their internals, the per-architecture difference being assembly variants selected by GOARCH build tags — and none under openpgp in any of them. The module is an indirect requirement pulled in for those packages, so it cannot be dropped, and the reported finding is module-level attribution rather than presence of the vulnerable code.",
+      "action_statement": "sts-opentelemetry-collector CI runs scripts/check_no_openpgp.sh against every published binary and architecture and blocks publication when an openpgp package enters a link graph, so a release cannot ship while this statement's assumption is false. That check does not alter or withdraw this document: withdrawing it remains an explicit reviewed vexhub change. Retire it when scanner matching for this advisory becomes package-aware, or if upstream ever publishes a fixed x/crypto release.",
       "timestamp": "2026-08-28T14:55:00Z"
     }
   ],
