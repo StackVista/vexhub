@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-19T06:49:38Z",
+  "updated_at": "2026-08-28T14:55:28Z",
   "packages": [
     {
       "id": "pkg:golang/github.com/containerd/containerd",
@@ -264,6 +264,21 @@
     {
       "id": "pkg:oci/stackstate-server?repository_url=registry.rancher.com%2Fsuse-observability%2Fstackstate-server",
       "location": "pkg/oci/sts-toolbox/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/sts-opentelemetry-collector",
+      "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/sts-opentelemetry-collector?repository_url=quay.io%2Fstackstate%2Fsts-opentelemetry-collector",
+      "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/sts-opentelemetry-collector?repository_url=registry.rancher.com%2Fstackstate%2Fsts-opentelemetry-collector",
+      "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
       "format": "openvex"
     },
     {
