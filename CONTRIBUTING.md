@@ -125,6 +125,36 @@ package across our portfolio.
    generated PRs back to the internal PR or Jira ticket. Track the
    migration through merge in `rancher/vexhub` and verify scanner parity.
 
+### Two ways a merged statement silently stops applying
+
+Neither of these produces an error. The statement stays in the hub, the
+scan stays green-looking, and the finding simply comes back as if no
+statement existed. Both have happened to `pkg/oci/stackstate-k8s-agent`.
+
+- **A pinned `subcomponents` version stops matching.** Grype requires the
+  subcomponent PURL to match the artefact it detected, so a statement
+  pinned to `pkg:generic/python@3.13.13` no longer applies once the image
+  ships `3.13.15`. Every routine patch bump of an embedded runtime voids
+  the statements written against the old version. When bumping an
+  embedded component, extend the affected statements in the same change,
+  and keep the superseded versions listed so the statement still covers
+  images that are still in support.
+- **The scanner reports an ID the statement does not carry.** Grype
+  reports Go findings under their Go advisory ID (`GO-2026-5338`), not
+  the CVE. A statement named `CVE-2026-50195` that lists only the GHSA
+  alias will not match it. List every ID a scanner may report — the CVE,
+  the GHSA and the `GO-` ID — in `vulnerability.aliases`; an alias
+  matches as well as the name does.
+
+Extending a statement to a component version nobody reviewed widens the
+claim, so it needs the same review as a new statement rather than being
+treated as a mechanical edit.
+
+After authoring, confirm the statement actually applies before relying on
+it — `grype --vex <file> <image>` should report the finding under
+`ignoredMatches`, and a finding you did *not* write a statement for
+should stay active as a control.
+
 VEX statements typically do not expire. Annual review is recommended
 for `vulnerable_code_not_in_execute_path` claims to confirm the
 runtime configuration is unchanged — and especially for Lane 1
