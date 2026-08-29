@@ -1,0 +1,69 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/rpm/sles/openssl/openssl-3.2.3-sle15sp7",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-2024-9143"
+      },
+      "products": [
+        {
+          "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "SUSE lists SUSE Linux Enterprise 15 SP7 as already fixed for this CVE at openssl-3 >= 3.2.3-150700.3.20, an earlier release of the same 3.2.3 stream than the 3.2.3-150700.5.40.1 our images ship, so the shipped package is on the fixed side of SUSE's own boundary. The rpm changelog confirms it directly: openssl-CVE-2024-9143.patch was added 2024-10-17 for bsc#1231741. Grype instead resolves the fixed version to SUSE's 3.5.0-150700.5.45.2 rebase and compares versions, so it reports the fixed package as vulnerable. No compatible upgrade exists for images built on SLE-BCI 15-SP7: the public SLE_BCI channel offers openssl-3 3.2.3-150700.5.40.1 as its newest build and carries no 3.5.0 package at all, verified on registry.suse.com/bci/bci-base 15.7-5.23.9 and on the newest 15.7-5.23.19. SUSE published the 3.5.0 rebase only to the subscription Basesystem module, so BCI images inherit it when that channel refreshes.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The out-of-bounds memory access in low-level GF(2^m) parameter handling is patched in the exact packages named above. This statement is deliberately pinned to the exact package versions named above, which are the versions our images ship and the dev chart scan measured. Re-review it when SLE-BCI moves openssl, rather than widening it to arbitrary 3.2.3 builds.",
+      "timestamp": "2026-08-29T10:45:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2024-12797"
+      },
+      "products": [
+        {
+          "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "The flaw was introduced in the initial RPK implementation in OpenSSL 3.2, so the 3.2.3 stream is inside the affected range on version alone. SUSE backported the fix rather than rebasing: the rpm changelog of the shipped openssl-3 3.2.3-150700.5.40.1 carries openssl-CVE-2024-12797.patch, added 2025-02-12 for bsc#1236599. Grype resolves the fixed version to SUSE's 3.5.0-150700.5.45.2 rebase and compares versions, so it reports the already-patched package as vulnerable. No compatible upgrade exists for images built on SLE-BCI 15-SP7: the public SLE_BCI channel offers openssl-3 3.2.3-150700.5.40.1 as its newest build and carries no 3.5.0 package at all, verified on registry.suse.com/bci/bci-base 15.7-5.23.9 and on the newest 15.7-5.23.19. SUSE published the 3.5.0 rebase only to the subscription Basesystem module, so BCI images inherit it when that channel refreshes.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "RFC7250 raw-public-key handshakes with unauthenticated servers abort as expected in the exact packages named above, because the upstream fix is present as a backported patch. This statement is deliberately pinned to the exact package versions named above, which are the versions our images ship and the dev chart scan measured. Re-review it when SLE-BCI moves openssl, rather than widening it to arbitrary 3.2.3 builds.",
+      "timestamp": "2026-08-29T10:45:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2025-11187"
+      },
+      "products": [
+        {
+          "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "The missing PBKDF2 salt and key-length validation is in PBMAC1 handling during PKCS#12 MAC verification, and per SUSE's own analysis the vulnerable code exists only in OpenSSL 3.4, 3.5 and 3.6. Our images ship 3.2.3, which predates PBMAC1 support, so the vulnerable code is not present at any release of that stream. SUSE's fixed version is its 3.5.0-150700.5.45.2 rebase, and Grype flags the older, never-affected 3.2.3 stream purely on version comparison. No compatible upgrade exists for images built on SLE-BCI 15-SP7: the public SLE_BCI channel offers openssl-3 3.2.3-150700.5.40.1 as its newest build and carries no 3.5.0 package at all, verified on registry.suse.com/bci/bci-base 15.7-5.23.9 and on the newest 15.7-5.23.19. SUSE published the 3.5.0 rebase only to the subscription Basesystem module, so BCI images inherit it when that channel refreshes.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The stack-based buffer overflow, invalid pointer dereference and NULL pointer dereference reachable through PBMAC1 PKCS#12 parsing cannot occur, because that code path does not exist in 3.2.3. This statement is deliberately pinned to the exact package versions named above, which are the versions our images ship and the dev chart scan measured. Re-review it when SLE-BCI moves openssl, rather than widening it to arbitrary 3.2.3 builds.",
+      "timestamp": "2026-08-29T10:45:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2025-15468"
+      },
+      "products": [
+        {
+          "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1"
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "The NULL pointer dereference is in SSL_CIPHER_find() when a QUIC implementation is asked about an unknown cipher suite. SUSE lists OpenSSL 3.6, 3.5, 3.4 and 3.3 as affected and states that 3.0, 1.1.1 and 1.0.2 are not affected. Our images ship 3.2.3, which predates the QUIC support the flaw lives in, so the vulnerable code is not present at any release of that stream. SUSE's fixed version is its 3.5.0-150700.5.45.2 rebase, and Grype flags the older, never-affected 3.2.3 stream purely on version comparison. No compatible upgrade exists for images built on SLE-BCI 15-SP7: the public SLE_BCI channel offers openssl-3 3.2.3-150700.5.40.1 as its newest build and carries no 3.5.0 package at all, verified on registry.suse.com/bci/bci-base 15.7-5.23.9 and on the newest 15.7-5.23.19. SUSE published the 3.5.0 rebase only to the subscription Basesystem module, so BCI images inherit it when that channel refreshes.",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The denial of service requires the QUIC cipher-suite lookup path, which does not exist in 3.2.3. This statement is deliberately pinned to the exact package versions named above, which are the versions our images ship and the dev chart scan measured. Re-review it when SLE-BCI moves openssl, rather than widening it to arbitrary 3.2.3 builds.",
+      "timestamp": "2026-08-29T10:45:00Z"
+    }
+  ],
+  "timestamp": "2026-08-29T10:45:00Z"
+}
