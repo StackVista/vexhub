@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 3,
+  "version": 4,
   "statements": [
     {
       "vulnerability": {
@@ -1041,7 +1041,81 @@
       "impact_statement": "CVE-2007-3149 is a flaw in sudo when it is linked against MIT Kerberos 5: sudo does not verify that the invoking user can currently authenticate to Kerberos, so certain KRB5_ environment settings let a local user who already has sudo access escalate in a way sudo's model did not intend. The vulnerable code is sudo's, not the Kerberos library's. This image ships no sudo binary at all, so the affected code path cannot exist; the finding arises only because the scanner attributes the CVE to the detected krb5 version. NVD also records a dispute of the issue on the grounds that the attacker must already be able to log in and use sudo.",
       "status_notes": "Verified on quay.io/stackstate/stackstate-k8s-agent:ff38da51 (digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on 2026-08-29: a filesystem search finds no sudo binary and sudo is not on PATH. Grype reports the finding against pkg:generic/krb5@1.21.3.",
       "timestamp": "2026-08-29T10:30:54Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-40355"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-40355 is a NULL pointer dereference in parse_nego_message that upstream describes as reachable only if an application calls gss_accept_sec_context() on a system with a NegoEx mechanism registered in /etc/gss/mech. Both preconditions are unmet in this image. (1) No GSS mechanism configuration exists: /etc/gss does not exist, no mech or mech.d file is present anywhere on the filesystem, and GSS_MECH_CONFIG is not set, so no NegoEx mechanism can be registered and parse_nego_message/parse_message are unreachable. (2) No shipped application calls gss_accept_sec_context. The only references to that symbol in the image are the krb5 headers, libgssapi_krb5.so.2.2 and libgssrpc.so.4.2 (which define or implement it, and whose server programs kadmind and krb5kdc are not shipped), and pyspnego's spnego/_context.py, whose GSSAPI backend is not installed - gssapi, krb5, kerberos and winkerberos are all absent from site-packages and spnego._gss.HAS_GSSAPI is False. The agent uses Kerberos only as an initiator; it exposes no GSSAPI acceptor.",
+      "action_statement": "Re-review if any of these stops holding: an /etc/gss mech configuration is added to the image or mounted into the container, GSS_MECH_CONFIG is set, the gssapi, krb5 or kerberos Python bindings are added (which would enable pyspnego's GSSAPI backend), or shipped code begins acting as a GSSAPI acceptor. Retire this statement once the embedded krb5 is upgraded to 1.22.3 or later, which carries the upstream fix.",
+      "status_notes": "Verified on quay.io/stackstate/stackstate-k8s-agent:ff38da51 (digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on 2026-08-29. Grype reports the finding against pkg:generic/krb5@1.21.3 at /opt/stackstate-agent/embedded/lib/libkrb5.so.3.3. krb5 1.21.3 is inside the affected range (NVD: >= 1.18.0, before 1.22.3) and upstream has not released 1.22.3, so this is a reachability statement rather than a version argument.",
+      "timestamp": "2026-08-29T16:38:23Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-40356"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-40356 is an integer underflow and resultant out-of-bounds read in parse_message that upstream describes as reachable only if an application calls gss_accept_sec_context() on a system with a NegoEx mechanism registered in /etc/gss/mech. Both preconditions are unmet in this image. (1) No GSS mechanism configuration exists: /etc/gss does not exist, no mech or mech.d file is present anywhere on the filesystem, and GSS_MECH_CONFIG is not set, so no NegoEx mechanism can be registered and parse_nego_message/parse_message are unreachable. (2) No shipped application calls gss_accept_sec_context. The only references to that symbol in the image are the krb5 headers, libgssapi_krb5.so.2.2 and libgssrpc.so.4.2 (which define or implement it, and whose server programs kadmind and krb5kdc are not shipped), and pyspnego's spnego/_context.py, whose GSSAPI backend is not installed - gssapi, krb5, kerberos and winkerberos are all absent from site-packages and spnego._gss.HAS_GSSAPI is False. The agent uses Kerberos only as an initiator; it exposes no GSSAPI acceptor.",
+      "action_statement": "Re-review if any of these stops holding: an /etc/gss mech configuration is added to the image or mounted into the container, GSS_MECH_CONFIG is set, the gssapi, krb5 or kerberos Python bindings are added (which would enable pyspnego's GSSAPI backend), or shipped code begins acting as a GSSAPI acceptor. Retire this statement once the embedded krb5 is upgraded to 1.22.3 or later, which carries the upstream fix.",
+      "status_notes": "Verified on quay.io/stackstate/stackstate-k8s-agent:ff38da51 (digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on 2026-08-29. Grype reports the finding against pkg:generic/krb5@1.21.3 at /opt/stackstate-agent/embedded/lib/libkrb5.so.3.3. krb5 1.21.3 is inside the affected range (NVD: >= 1.18.0, before 1.22.3) and upstream has not released 1.22.3, so this is a reachability statement rather than a version argument.",
+      "timestamp": "2026-08-29T16:38:23Z"
     }
   ],
-  "timestamp": "2026-08-29T10:30:54Z"
+  "timestamp": "2026-08-29T16:38:23Z"
 }
