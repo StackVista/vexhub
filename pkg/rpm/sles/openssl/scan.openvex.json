@@ -1,0 +1,72 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/rpm/sles/openssl/openssl-3.2.3-sle15sp7",
+  "author": "SUSE Observability Security Team",
+  "version": 2,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2024-9143" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2024-12797" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2024-13176" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-27587" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2026-28390" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-11187" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-15468" },
+      "products": [ { "@id": "pkg:rpm/sles/openssl@3.2.3-150700.1.1" } ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "The openssl noarch RPM contains only /usr/share/doc/packages/openssl/README.SUSE and no executable or library code.",
+      "impact_statement": "The vulnerable OpenSSL implementation is not present in this documentation-only package.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    }
+  ],
+  "timestamp": "2026-08-30T06:12:30Z"
+}

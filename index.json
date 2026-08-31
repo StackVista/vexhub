@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T20:39:00Z",
+  "updated_at": "2026-08-31T13:21:18Z",
   "packages": [
     {
       "id": "pkg:golang/github.com/containerd/containerd",
@@ -324,6 +324,26 @@
     {
       "id": "pkg:oci/zookeeper?repository_url=registry.rancher.com%2Fsuse-observability%2Fzookeeper",
       "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/libopenssl-3-fips-provider",
+      "location": "pkg/rpm/sles/libopenssl-3-fips-provider/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/libopenssl3",
+      "location": "pkg/rpm/sles/libopenssl3/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/openssl",
+      "location": "pkg/rpm/sles/openssl/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/openssl-3",
+      "location": "pkg/rpm/sles/openssl-3/scan.openvex.json",
       "format": "openvex"
     }
   ]
