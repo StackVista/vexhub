@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 2,
+  "version": 3,
   "statements": [
     {
       "vulnerability": {
@@ -177,6 +177,9 @@
             },
             {
               "@id": "pkg:generic/python@3.13.14"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.15"
             }
           ]
         },
@@ -188,6 +191,9 @@
             },
             {
               "@id": "pkg:generic/python@3.13.14"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.15"
             }
           ]
         },
@@ -199,15 +205,19 @@
             },
             {
               "@id": "pkg:generic/python@3.13.14"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.15"
             }
           ]
         }
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "The image embeds a full CPython 3.13.13 interpreter via the omnibus build defined in omnibus/config/software/python3.rb:3 (default_version \"3.13.13\"), shipped with the unmodified standard library, so Lib/poplib.py \u2014 and the vulnerable POP3._putcmd sink \u2014 is present on disk inside /opt/stackstate-agent/embedded/. However, no first-party Go, Python, or shell code in stackstate-agent or stackstate-agent-integrations imports or otherwise references the poplib module: a recursive grep across both trees for `poplib`, `import poplib`, `from poplib`, and `POP3` returns zero matches. There is no agent check, integration, helper script, or entrypoint that opens a POP3 session, so POP3._putcmd is never reached at runtime. The Python interpreter shipped in the image is invoked exclusively by the agent's check loader (rtloader) to execute integrations under conf.d/checks.d, none of which exercise poplib, and CVSS PR:H confirms an attacker would additionally need authenticated control over POP3 command arguments \u2014 a surface this image does not expose (no POP3 client is constructed and no POP3 ports are listened on; the only EXPOSE directives in Dockerfiles/agent/Dockerfile:75 are 8125/udp DogStatsD and 8126/tcp trace-agent). The container also runs as USER 1000:1000 per Dockerfile:71, further reducing residual risk. The 2026-06-30 cve-reporter scan of quay.io/stackstate/stackstate-k8s-agent:5bc56023 reports the same finding against pkg:generic/python@3.13.14 at /opt/stackstate-agent/embedded/bin/python3.13; the source, packaging, and supported-runtime reachability analysis above remains valid for the current 3.13.14 build.",
-      "status_notes": "Revalidated against quay.io/stackstate/stackstate-k8s-agent:5bc56023 on 2026-06-30; that image reports the embedded interpreter as pkg:generic/python@3.13.14 at /opt/stackstate-agent/embedded/bin/python3.13, and the same SUSE Observability runtime reachability conclusion applies.",
-      "timestamp": "2026-06-30T15:44:21Z"
+      "impact_statement": "CVE-2025-15367 is in the POP3._putcmd sink of the CPython standard library module Lib/poplib.py. The image embeds a full CPython interpreter under /opt/stackstate-agent/embedded/, so poplib.py is present on disk, but no shipped first-party code reaches it. A recursive search of the whole shipped tree (/opt/stackstate-agent, including every stackstate_checks integration in site-packages, python-scripts/ and /etc/stackstate-agent) for the tokens poplib and POP3 returns exactly one hit, embedded/lib/python3.13/pydoc_data/module_docs.py, which is inert documentation data rather than executable code; there is no import of poplib, no POP3 object construction and no POP3 session anywhere in shipped code. /etc/stackstate-agent/checks.d is empty, so no additional check code is layered in at build time. The interpreter is invoked only by the agent's rtloader check loader to run the bundled integrations, none of which exercise poplib. The image exposes only 8125/udp (DogStatsD) and 8126/tcp (trace-agent) and no POP3 port, and CVSS PR:H means an attacker would additionally need authenticated control of POP3 command arguments - a surface this image does not present. The container runs as USER 1000:1000.",
+      "status_notes": "Re-verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521). The embedded interpreter now reports itself as 3.13.15 (sys.version probed in the running image) and Grype reports the finding against pkg:generic/python@3.13.15, so pkg:generic/python@3.13.15 is added to subcomponents; the previously listed 3.13.13 and 3.13.14 pins are retained for images still in support. The reachability premise - no shipped code referencing poplib or POP3 - was re-established on both architectures and is unchanged by the interpreter patch bump.",
+      "timestamp": "2026-09-06T11:12:13Z",
+      "action_statement": "This statement is pinned to the interpreter versions listed in subcomponents, so a future CPython patch bump makes it inert rather than silently over-broad; extend subcomponents only after re-confirming that no shipped code references poplib or POP3. Re-review if any agent check, integration or helper script begins opening a POP3 session."
     },
     {
       "vulnerability": {
@@ -799,6 +809,9 @@
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.15"
             }
           ]
         },
@@ -807,6 +820,9 @@
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.15"
             }
           ]
         },
@@ -815,16 +831,19 @@
           "subcomponents": [
             {
               "@id": "pkg:generic/python@3.13.13"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.15"
             }
           ]
         }
       ],
       "status": "not_affected",
-      "status_notes": "Reviewed quay.io/stackstate/stackstate-k8s-agent:3ce0270e and source commit 3ce0270ebe on 2026-07-20. The only shipped runtime tar extraction path excludes hardlinks before calling tarfile.extract().",
+      "status_notes": "Re-verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521). The embedded interpreter now reports 3.13.15, and Grype reports the finding against pkg:generic/python@3.13.15, so that PURL is added to subcomponents. The rationale was re-derived from the current image rather than carried over: the previously cited bpftool extraction path is no longer shipped, and the surviving argument is that the shipped tree contains no first-party tarfile.extract() call. Upstream still lists no fixed CPython release for this advisory.",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "CVE-2026-4360 affects tarfile.extract() handling of hardlinks. The sole shipped runtime extraction path iterates archive members, accepts only a member for which TarInfo.isfile() is true, renames the selected regular file to the fixed basename bpftool, and extracts only that member. Tar hardlinks have LNKTYPE and do not satisfy isfile(), so the vulnerable hardlink branch cannot be reached. Other repository extraction calls are build or test tooling and are not part of the agent runtime image.",
-      "action_statement": "Upgrade the embedded CPython runtime when a compatible 3.13.x patch release fixes CVE-2026-4360, then retire this statement. Re-review if shipped agent code adds another tar extraction path or permits hardlink members.",
-      "timestamp": "2026-07-20T07:19:56Z"
+      "impact_statement": "CVE-2026-4360 affects hardlink handling in tarfile.extract(). No shipped first-party code in this image calls it. A recursive search of the whole shipped tree for tarfile.extract / extractall, excluding the CPython standard library and the packaging tooling (pip, setuptools, wheel, pkg_resources, build, virtualenv), leaves exactly one tarfile.extract() call on both published architectures: site-packages/dateutil/zoneinfo/rebuild.py:24. That function is dateutil's maintenance utility for regenerating its own bundled zoneinfo tarball. It is unreachable here for three independent reasons: nothing in the shipped tree imports or calls dateutil.zoneinfo.rebuild (the rebuild( matches elsewhere are unrelated methods on dateutil.rrule's internal iterinfo class and on pydantic schema objects); it requires the caller to pass an explicit IANA tz tarball path plus a zonegroups member list, and no caller exists; and it shells out to the zic compiler via subprocess.check_call, which is absent from both architectures, so it would fail before extraction completed. The only other archive extraction in the shipped tree, pyproject_hooks/_in_process/_in_process.py:241, is zipfile.extractall and not tarfile. pynag's SshConfig parser touches tar but uses extractfile() and addfile(), which return file objects and never create filesystem links, so they do not enter the vulnerable hardlink branch; SshConfig is only re-exported by pynag.Parsers and is never instantiated by shipped code, and would additionally require an operator-configured paramiko SSH connection. The bpftool extraction path cited when this statement was first written is not present in this image at all - bpftool appears nowhere in either architecture's filesystem - so the conclusion now rests on there being no first-party tarfile.extract() call rather than on that path filtering hardlinks.",
+      "action_statement": "Upgrade the embedded CPython runtime when a compatible 3.13.x patch release fixes CVE-2026-4360, then retire this statement. This statement is pinned to the interpreter versions listed in subcomponents, so a future patch bump makes it inert rather than silently over-broad. Re-review if shipped agent code adds any tarfile.extract() or extractall() call, or if dateutil.zoneinfo.rebuild gains a caller and zic is added to the image.",
+      "timestamp": "2026-09-06T11:12:13Z"
     },
     {
       "vulnerability": {
@@ -969,7 +988,155 @@
       "impact_statement": "CVE-2026-53489 affects only github.com/containerd/containerd/v2 versions in the 2.1, 2.2, and 2.3 release lines. The agent binary links github.com/containerd/containerd v1.7.33, whose Go module path does not contain the /v2 major-version suffix. Go major versions two and later use distinct module paths, and the affected /v2 component is not linked into this binary. The Grype finding results from matching the /v2 advisory to the major-v1 module after module-path normalization.",
       "action_statement": "Retire this statement when scanner matching no longer maps github.com/containerd/containerd/v2 advisories to the major-v1 module. Re-review if the agent starts linking github.com/containerd/containerd/v2 in an affected release line.",
       "timestamp": "2026-07-21T11:16:37Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2007-5894"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "CVE-2007-5894 is an uninitialised length variable in the reply() function of ftpd.c in the gssftp FTP daemon distributed with MIT Kerberos 5. The vulnerable code is that daemon's, not the Kerberos libraries'. The omnibus build installs only Kerberos libraries into this image - libkrb5.so.3.3, libgssapi_krb5.so.2.2, libk5crypto.so.3.1, libgssrpc.so.4.2 and libkrb5support - and builds none of the krb5 applications. A filesystem search of both published architectures finds no ftpd, gssftp, ftp, telnetd, telnet, kadmind, krb5kdc or kpropd binary, so the affected program is not present in the image; the finding arises only because the scanner infers the krb5 version from a shared library. NVD additionally records a vendor dispute: the length variable is only uninitialised when auth_type is neither KERBEROS_V4 nor GSSAPI, a condition the vendor states cannot occur in unmodified source.",
+      "action_statement": "This statement is pinned to pkg:generic/krb5@1.21.3, so a krb5 bump makes it inert rather than silently carrying forward. Re-review if the image ever ships the gssftp applications or any other krb5 server program.",
+      "status_notes": "Verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521), which report an identical finding set. Grype 0.117.0 with vulnerability database built 2026-09-06T06:27:35Z reports the finding against pkg:generic/krb5@1.21.3, detected from /opt/stackstate-agent/embedded/lib/libkrb5.so.3.3, with no fix version offered.",
+      "timestamp": "2026-09-06T11:12:13Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2007-3149"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "impact_statement": "CVE-2007-3149 is a flaw in sudo when linked against MIT Kerberos 5: sudo fails to check whether the invoking user can currently authenticate to Kerberos, so certain KRB5_ environment settings let a local user who already has sudo access escalate in a way sudo's model did not intend. The vulnerable code is sudo's, not the Kerberos libraries'. This image ships no sudo binary on either published architecture and sudo is not on PATH, so the affected component is absent and the described attack has no code to execute; the finding arises only because the scanner attributes the CVE to the detected krb5 version. The container also runs as USER 1000:1000 with no setuid sudo present. NVD records a dispute of the issue on the grounds that the attacker must already be able to log in and use sudo.",
+      "action_statement": "This statement is pinned to pkg:generic/krb5@1.21.3, so a krb5 bump makes it inert rather than silently carrying forward. Re-review if sudo is ever added to the image.",
+      "status_notes": "Verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521), which report an identical finding set. Grype 0.117.0 with vulnerability database built 2026-09-06T06:27:35Z reports the finding against pkg:generic/krb5@1.21.3, detected from /opt/stackstate-agent/embedded/lib/libkrb5.so.3.3, with no fix version offered.",
+      "timestamp": "2026-09-06T11:12:13Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-40355"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-40355 is a NULL pointer dereference in parse_nego_message. NVD states it is triggerable only if an application calls gss_accept_sec_context() on a system with a NegoEx mechanism registered in /etc/gss/mech. Both preconditions the advisory names are unmet in this image, on both published architectures. (1) No GSS mechanism configuration exists: /etc/gss is absent, no mech or mech.d file exists anywhere in the filesystem, and no GSS_MECH_CONFIG or KRB5_ variable is set in the image configuration, so no NegoEx mechanism can be registered and the NegoEx message parsers are never entered. (2) Nothing shipped acts as a GSSAPI acceptor. Resolving the gss_accept_sec_context symbol across every shipped ELF object shows it defined only by embedded/lib/libgssapi_krb5.so.2.2 and left undefined (imported) only by embedded/lib/libgssrpc.so.4.2, the RPC library whose server programs kadmind and krb5kdc are not shipped; no executable or other library in the image imports it. The only source-level reference is pyspnego's spnego/_context.py, whose GSSAPI backend is not installed: gssapi, krb5, kerberos and winkerberos are all absent from site-packages and spnego._gss.HAS_GSSAPI evaluates to False in the running image. The agent uses Kerberos as an initiator only, and exposes just 8125/udp and 8126/tcp.",
+      "action_statement": "Re-review if any of these stops holding: an /etc/gss mech configuration is added to the image or mounted into the container, GSS_MECH_CONFIG is set, the gssapi, krb5 or kerberos Python bindings are added (which would enable pyspnego's GSSAPI backend), or shipped code begins acting as a GSSAPI acceptor. This statement is pinned to pkg:generic/krb5@1.21.3, so a krb5 bump makes it inert rather than silently carrying forward; retire it once the embedded krb5 reaches 1.22.3 or later, which carries the upstream fix.",
+      "status_notes": "Verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521), which report an identical finding set. Grype 0.117.0 with vulnerability database built 2026-09-06T06:27:35Z reports the finding against pkg:generic/krb5@1.21.3, detected from /opt/stackstate-agent/embedded/lib/libkrb5.so.3.3, with no fix version offered. krb5 1.21.3 is inside the affected range (NVD: affected from 1.18.0, fixed in 1.22.3). Upstream has not released 1.22.3 - the newest tag in krb5/krb5 is krb5-1.22.2-final, which is itself still inside the affected range - so no compatible upgrade exists and this is a reachability statement rather than a version argument. NVD scores this CVSS 3.1 5.9 (MEDIUM, AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H, availability-only); Grype reports it as High from a different severity source.",
+      "timestamp": "2026-09-06T11:12:13Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-40356"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/krb5@1.21.3"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-40356 is an integer underflow and resultant out-of-bounds read in parse_message. NVD states it is triggerable only if an application calls gss_accept_sec_context() on a system with a NegoEx mechanism registered in /etc/gss/mech. Both preconditions the advisory names are unmet in this image, on both published architectures. (1) No GSS mechanism configuration exists: /etc/gss is absent, no mech or mech.d file exists anywhere in the filesystem, and no GSS_MECH_CONFIG or KRB5_ variable is set in the image configuration, so no NegoEx mechanism can be registered and the NegoEx message parsers are never entered. (2) Nothing shipped acts as a GSSAPI acceptor. Resolving the gss_accept_sec_context symbol across every shipped ELF object shows it defined only by embedded/lib/libgssapi_krb5.so.2.2 and left undefined (imported) only by embedded/lib/libgssrpc.so.4.2, the RPC library whose server programs kadmind and krb5kdc are not shipped; no executable or other library in the image imports it. The only source-level reference is pyspnego's spnego/_context.py, whose GSSAPI backend is not installed: gssapi, krb5, kerberos and winkerberos are all absent from site-packages and spnego._gss.HAS_GSSAPI evaluates to False in the running image. The agent uses Kerberos as an initiator only, and exposes just 8125/udp and 8126/tcp.",
+      "action_statement": "Re-review if any of these stops holding: an /etc/gss mech configuration is added to the image or mounted into the container, GSS_MECH_CONFIG is set, the gssapi, krb5 or kerberos Python bindings are added (which would enable pyspnego's GSSAPI backend), or shipped code begins acting as a GSSAPI acceptor. This statement is pinned to pkg:generic/krb5@1.21.3, so a krb5 bump makes it inert rather than silently carrying forward; retire it once the embedded krb5 reaches 1.22.3 or later, which carries the upstream fix.",
+      "status_notes": "Verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521), which report an identical finding set. Grype 0.117.0 with vulnerability database built 2026-09-06T06:27:35Z reports the finding against pkg:generic/krb5@1.21.3, detected from /opt/stackstate-agent/embedded/lib/libkrb5.so.3.3, with no fix version offered. krb5 1.21.3 is inside the affected range (NVD: affected from 1.18.0, fixed in 1.22.3). Upstream has not released 1.22.3 - the newest tag in krb5/krb5 is krb5-1.22.2-final, which is itself still inside the affected range - so no compatible upgrade exists and this is a reachability statement rather than a version argument. NVD scores this CVSS 3.1 5.9 (MEDIUM, AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H, availability-only); Grype reports it as High from a different severity source.",
+      "timestamp": "2026-09-06T11:12:13Z"
     }
   ],
-  "timestamp": "2026-07-21T11:16:37Z"
+  "timestamp": "2026-09-06T11:12:13Z"
 }
