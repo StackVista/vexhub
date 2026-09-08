@@ -1,0 +1,83 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/rpm/sles/libopenssl-3-fips-provider/openssl-3.2.3-sle15sp7",
+  "author": "SUSE Observability Security Team",
+  "version": 2,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2024-9143" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "OpenSSL's FIPS CVE table classifies CVE-2024-9143 as outside the FIPS provider. This RPM contains only /usr/lib64/ossl-modules/fips.so.",
+      "impact_statement": "The vulnerable low-level GF(2^m) implementation is not part of the FIPS provider product.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2024-12797" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "OpenSSL's FIPS CVE table classifies CVE-2024-12797 as outside the FIPS provider. This RPM contains only /usr/lib64/ossl-modules/fips.so; the affected RPK handshake code is in libssl.",
+      "impact_statement": "The vulnerable RFC7250 handshake implementation is not part of the FIPS provider product.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2024-13176" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-CVE-2024-13176.patch, added for bsc#1236136. The package was built from that patched source.",
+      "impact_statement": "The ECDSA timing side channel is patched in libopenssl-3-fips-provider 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-27587" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-3-p384-minerva-ppc.patch for CVE-2025-27587. The package was built from that patched source.",
+      "impact_statement": "The P-384 Minerva side channel is patched in libopenssl-3-fips-provider 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2026-28390" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-CVE-2026-28390.patch, added for bsc#1261678. The package was built from that patched source.",
+      "impact_statement": "The CMS EnvelopedData NULL dereference is patched in libopenssl-3-fips-provider 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-11187" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "OpenSSL states that PKCS#12 processing is outside the FIPS module boundary. This RPM contains only /usr/lib64/ossl-modules/fips.so.",
+      "impact_statement": "The vulnerable PBMAC1 PKCS#12 implementation is not part of the FIPS provider product.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-15468" },
+      "products": [
+        { "@id": "pkg:rpm/sles/libopenssl-3-fips-provider@3.2.3-150700.5.40.1" }
+      ],
+      "status": "not_affected",
+      "justification": "component_not_present",
+      "status_notes": "OpenSSL states that QUIC processing is outside the FIPS module boundary. This RPM contains only /usr/lib64/ossl-modules/fips.so.",
+      "impact_statement": "The vulnerable QUIC cipher lookup is not part of the FIPS provider product.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    }
+  ],
+  "timestamp": "2026-08-30T06:12:30Z"
+}

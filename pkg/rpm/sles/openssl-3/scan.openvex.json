@@ -1,0 +1,70 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/rpm/sles/openssl-3/openssl-3.2.3-sle15sp7",
+  "author": "SUSE Observability Security Team",
+  "version": 2,
+  "statements": [
+    {
+      "vulnerability": { "name": "CVE-2024-9143" },
+      "products": [
+        { "@id": "pkg:rpm/sles/openssl-3@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-CVE-2024-9143.patch, added for bsc#1231741. Grype compares the 3.2.3 backport build with SUSE's later 3.5.0 rebase and therefore reports an already-fixed package.",
+      "impact_statement": "The vulnerable GF(2^m) parameter handling is patched in openssl-3 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2024-12797" },
+      "products": [
+        { "@id": "pkg:rpm/sles/openssl-3@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-CVE-2024-12797.patch, added for bsc#1236599. Grype compares the 3.2.3 backport build with SUSE's later 3.5.0 rebase and therefore reports an already-fixed package.",
+      "impact_statement": "The RFC7250 raw-public-key authentication failure is patched in openssl-3 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2024-13176" },
+      "products": [
+        { "@id": "pkg:rpm/sles/openssl-3@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-CVE-2024-13176.patch, added for bsc#1236136. Grype compares the 3.2.3 backport build with SUSE's later 3.5.0 rebase and therefore reports an already-fixed package.",
+      "impact_statement": "The ECDSA timing side channel is patched in openssl-3 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-27587" },
+      "products": [
+        { "@id": "pkg:rpm/sles/openssl-3@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-3-p384-minerva-ppc.patch for CVE-2025-27587. Grype compares the 3.2.3 backport build with SUSE's later 3.5.0 rebase and therefore reports an already-fixed package.",
+      "impact_statement": "The P-384 Minerva side channel is patched in openssl-3 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2026-28390" },
+      "products": [
+        { "@id": "pkg:rpm/sles/openssl-3@3.2.3-150700.5.40.1" }
+      ],
+      "status": "fixed",
+      "status_notes": "The exact installed RPM changelog records openssl-CVE-2026-28390.patch, added for bsc#1261678. Grype compares the 3.2.3 backport build with SUSE's later 3.5.0 rebase and therefore reports an already-fixed package.",
+      "impact_statement": "The CMS EnvelopedData NULL dereference is patched in openssl-3 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    },
+    {
+      "vulnerability": { "name": "CVE-2025-11187" },
+      "products": [
+        { "@id": "pkg:rpm/sles/openssl-3@3.2.3-150700.5.40.1" }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "status_notes": "OpenSSL and SUSE place the affected PBMAC1 PKCS#12 implementation in OpenSSL 3.4 and later. The exact package is built from OpenSSL 3.2.3 and does not contain that implementation.",
+      "impact_statement": "The vulnerable PBMAC1 parameter-validation path is absent from openssl-3 3.2.3-150700.5.40.1.",
+      "timestamp": "2026-08-30T06:12:30Z"
+    }
+  ],
+  "timestamp": "2026-08-30T06:12:30Z"
+}

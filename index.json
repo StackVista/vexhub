@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-19T14:58:25Z",
+  "updated_at": "2026-09-08T14:44:28Z",
   "packages": [
     {
       "id": "pkg:golang/github.com/containerd/containerd",
@@ -272,6 +272,21 @@
       "format": "openvex"
     },
     {
+      "id": "pkg:oci/sts-opentelemetry-collector",
+      "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/sts-opentelemetry-collector?repository_url=quay.io%2Fstackstate%2Fsts-opentelemetry-collector",
+      "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/sts-opentelemetry-collector?repository_url=registry.rancher.com%2Fsuse-observability%2Fsts-opentelemetry-collector",
+      "location": "pkg/oci/sts-opentelemetry-collector/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
       "id": "pkg:oci/tephra-server",
       "location": "pkg/oci/jackson-databind/scan.openvex.json",
       "format": "openvex"
@@ -314,6 +329,26 @@
     {
       "id": "pkg:oci/zookeeper?repository_url=registry.rancher.com%2Fsuse-observability%2Fzookeeper",
       "location": "pkg/oci/jackson-databind/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/libopenssl-3-fips-provider",
+      "location": "pkg/rpm/sles/libopenssl-3-fips-provider/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/libopenssl3",
+      "location": "pkg/rpm/sles/libopenssl3/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/openssl",
+      "location": "pkg/rpm/sles/openssl/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:rpm/sles/openssl-3",
+      "location": "pkg/rpm/sles/openssl-3/scan.openvex.json",
       "format": "openvex"
     }
   ]
