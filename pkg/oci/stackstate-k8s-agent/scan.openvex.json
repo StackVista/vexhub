@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 4,
+  "version": 5,
   "statements": [
     {
       "vulnerability": {
@@ -1165,7 +1165,118 @@
       "impact_statement": "The CPython build this image ships contains the vendor fix for CVE-2026-4360. The PSF CNA record lists CPython 3.13.0 up to but not including 3.13.15 as affected, so 3.13.15 is the 3.13-series release that carries the fix. The fix passes filter_function through to TarFile._extract_one() in Lib/tarfile.py so that the extraction filter is applied to hardlink members; it reached the 3.13 branch in python/cpython PR 152610, whose merge commit eee3ddf0ca10283cc7fea724aae9cd8665f8d15e is an ancestor of tag v3.13.15 (the other commits the advisory lists are the 3.10, 3.11, 3.12, 3.14 and 3.15 backports and are not on this branch). This was confirmed in the shipped artifact rather than inferred from version strings: inside the running container /opt/stackstate-agent/embedded/bin/python3 reports 3.13.15, inspect.getsource(tarfile.TarFile.extract) contains the patched call self._extract_one(tarinfo, path, set_attrs, numeric_owner, filter_function=filter_function), and TarFile._extract_one carries the filter_function=None parameter the fix introduced. The Grype finding is a version-matching false positive: its data source records no fixed version for this advisory, so every 3.13.x build matches an open-ended affected range.",
       "status_notes": "Verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521), which report an identical finding set. This statement supersedes, for pkg:generic/python@3.13.15 only, the reachability assertion that appeared at head 9124b60; that assertion was withdrawn because the vendor fix is present in the shipped interpreter, and a fix is preferred over a suppression. The reachability statement for CVE-2026-4360 is retained separately for pkg:generic/python@3.13.13, which the PSF CNA record does place inside the affected range. Retire this statement once the scanner's data records a fixed version for CVE-2026-4360, at which point the finding stops being reported on its own.",
       "timestamp": "2026-09-06T14:45:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-15806"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed 2026-09-08 against quay.io/stackstate/stackstate-k8s-agent:158e1098 (digest sha256:35e66696a1bdc0d470e0d11d7711e426548a09d31190bdd94cd1350b464dc839), the exact image the dev chart scan gates on. Embedded CPython confirmed 3.13.15 via sys.version_info. Searches cover the shipped tree under /opt/stackstate-agent and /etc/stackstate-agent, counting the standard-library module that *defines* each API separately from code that *calls* it. No shipped code registers any credential with a urllib.request password manager.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-15806 is a credential-scope defect in urllib.request.HTTPPasswordMgr and HTTPPasswordMgrWithDefaultRealm: a password registered for an https URI is also returned for the same host over plain http, so credentials can be sent unencrypted. Triggering it requires application code to register a credential through add_password() and then drive a request through the corresponding auth handler. The shipped tree contains zero .add_password() call sites outside the standard library's own definitions in urllib/request.py (lines 810 and 885) and a docstring example at line 53; the only other textual matches are inert MovedAttribute alias-table rows in six.py. With no credential ever registered, the affected find_user_password path returns nothing and the downgrade cannot occur. Agent HTTP traffic goes through requests/urllib3, which carry their own HTTPBasicAuth handling and do not use urllib.request password managers. The module is present in the embedded runtime but this code path is not executed by the supported product.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release that fixes CVE-2026-15806, then retire this statement. Re-review if shipped agent or integration code begins registering credentials via urllib.request add_password().",
+      "timestamp": "2026-09-08T14:57:15Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-19672"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed 2026-09-08 against quay.io/stackstate/stackstate-k8s-agent:158e1098 (digest sha256:35e66696a1bdc0d470e0d11d7711e426548a09d31190bdd94cd1350b464dc839), the exact image the dev chart scan gates on. Embedded CPython confirmed 3.13.15 via sys.version_info. Searches cover the shipped tree under /opt/stackstate-agent and /etc/stackstate-agent, counting the standard-library module that *defines* each API separately from code that *calls* it. The affected tarfile filters are never selected by agent runtime code; the only use is in build-frontend tooling that the runtime never invokes.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-19672 affects tarfile's 'tar' and 'data' extraction filters, which on POSIX can create empty directories outside the destination while extracting. Reaching it requires extraction to run with one of those two filters selected. On CPython 3.13 tarfile.TarFile.extraction_filter is None, verified in this image, so the default is fully_trusted_filter and the affected filters apply only when passed explicitly. The single explicit filter='data' in the shipped tree is site-packages/build/_compat/tarfile.py:27, part of the PEP 517 build frontend; grep for pyproject_hooks or 'from build import' across /etc/stackstate-agent and /opt/stackstate-agent/bin returns zero references, so no agent entrypoint invokes it, and /etc/stackstate-agent/checks.d contains no Python checks. The other extractall() call sites (build/_builder.py:376 and pyproject_hooks/_in_process/_in_process.py:241) operate on wheels via zipfile, not tarfile. The runtime python-dateutil path (zoneinfo/__init__.py) uses extractfile() only and writes nothing to the filesystem; the one genuine tarfile.extract() in dateutil/zoneinfo/rebuild.py passes no filter= and requires the zic binary, which is absent from this image. This is the same premise already reviewed for CVE-2026-4360, re-derived here against the current image.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release that fixes CVE-2026-19672, then retire this statement. Re-review if shipped agent or integration code begins extracting tar archives with filter='tar' or filter='data', or if tarfile.extraction_filter is set globally.",
+      "timestamp": "2026-09-08T14:57:15Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-15310"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "status_notes": "Reviewed 2026-09-08 against quay.io/stackstate/stackstate-k8s-agent:158e1098 (digest sha256:35e66696a1bdc0d470e0d11d7711e426548a09d31190bdd94cd1350b464dc839), the exact image the dev chart scan gates on. Embedded CPython confirmed 3.13.15 via sys.version_info. Searches cover the shipped tree under /opt/stackstate-agent and /etc/stackstate-agent, counting the standard-library module that *defines* each API separately from code that *calls* it. No shipped code decompresses an adversary-supplied zip, and the affected compressors are never selected. Weaker than the sibling statements: it rests on no attacker-controlled archive reaching the runtime rather than on the API being absent.",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-15310 lets a crafted zip drive memory exhaustion when a member declares a large uncompressed size and is stored with bzip2, LZMA or Zstandard, because the decompressor pre-allocates from the attacker-supplied header value. Reaching it requires shipped code to open an adversary-controlled zip whose members use one of those three compressors. The shipped tree contains zero references to ZIP_BZIP2, ZIP_LZMA or ZIP_ZSTANDARD and no compress_type= selection outside packaging tooling, so those codecs are never chosen. Of the four zipfile.ZipFile() call sites, three are build-frontend tooling (build/_builder.py:361, build/__main__.py:484, pyproject_hooks/_in_process/_in_process.py:239) that no agent entrypoint invokes and that read locally-built wheels rather than untrusted input. The only runtime-reachable site is requests/utils.py:280 inside extract_zipped_paths(); verified in this image that certifi.where() resolves to an existing file, so the function returns at its os.path.exists(path) guard before reaching ZipFile. The agent exposes no interface that accepts a zip archive from an untrusted source. The bz2 and lzma modules exist in the embedded runtime but no shipped code uses them to decompress adversary input.",
+      "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release that fixes CVE-2026-15310, then retire this statement. Re-review if shipped agent or integration code begins reading zip archives from an untrusted source, or if any shipped code starts selecting the bzip2, LZMA or Zstandard zip compressors.",
+      "timestamp": "2026-09-08T14:57:15Z"
     }
   ],
-  "timestamp": "2026-09-06T14:45:00Z"
+  "timestamp": "2026-09-08T14:57:15Z"
 }
