@@ -1,9 +1,14 @@
 {
-  "updated_at": "2026-09-06T14:44:41Z",
+  "updated_at": "2026-09-08T14:44:28Z",
   "packages": [
     {
       "id": "pkg:golang/github.com/containerd/containerd",
       "location": "pkg/golang/github.com/containerd/containerd/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:golang/github.com/docker/buildx",
+      "location": "pkg/oci/ai-collaboration-workbench/scan.openvex.json",
       "format": "openvex"
     },
     {
