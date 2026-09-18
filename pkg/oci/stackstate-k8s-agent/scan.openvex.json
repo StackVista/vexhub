@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 6,
+  "version": 7,
   "statements": [
     {
       "vulnerability": {
@@ -1312,7 +1312,62 @@
       "impact_statement": "CVE-2026-15310 lets a crafted zip drive memory exhaustion when a member declares a large uncompressed size and is stored with bzip2, LZMA or Zstandard, because the decompressor pre-allocates from the attacker-supplied header value. Reaching it requires shipped code to open an adversary-controlled zip whose members use one of those three compressors. The shipped tree contains zero references to ZIP_BZIP2, ZIP_LZMA or ZIP_ZSTANDARD and no compress_type= selection outside packaging tooling, so those codecs are never chosen. Of the four zipfile.ZipFile() call sites, three are build-frontend tooling (build/_builder.py:361, build/__main__.py:484, pyproject_hooks/_in_process/_in_process.py:239) that no agent entrypoint invokes and that read locally-built wheels rather than untrusted input. The only runtime-reachable site is requests/utils.py:280 inside extract_zipped_paths(); verified in this image that certifi.where() resolves to an existing file, so the function returns at its os.path.exists(path) guard before reaching ZipFile. The agent exposes no interface that accepts a zip archive from an untrusted source. The bz2 and lzma modules exist in the embedded runtime but no shipped code uses them to decompress adversary input.",
       "action_statement": "Upgrade the omnibus-embedded CPython (omnibus/config/software/python3.rb) to the first 3.13.x release that fixes CVE-2026-15310, then retire this statement. Re-review if shipped agent or integration code begins reading zip archives from an untrusted source, or if any shipped code starts selecting the bzip2, LZMA or Zstandard zip compressors.",
       "timestamp": "2026-09-08T14:57:15Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-87910"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_in_execute_path",
+      "impact_statement": "CVE-2026-87910 requires tarfile filesystem extraction of a link that falls back to extracting its target after link creation fails; a filter returns None to reject that target, but the vulnerable fallback ignores the rejection. Shipped runtime archive readers in dateutil.zoneinfo and pynag.Parsers.ssh_config use extractfile(), not filesystem extraction. docker.utils.build creates archives. The explicit filtered extraction in build._compat.tarfile belongs to the PEP 517 build frontend, which agent entrypoints do not invoke. dateutil.zoneinfo.rebuild is maintenance tooling requiring the absent zic executable and passes no extraction filter. TarFile.extraction_filter is None in the packaged interpreter. No supported agent execution path selects a rejecting tar extraction filter or invokes the vulnerable fallback. Reassess if the shipped runtime starts extracting tar archives or installs customer-provided integrations that do so.",
+      "timestamp": "2026-09-18T11:56:22.50664Z",
+      "status_notes": "Reviewed the shipped AMD64 and ARM64 filesystems of quay.io/stackstate/stackstate-k8s-agent:13451dce, multi-architecture index sha256:32a25b904072a24df3c6e1d3da22e8fb7fee9e34ad98b4a73756b091acba4060, on 2026-09-18. Embedded Python reports 3.13.15. This assessment covers the shipped agent and integrations, not arbitrary customer-mounted Python checks or use of the image as a general-purpose Python environment.",
+      "action_statement": "Upgrade embedded CPython when a supported release includes the fix, then retire this statement. Re-review on changes to tar extraction call paths or runtime integrations."
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-17084"
+      },
+      "products": [
+        {
+          "@id": "https://github.com/StackVista/stackstate-agent/commit/9f51215785bbf3c400065aeb3e3eb8c94e7f18ec",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        }
+      ],
+      "status": "fixed",
+      "status_notes": "Source-level fix in stackstate-agent PR529: deps/cpython/cpython.MODULE.bazel applies the unchanged upstream Python 3.13 StringPrep backport c28b121a4f0b975937c8b5a1b4934bb361d84296. The packaged interpreter remains version 3.13.15. The current published interpreter fails all four upstream IDNA case-folding regressions; replacing its stringprep module with this patched source passes them. This statement identifies only the exact source commit, not any published image or all Python 3.13.15 installations. Add OCI digest products only after verifying the post-merge published artifacts contain the patch and pass the packaged-runtime regressions on both architectures.",
+      "timestamp": "2026-09-18T12:00:14.519497Z"
     }
   ],
-  "timestamp": "2026-09-17T12:56:46Z"
+  "timestamp": "2026-09-18T12:00:14Z"
 }
