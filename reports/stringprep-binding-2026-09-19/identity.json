@@ -1,0 +1,48 @@
+{
+  "amd64": {
+    "architecture": "amd64",
+    "labels": {
+      "org.opencontainers.image.revision": "0812a1b82c80f28667fcdb646d2d0478384c9bee",
+      "org.opencontainers.image.source": "https://github.com/StackVista/stackstate-agent",
+      "published-by": "https://github.com/StackVista/stackstate-agent/actions/runs/35352622819"
+    }
+  },
+  "arm64": {
+    "architecture": "arm64",
+    "labels": {
+      "org.opencontainers.image.revision": "0812a1b82c80f28667fcdb646d2d0478384c9bee",
+      "org.opencontainers.image.source": "https://github.com/StackVista/stackstate-agent",
+      "published-by": "https://github.com/StackVista/stackstate-agent/actions/runs/35352622819"
+    }
+  },
+  "scan_metadata": {
+    "image": "quay.io/stackstate/stackstate-k8s-agent:0812a1b8",
+    "target_type": "image",
+    "scan_image": "quay.io/stackstate/stackstate-k8s-agent:0812a1b8",
+    "image_name": "quay.io/stackstate/stackstate-k8s-agent",
+    "image_tag": "0812a1b8",
+    "display_name": "stackstate-k8s-agent:0812a1b8 [9673b40c]",
+    "image_slug": "quay.io-stackstate-stackstate-k8s-agent-0812a1b8-9673b40c2081",
+    "charts": [
+      "stackstate-internal/suse-observability-agent"
+    ],
+    "distribution_types": [
+      "helm-chart"
+    ],
+    "platforms": [],
+    "release_targets": [],
+    "profile": "dev",
+    "severity": "CRITICAL,HIGH,MEDIUM,LOW",
+    "mode": "gate",
+    "with_grype": "true",
+    "source_repo": "https://github.com/StackVista/stackstate-agent",
+    "image_digest": "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6",
+    "decision": "failed",
+    "scan_outcome": "success",
+    "action_outcome": "failure"
+  },
+  "source_tree": "226e90bf2c7a699613b90b4cad94ae54ca601e6e",
+  "shared_tooling_commit": "27cf07bd5f5f3bafdb714e3b24d72d85480d2a60",
+  "candidate_agent_document_sha256": "ed48fbbde1217051cdb9509cd640b8f1a6b6044b748ab1c3356206126f4a020b",
+  "baseline_agent_document_sha256": "657e9759e7cf6ab00cd975cf7d82729c3f9fae8c2f68ce0d1140130b25f37845"
+}
