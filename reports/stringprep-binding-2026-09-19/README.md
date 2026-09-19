@@ -164,7 +164,7 @@ Each positive result contains the actual StringPrep match in `ignoredMatches`
 with `appliedIgnoreRules: [{"namespace":"vex","vex-status":"fixed"}]`.
 The negative control still contains the CVE in `matches`. Comparison by CVE,
 package and version proves all other dispositions equal the baseline, including
-both architecture results. The remaining active Go finding is left untouched.
+both architecture results. The remaining active Python finding, CVE-2026-82049, is left untouched.
 The canonical scan used an older DB; it is reused for provenance, while the
 candidate/baseline causal comparison above uses one identical current DB.
 
