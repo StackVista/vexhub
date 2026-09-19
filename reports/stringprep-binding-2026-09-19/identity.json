@@ -42,5 +42,7 @@
     "action_outcome": "failure"
   },
   "source_tree": "226e90bf2c7a699613b90b4cad94ae54ca601e6e",
-  "shared_tooling_commit": "27cf07bd5f5f3bafdb714e3b24d72d85480d2a60"
+  "shared_tooling_commit": "27cf07bd5f5f3bafdb714e3b24d72d85480d2a60",
+  "candidate_agent_document_sha256": "ed48fbbde1217051cdb9509cd640b8f1a6b6044b748ab1c3356206126f4a020b",
+  "baseline_agent_document_sha256": "657e9759e7cf6ab00cd975cf7d82729c3f9fae8c2f68ce0d1140130b25f37845"
 }

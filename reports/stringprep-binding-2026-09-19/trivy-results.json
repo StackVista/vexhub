@@ -1,0 +1,182 @@
+{
+  "amd64-trivy-controlled.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent@sha256:640f3b6f69949f1c958a7d89e788e5088ea9956293549182d32784a6f92f3892",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:640f3b6f69949f1c958a7d89e788e5088ea9956293549182d32784a6f92f3892"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": true,
+    "active": [],
+    "modified": [
+      {
+        "Type": "vulnerability",
+        "Status": "fixed",
+        "Statement": "",
+        "Source": "VEX Repository: stackvista (https://github.com/StackVista/vexhub)",
+        "Finding": {
+          "VulnerabilityID": "CVE-2026-17084",
+          "PkgID": "python@3.13.15",
+          "PkgName": "python",
+          "PkgIdentifier": {
+            "PURL": "pkg:generic/python@3.13.15",
+            "UID": "stringprep-control"
+          },
+          "InstalledVersion": "3.13.15"
+        }
+      }
+    ]
+  },
+  "arm64-trivy-controlled.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent@sha256:cf3e4f4cf2ba6e66c6c075f68a29e0497e2465fc8672715768e755c98ac6c543",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:cf3e4f4cf2ba6e66c6c075f68a29e0497e2465fc8672715768e755c98ac6c543"
+    ],
+    "architecture": "arm64",
+    "controlled_finding": true,
+    "active": [],
+    "modified": [
+      {
+        "Type": "vulnerability",
+        "Status": "fixed",
+        "Statement": "",
+        "Source": "VEX Repository: stackvista (https://github.com/StackVista/vexhub)",
+        "Finding": {
+          "VulnerabilityID": "CVE-2026-17084",
+          "PkgID": "python@3.13.15",
+          "PkgName": "python",
+          "PkgIdentifier": {
+            "PURL": "pkg:generic/python@3.13.15",
+            "UID": "stringprep-control"
+          },
+          "InstalledVersion": "3.13.15"
+        }
+      }
+    ]
+  },
+  "index-trivy-controlled.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "arm64",
+    "controlled_finding": true,
+    "active": [],
+    "modified": [
+      {
+        "Type": "vulnerability",
+        "Status": "fixed",
+        "Statement": "",
+        "Source": "VEX Repository: stackvista (https://github.com/StackVista/vexhub)",
+        "Finding": {
+          "VulnerabilityID": "CVE-2026-17084",
+          "PkgID": "python@3.13.15",
+          "PkgName": "python",
+          "PkgIdentifier": {
+            "PURL": "pkg:generic/python@3.13.15",
+            "UID": "stringprep-control"
+          },
+          "InstalledVersion": "3.13.15"
+        }
+      }
+    ]
+  },
+  "index-trivy.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": false,
+    "active": [],
+    "modified": []
+  },
+  "tag-trivy-controlled.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent:0812a1b8",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": true,
+    "active": [],
+    "modified": [
+      {
+        "Type": "vulnerability",
+        "Status": "fixed",
+        "Statement": "",
+        "Source": "VEX Repository: stackvista (https://github.com/StackVista/vexhub)",
+        "Finding": {
+          "VulnerabilityID": "CVE-2026-17084",
+          "PkgID": "python@3.13.15",
+          "PkgName": "python",
+          "PkgIdentifier": {
+            "PURL": "pkg:generic/python@3.13.15",
+            "UID": "stringprep-control"
+          },
+          "InstalledVersion": "3.13.15"
+        }
+      }
+    ]
+  },
+  "tag-trivy.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent:0812a1b8",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": false,
+    "active": [],
+    "modified": []
+  },
+  "unpatched-trivy-controlled.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent@sha256:32a25b904072a24df3c6e1d3da22e8fb7fee9e34ad98b4a73756b091acba4060",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:32a25b904072a24df3c6e1d3da22e8fb7fee9e34ad98b4a73756b091acba4060"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": true,
+    "active": [
+      {
+        "VulnerabilityID": "CVE-2026-17084",
+        "PkgID": "python@3.13.15",
+        "PkgName": "python",
+        "PkgIdentifier": {
+          "PURL": "pkg:generic/python@3.13.15",
+          "UID": "stringprep-control"
+        },
+        "InstalledVersion": "3.13.15"
+      }
+    ],
+    "modified": []
+  },
+  "unpatched-trivy.json": {
+    "artifact": "quay.io/stackstate/stackstate-k8s-agent@sha256:32a25b904072a24df3c6e1d3da22e8fb7fee9e34ad98b4a73756b091acba4060",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:32a25b904072a24df3c6e1d3da22e8fb7fee9e34ad98b4a73756b091acba4060"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": false,
+    "active": [],
+    "modified": []
+  },
+  "unverified-rancher-trivy-controlled.json": {
+    "artifact": "registry.rancher.com/suse-observability/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6",
+    "repo_digests": [
+      "registry.rancher.com/suse-observability/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "controlled_finding": true,
+    "active": [
+      {
+        "VulnerabilityID": "CVE-2026-17084",
+        "PkgID": "python@3.13.15",
+        "PkgName": "python",
+        "PkgIdentifier": {
+          "PURL": "pkg:generic/python@3.13.15",
+          "UID": "stringprep-control"
+        },
+        "InstalledVersion": "3.13.15"
+      }
+    ],
+    "modified": []
+  }
+}

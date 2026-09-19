@@ -1,0 +1,16 @@
+=== RUN   TestStringPrepBinding
+=== RUN   TestStringPrepBinding/tag
+=== RUN   TestStringPrepBinding/index
+=== RUN   TestStringPrepBinding/amd64
+=== RUN   TestStringPrepBinding/arm64
+=== RUN   TestStringPrepBinding/unpatched
+=== RUN   TestStringPrepBinding/unverified-rancher
+--- PASS: TestStringPrepBinding (0.22s)
+    --- PASS: TestStringPrepBinding/tag (0.04s)
+    --- PASS: TestStringPrepBinding/index (0.06s)
+    --- PASS: TestStringPrepBinding/amd64 (0.02s)
+    --- PASS: TestStringPrepBinding/arm64 (0.02s)
+    --- PASS: TestStringPrepBinding/unpatched (0.05s)
+    --- PASS: TestStringPrepBinding/unverified-rancher (0.02s)
+PASS
+ok  	github.com/aquasecurity/trivy/pkg/vex	0.316s

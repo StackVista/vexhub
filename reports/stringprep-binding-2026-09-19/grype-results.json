@@ -1,0 +1,940 @@
+{
+  "baseline": {
+    "input": "quay.io/stackstate/stackstate-k8s-agent:0812a1b8",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "scanner": "0.118.0",
+    "db": {
+      "schemaVersion": "v6.1.9",
+      "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-19T00:32:09Z_1789799270.tar.zst?checksum=sha256%3A28831b25b36ed42597025728d24d61a7e3a9bbf198ed38c1c7211678807e4455",
+      "built": "2026-09-19T06:27:50Z",
+      "path": "/home/omnigent/.cache/grype/db/6/vulnerability.db",
+      "valid": true
+    },
+    "raw_report_sha256": "d82bf4a9a2f31b469ee38ae501ddb8ca3936cafc3b01d76ad60a2193ef9600ca",
+    "active_count": 2,
+    "ignored_count": 12,
+    "active_findings": [
+      {
+        "id": "CVE-2026-17084",
+        "package": "pkg:generic/python@3.13.15"
+      },
+      {
+        "id": "CVE-2026-82049",
+        "package": "pkg:generic/python@3.13.15"
+      }
+    ],
+    "stringprep_active": [
+      {
+        "vulnerability": {
+          "id": "CVE-2026-17084",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-17084",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/python/cpython/commit/1e54caa096678a38afcabecabb1ff72400dd6bae",
+            "https://github.com/python/cpython/commit/5181304bcec9cfc3c15311741c9154cdff2e3fd7",
+            "https://github.com/python/cpython/commit/7e109d084d55e7eb25837a5f3b47ef9beee547bc",
+            "https://github.com/python/cpython/commit/c016c2535b74227fddf2cf7334dbfead6c930214",
+            "https://github.com/python/cpython/commit/c28b121a4f0b975937c8b5a1b4934bb361d84296",
+            "https://github.com/python/cpython/commit/c42790b34f634051750e5da340d17c7da19e4784",
+            "https://github.com/python/cpython/issues/155292",
+            "https://github.com/python/cpython/pull/155293",
+            "https://mail.python.org/archives/list/security-announce@python.org/thread/EUHHTC6EV7HCLSUHP25C5VHSV4V2MUZN/",
+            "http://www.openwall.com/lists/oss-security/2026/08/18/2"
+          ],
+          "description": "The \"stringprep\" module didn't process characters from RFC 3454 tables \nB.2 or B.3 correctly: the latest Unicode codepoint attributes were used \ninstead of the specified Unicode 3.2.0. This behavior would cause \nmismatches when processing domain names using IDNA 2003 (the \"idna\" \ncodec) and the in_table_b2() function of the \"stringprep\" module. This \nonly affects domain names containing characters that were not previously\n registered or had their Unicode attributes such as case-folding \nbehavior updated since Unicode 3.2.0.",
+          "cvss": [
+            {
+              "source": "cna@python.org",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-17084",
+              "epss": 0.00601,
+              "percentile": 0.47392,
+              "date": "2026-09-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-17084",
+              "cwe": "CWE-436",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "fix": {
+            "versions": [
+              "3.15.0rc2"
+            ],
+            "state": "fixed",
+            "available": [
+              {
+                "version": "3.15.0rc2",
+                "date": "2026-09-09",
+                "kind": "first-observed"
+              }
+            ]
+          },
+          "advisories": [],
+          "risk": 0.33055
+        },
+        "relatedVulnerabilities": [],
+        "matchDetails": [
+          {
+            "type": "cpe-match",
+            "matcher": "stock-matcher",
+            "searchedBy": {
+              "namespace": "nvd:cpe",
+              "cpes": [
+                "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+              ],
+              "package": {
+                "name": "python",
+                "version": "3.13.15"
+              }
+            },
+            "found": {
+              "vulnerabilityID": "CVE-2026-17084",
+              "versionConstraint": "< 3.15.0rc2 (unknown)",
+              "cpes": [
+                "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+              ]
+            },
+            "fix": {
+              "suggestedVersion": "3.15.0rc2"
+            }
+          }
+        ],
+        "artifact": {
+          "id": "a805fc69a003e6d1",
+          "name": "python",
+          "version": "3.13.15",
+          "type": "binary",
+          "locations": [
+            {
+              "path": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "annotations": {
+                "evidence": "primary"
+              }
+            },
+            {
+              "path": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "annotations": {
+                "evidence": "supporting"
+              }
+            }
+          ],
+          "language": "",
+          "licenses": [],
+          "cpes": [
+            "cpe:2.3:a:python_software_foundation:python:3.13.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+          ],
+          "purl": "pkg:generic/python@3.13.15",
+          "upstreams": []
+        }
+      }
+    ],
+    "stringprep_ignored": [],
+    "other_dispositions_equal_baseline": true
+  },
+  "tag": {
+    "input": "quay.io/stackstate/stackstate-k8s-agent:0812a1b8",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "scanner": "0.118.0",
+    "db": {
+      "schemaVersion": "v6.1.9",
+      "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-19T00:32:09Z_1789799270.tar.zst?checksum=sha256%3A28831b25b36ed42597025728d24d61a7e3a9bbf198ed38c1c7211678807e4455",
+      "built": "2026-09-19T06:27:50Z",
+      "path": "/home/omnigent/.cache/grype/db/6/vulnerability.db",
+      "valid": true
+    },
+    "raw_report_sha256": "c1afe18c6baadc407f25695897db62279e75a7ac3319a6cc9c0ba3806a4390a7",
+    "active_count": 1,
+    "ignored_count": 13,
+    "active_findings": [
+      {
+        "id": "CVE-2026-82049",
+        "package": "pkg:generic/python@3.13.15"
+      }
+    ],
+    "stringprep_active": [],
+    "stringprep_ignored": [
+      {
+        "vulnerability": {
+          "id": "CVE-2026-17084",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-17084",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/python/cpython/commit/1e54caa096678a38afcabecabb1ff72400dd6bae",
+            "https://github.com/python/cpython/commit/5181304bcec9cfc3c15311741c9154cdff2e3fd7",
+            "https://github.com/python/cpython/commit/7e109d084d55e7eb25837a5f3b47ef9beee547bc",
+            "https://github.com/python/cpython/commit/c016c2535b74227fddf2cf7334dbfead6c930214",
+            "https://github.com/python/cpython/commit/c28b121a4f0b975937c8b5a1b4934bb361d84296",
+            "https://github.com/python/cpython/commit/c42790b34f634051750e5da340d17c7da19e4784",
+            "https://github.com/python/cpython/issues/155292",
+            "https://github.com/python/cpython/pull/155293",
+            "https://mail.python.org/archives/list/security-announce@python.org/thread/EUHHTC6EV7HCLSUHP25C5VHSV4V2MUZN/",
+            "http://www.openwall.com/lists/oss-security/2026/08/18/2"
+          ],
+          "description": "The \"stringprep\" module didn't process characters from RFC 3454 tables \nB.2 or B.3 correctly: the latest Unicode codepoint attributes were used \ninstead of the specified Unicode 3.2.0. This behavior would cause \nmismatches when processing domain names using IDNA 2003 (the \"idna\" \ncodec) and the in_table_b2() function of the \"stringprep\" module. This \nonly affects domain names containing characters that were not previously\n registered or had their Unicode attributes such as case-folding \nbehavior updated since Unicode 3.2.0.",
+          "cvss": [
+            {
+              "source": "cna@python.org",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-17084",
+              "epss": 0.00601,
+              "percentile": 0.47392,
+              "date": "2026-09-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-17084",
+              "cwe": "CWE-436",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "fix": {
+            "versions": [
+              "3.15.0rc2"
+            ],
+            "state": "fixed",
+            "available": [
+              {
+                "version": "3.15.0rc2",
+                "date": "2026-09-09",
+                "kind": "first-observed"
+              }
+            ]
+          },
+          "advisories": [],
+          "risk": 0.33055
+        },
+        "relatedVulnerabilities": [],
+        "matchDetails": [
+          {
+            "type": "cpe-match",
+            "matcher": "stock-matcher",
+            "searchedBy": {
+              "namespace": "nvd:cpe",
+              "cpes": [
+                "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+              ],
+              "package": {
+                "name": "python",
+                "version": "3.13.15"
+              }
+            },
+            "found": {
+              "vulnerabilityID": "CVE-2026-17084",
+              "versionConstraint": "< 3.15.0rc2 (unknown)",
+              "cpes": [
+                "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+              ]
+            },
+            "fix": {
+              "suggestedVersion": "3.15.0rc2"
+            }
+          }
+        ],
+        "artifact": {
+          "id": "a805fc69a003e6d1",
+          "name": "python",
+          "version": "3.13.15",
+          "type": "binary",
+          "locations": [
+            {
+              "path": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "annotations": {
+                "evidence": "primary"
+              }
+            },
+            {
+              "path": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "annotations": {
+                "evidence": "supporting"
+              }
+            }
+          ],
+          "language": "",
+          "licenses": [],
+          "cpes": [
+            "cpe:2.3:a:python_software_foundation:python:3.13.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+          ],
+          "purl": "pkg:generic/python@3.13.15",
+          "upstreams": []
+        },
+        "appliedIgnoreRules": [
+          {
+            "namespace": "vex",
+            "vex-status": "fixed"
+          }
+        ]
+      }
+    ],
+    "other_dispositions_equal_baseline": true
+  },
+  "index": {
+    "input": "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6"
+    ],
+    "architecture": "amd64",
+    "scanner": "0.118.0",
+    "db": {
+      "schemaVersion": "v6.1.9",
+      "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-19T00:32:09Z_1789799270.tar.zst?checksum=sha256%3A28831b25b36ed42597025728d24d61a7e3a9bbf198ed38c1c7211678807e4455",
+      "built": "2026-09-19T06:27:50Z",
+      "path": "/home/omnigent/.cache/grype/db/6/vulnerability.db",
+      "valid": true
+    },
+    "raw_report_sha256": "934482516c2683c95dcea6d3203d93cf0a4ad9e7e8ee643fc260606ee94d1a29",
+    "active_count": 1,
+    "ignored_count": 13,
+    "active_findings": [
+      {
+        "id": "CVE-2026-82049",
+        "package": "pkg:generic/python@3.13.15"
+      }
+    ],
+    "stringprep_active": [],
+    "stringprep_ignored": [
+      {
+        "vulnerability": {
+          "id": "CVE-2026-17084",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-17084",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/python/cpython/commit/1e54caa096678a38afcabecabb1ff72400dd6bae",
+            "https://github.com/python/cpython/commit/5181304bcec9cfc3c15311741c9154cdff2e3fd7",
+            "https://github.com/python/cpython/commit/7e109d084d55e7eb25837a5f3b47ef9beee547bc",
+            "https://github.com/python/cpython/commit/c016c2535b74227fddf2cf7334dbfead6c930214",
+            "https://github.com/python/cpython/commit/c28b121a4f0b975937c8b5a1b4934bb361d84296",
+            "https://github.com/python/cpython/commit/c42790b34f634051750e5da340d17c7da19e4784",
+            "https://github.com/python/cpython/issues/155292",
+            "https://github.com/python/cpython/pull/155293",
+            "https://mail.python.org/archives/list/security-announce@python.org/thread/EUHHTC6EV7HCLSUHP25C5VHSV4V2MUZN/",
+            "http://www.openwall.com/lists/oss-security/2026/08/18/2"
+          ],
+          "description": "The \"stringprep\" module didn't process characters from RFC 3454 tables \nB.2 or B.3 correctly: the latest Unicode codepoint attributes were used \ninstead of the specified Unicode 3.2.0. This behavior would cause \nmismatches when processing domain names using IDNA 2003 (the \"idna\" \ncodec) and the in_table_b2() function of the \"stringprep\" module. This \nonly affects domain names containing characters that were not previously\n registered or had their Unicode attributes such as case-folding \nbehavior updated since Unicode 3.2.0.",
+          "cvss": [
+            {
+              "source": "cna@python.org",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-17084",
+              "epss": 0.00601,
+              "percentile": 0.47392,
+              "date": "2026-09-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-17084",
+              "cwe": "CWE-436",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "fix": {
+            "versions": [
+              "3.15.0rc2"
+            ],
+            "state": "fixed",
+            "available": [
+              {
+                "version": "3.15.0rc2",
+                "date": "2026-09-09",
+                "kind": "first-observed"
+              }
+            ]
+          },
+          "advisories": [],
+          "risk": 0.33055
+        },
+        "relatedVulnerabilities": [],
+        "matchDetails": [
+          {
+            "type": "cpe-match",
+            "matcher": "stock-matcher",
+            "searchedBy": {
+              "namespace": "nvd:cpe",
+              "cpes": [
+                "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+              ],
+              "package": {
+                "name": "python",
+                "version": "3.13.15"
+              }
+            },
+            "found": {
+              "vulnerabilityID": "CVE-2026-17084",
+              "versionConstraint": "< 3.15.0rc2 (unknown)",
+              "cpes": [
+                "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+              ]
+            },
+            "fix": {
+              "suggestedVersion": "3.15.0rc2"
+            }
+          }
+        ],
+        "artifact": {
+          "id": "a805fc69a003e6d1",
+          "name": "python",
+          "version": "3.13.15",
+          "type": "binary",
+          "locations": [
+            {
+              "path": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "annotations": {
+                "evidence": "primary"
+              }
+            },
+            {
+              "path": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "annotations": {
+                "evidence": "supporting"
+              }
+            }
+          ],
+          "language": "",
+          "licenses": [],
+          "cpes": [
+            "cpe:2.3:a:python_software_foundation:python:3.13.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+          ],
+          "purl": "pkg:generic/python@3.13.15",
+          "upstreams": []
+        },
+        "appliedIgnoreRules": [
+          {
+            "namespace": "vex",
+            "vex-status": "fixed"
+          }
+        ]
+      }
+    ],
+    "other_dispositions_equal_baseline": true
+  },
+  "amd64": {
+    "input": "quay.io/stackstate/stackstate-k8s-agent@sha256:640f3b6f69949f1c958a7d89e788e5088ea9956293549182d32784a6f92f3892",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:640f3b6f69949f1c958a7d89e788e5088ea9956293549182d32784a6f92f3892"
+    ],
+    "architecture": "amd64",
+    "scanner": "0.118.0",
+    "db": {
+      "schemaVersion": "v6.1.9",
+      "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-19T00:32:09Z_1789799270.tar.zst?checksum=sha256%3A28831b25b36ed42597025728d24d61a7e3a9bbf198ed38c1c7211678807e4455",
+      "built": "2026-09-19T06:27:50Z",
+      "path": "/home/omnigent/.cache/grype/db/6/vulnerability.db",
+      "valid": true
+    },
+    "raw_report_sha256": "5f2888e4ef99455666690ea11d3d278aabf7853b76035809ea09715a14ad7ed6",
+    "active_count": 1,
+    "ignored_count": 13,
+    "active_findings": [
+      {
+        "id": "CVE-2026-82049",
+        "package": "pkg:generic/python@3.13.15"
+      }
+    ],
+    "stringprep_active": [],
+    "stringprep_ignored": [
+      {
+        "vulnerability": {
+          "id": "CVE-2026-17084",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-17084",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/python/cpython/commit/1e54caa096678a38afcabecabb1ff72400dd6bae",
+            "https://github.com/python/cpython/commit/5181304bcec9cfc3c15311741c9154cdff2e3fd7",
+            "https://github.com/python/cpython/commit/7e109d084d55e7eb25837a5f3b47ef9beee547bc",
+            "https://github.com/python/cpython/commit/c016c2535b74227fddf2cf7334dbfead6c930214",
+            "https://github.com/python/cpython/commit/c28b121a4f0b975937c8b5a1b4934bb361d84296",
+            "https://github.com/python/cpython/commit/c42790b34f634051750e5da340d17c7da19e4784",
+            "https://github.com/python/cpython/issues/155292",
+            "https://github.com/python/cpython/pull/155293",
+            "https://mail.python.org/archives/list/security-announce@python.org/thread/EUHHTC6EV7HCLSUHP25C5VHSV4V2MUZN/",
+            "http://www.openwall.com/lists/oss-security/2026/08/18/2"
+          ],
+          "description": "The \"stringprep\" module didn't process characters from RFC 3454 tables \nB.2 or B.3 correctly: the latest Unicode codepoint attributes were used \ninstead of the specified Unicode 3.2.0. This behavior would cause \nmismatches when processing domain names using IDNA 2003 (the \"idna\" \ncodec) and the in_table_b2() function of the \"stringprep\" module. This \nonly affects domain names containing characters that were not previously\n registered or had their Unicode attributes such as case-folding \nbehavior updated since Unicode 3.2.0.",
+          "cvss": [
+            {
+              "source": "cna@python.org",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-17084",
+              "epss": 0.00601,
+              "percentile": 0.47392,
+              "date": "2026-09-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-17084",
+              "cwe": "CWE-436",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "fix": {
+            "versions": [
+              "3.15.0rc2"
+            ],
+            "state": "fixed",
+            "available": [
+              {
+                "version": "3.15.0rc2",
+                "date": "2026-09-09",
+                "kind": "first-observed"
+              }
+            ]
+          },
+          "advisories": [],
+          "risk": 0.33055
+        },
+        "relatedVulnerabilities": [],
+        "matchDetails": [
+          {
+            "type": "cpe-match",
+            "matcher": "stock-matcher",
+            "searchedBy": {
+              "namespace": "nvd:cpe",
+              "cpes": [
+                "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+              ],
+              "package": {
+                "name": "python",
+                "version": "3.13.15"
+              }
+            },
+            "found": {
+              "vulnerabilityID": "CVE-2026-17084",
+              "versionConstraint": "< 3.15.0rc2 (unknown)",
+              "cpes": [
+                "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+              ]
+            },
+            "fix": {
+              "suggestedVersion": "3.15.0rc2"
+            }
+          }
+        ],
+        "artifact": {
+          "id": "a805fc69a003e6d1",
+          "name": "python",
+          "version": "3.13.15",
+          "type": "binary",
+          "locations": [
+            {
+              "path": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "annotations": {
+                "evidence": "primary"
+              }
+            },
+            {
+              "path": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "layerID": "sha256:d85b34bb73e32eb8640c235c66de08678464a3e9bf37f3df7589b8150d946e1d",
+              "accessPath": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "annotations": {
+                "evidence": "supporting"
+              }
+            }
+          ],
+          "language": "",
+          "licenses": [],
+          "cpes": [
+            "cpe:2.3:a:python_software_foundation:python:3.13.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+          ],
+          "purl": "pkg:generic/python@3.13.15",
+          "upstreams": []
+        },
+        "appliedIgnoreRules": [
+          {
+            "namespace": "vex",
+            "vex-status": "fixed"
+          }
+        ]
+      }
+    ],
+    "other_dispositions_equal_baseline": true
+  },
+  "arm64": {
+    "input": "quay.io/stackstate/stackstate-k8s-agent@sha256:cf3e4f4cf2ba6e66c6c075f68a29e0497e2465fc8672715768e755c98ac6c543",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:cf3e4f4cf2ba6e66c6c075f68a29e0497e2465fc8672715768e755c98ac6c543"
+    ],
+    "architecture": "arm64",
+    "scanner": "0.118.0",
+    "db": {
+      "schemaVersion": "v6.1.9",
+      "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-19T00:32:09Z_1789799270.tar.zst?checksum=sha256%3A28831b25b36ed42597025728d24d61a7e3a9bbf198ed38c1c7211678807e4455",
+      "built": "2026-09-19T06:27:50Z",
+      "path": "/home/omnigent/.cache/grype/db/6/vulnerability.db",
+      "valid": true
+    },
+    "raw_report_sha256": "a2abd2942fad4aeea8be5091a12c33134c51ae1beec0e645934403c5d190fc71",
+    "active_count": 1,
+    "ignored_count": 13,
+    "active_findings": [
+      {
+        "id": "CVE-2026-82049",
+        "package": "pkg:generic/python@3.13.15"
+      }
+    ],
+    "stringprep_active": [],
+    "stringprep_ignored": [
+      {
+        "vulnerability": {
+          "id": "CVE-2026-17084",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-17084",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/python/cpython/commit/1e54caa096678a38afcabecabb1ff72400dd6bae",
+            "https://github.com/python/cpython/commit/5181304bcec9cfc3c15311741c9154cdff2e3fd7",
+            "https://github.com/python/cpython/commit/7e109d084d55e7eb25837a5f3b47ef9beee547bc",
+            "https://github.com/python/cpython/commit/c016c2535b74227fddf2cf7334dbfead6c930214",
+            "https://github.com/python/cpython/commit/c28b121a4f0b975937c8b5a1b4934bb361d84296",
+            "https://github.com/python/cpython/commit/c42790b34f634051750e5da340d17c7da19e4784",
+            "https://github.com/python/cpython/issues/155292",
+            "https://github.com/python/cpython/pull/155293",
+            "https://mail.python.org/archives/list/security-announce@python.org/thread/EUHHTC6EV7HCLSUHP25C5VHSV4V2MUZN/",
+            "http://www.openwall.com/lists/oss-security/2026/08/18/2"
+          ],
+          "description": "The \"stringprep\" module didn't process characters from RFC 3454 tables \nB.2 or B.3 correctly: the latest Unicode codepoint attributes were used \ninstead of the specified Unicode 3.2.0. This behavior would cause \nmismatches when processing domain names using IDNA 2003 (the \"idna\" \ncodec) and the in_table_b2() function of the \"stringprep\" module. This \nonly affects domain names containing characters that were not previously\n registered or had their Unicode attributes such as case-folding \nbehavior updated since Unicode 3.2.0.",
+          "cvss": [
+            {
+              "source": "cna@python.org",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-17084",
+              "epss": 0.00601,
+              "percentile": 0.47392,
+              "date": "2026-09-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-17084",
+              "cwe": "CWE-436",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "fix": {
+            "versions": [
+              "3.15.0rc2"
+            ],
+            "state": "fixed",
+            "available": [
+              {
+                "version": "3.15.0rc2",
+                "date": "2026-09-09",
+                "kind": "first-observed"
+              }
+            ]
+          },
+          "advisories": [],
+          "risk": 0.33055
+        },
+        "relatedVulnerabilities": [],
+        "matchDetails": [
+          {
+            "type": "cpe-match",
+            "matcher": "stock-matcher",
+            "searchedBy": {
+              "namespace": "nvd:cpe",
+              "cpes": [
+                "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+              ],
+              "package": {
+                "name": "python",
+                "version": "3.13.15"
+              }
+            },
+            "found": {
+              "vulnerabilityID": "CVE-2026-17084",
+              "versionConstraint": "< 3.15.0rc2 (unknown)",
+              "cpes": [
+                "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+              ]
+            },
+            "fix": {
+              "suggestedVersion": "3.15.0rc2"
+            }
+          }
+        ],
+        "artifact": {
+          "id": "672e4919ee57bf9b",
+          "name": "python",
+          "version": "3.13.15",
+          "type": "binary",
+          "locations": [
+            {
+              "path": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "layerID": "sha256:7702f01379591fa31b094b98529cf55523086132269f37960eb0fec9644abdab",
+              "accessPath": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "annotations": {
+                "evidence": "primary"
+              }
+            },
+            {
+              "path": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "layerID": "sha256:7702f01379591fa31b094b98529cf55523086132269f37960eb0fec9644abdab",
+              "accessPath": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "annotations": {
+                "evidence": "supporting"
+              }
+            }
+          ],
+          "language": "",
+          "licenses": [],
+          "cpes": [
+            "cpe:2.3:a:python_software_foundation:python:3.13.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+          ],
+          "purl": "pkg:generic/python@3.13.15",
+          "upstreams": []
+        },
+        "appliedIgnoreRules": [
+          {
+            "namespace": "vex",
+            "vex-status": "fixed"
+          }
+        ]
+      }
+    ],
+    "other_dispositions_equal_baseline": true
+  },
+  "unpatched": {
+    "input": "quay.io/stackstate/stackstate-k8s-agent:13451dce",
+    "repo_digests": [
+      "quay.io/stackstate/stackstate-k8s-agent@sha256:32a25b904072a24df3c6e1d3da22e8fb7fee9e34ad98b4a73756b091acba4060"
+    ],
+    "architecture": "amd64",
+    "scanner": "0.118.0",
+    "db": {
+      "schemaVersion": "v6.1.9",
+      "from": "https://grype.anchore.io/databases/v6/vulnerability-db_v6.1.9_2026-09-19T00:32:09Z_1789799270.tar.zst?checksum=sha256%3A28831b25b36ed42597025728d24d61a7e3a9bbf198ed38c1c7211678807e4455",
+      "built": "2026-09-19T06:27:50Z",
+      "path": "/home/omnigent/.cache/grype/db/6/vulnerability.db",
+      "valid": true
+    },
+    "raw_report_sha256": "5b20724f3270dc38ca8a29da0a57a21cfb500ab9f0a79cea5bb7404fd917801e",
+    "active_count": 2,
+    "ignored_count": 12,
+    "active_findings": [
+      {
+        "id": "CVE-2026-17084",
+        "package": "pkg:generic/python@3.13.15"
+      },
+      {
+        "id": "CVE-2026-82049",
+        "package": "pkg:generic/python@3.13.15"
+      }
+    ],
+    "stringprep_active": [
+      {
+        "vulnerability": {
+          "id": "CVE-2026-17084",
+          "dataSource": "https://nvd.nist.gov/vuln/detail/CVE-2026-17084",
+          "namespace": "nvd:cpe",
+          "severity": "Medium",
+          "urls": [
+            "https://github.com/python/cpython/commit/1e54caa096678a38afcabecabb1ff72400dd6bae",
+            "https://github.com/python/cpython/commit/5181304bcec9cfc3c15311741c9154cdff2e3fd7",
+            "https://github.com/python/cpython/commit/7e109d084d55e7eb25837a5f3b47ef9beee547bc",
+            "https://github.com/python/cpython/commit/c016c2535b74227fddf2cf7334dbfead6c930214",
+            "https://github.com/python/cpython/commit/c28b121a4f0b975937c8b5a1b4934bb361d84296",
+            "https://github.com/python/cpython/commit/c42790b34f634051750e5da340d17c7da19e4784",
+            "https://github.com/python/cpython/issues/155292",
+            "https://github.com/python/cpython/pull/155293",
+            "https://mail.python.org/archives/list/security-announce@python.org/thread/EUHHTC6EV7HCLSUHP25C5VHSV4V2MUZN/",
+            "http://www.openwall.com/lists/oss-security/2026/08/18/2"
+          ],
+          "description": "The \"stringprep\" module didn't process characters from RFC 3454 tables \nB.2 or B.3 correctly: the latest Unicode codepoint attributes were used \ninstead of the specified Unicode 3.2.0. This behavior would cause \nmismatches when processing domain names using IDNA 2003 (the \"idna\" \ncodec) and the in_table_b2() function of the \"stringprep\" module. This \nonly affects domain names containing characters that were not previously\n registered or had their Unicode attributes such as case-folding \nbehavior updated since Unicode 3.2.0.",
+          "cvss": [
+            {
+              "source": "cna@python.org",
+              "type": "Secondary",
+              "version": "4.0",
+              "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+              "metrics": {
+                "baseScore": 6
+              },
+              "vendorMetadata": {}
+            }
+          ],
+          "epss": [
+            {
+              "cve": "CVE-2026-17084",
+              "epss": 0.00601,
+              "percentile": 0.47392,
+              "date": "2026-09-18"
+            }
+          ],
+          "cwes": [
+            {
+              "cve": "CVE-2026-17084",
+              "cwe": "CWE-436",
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "fix": {
+            "versions": [
+              "3.15.0rc2"
+            ],
+            "state": "fixed",
+            "available": [
+              {
+                "version": "3.15.0rc2",
+                "date": "2026-09-09",
+                "kind": "first-observed"
+              }
+            ]
+          },
+          "advisories": [],
+          "risk": 0.33055
+        },
+        "relatedVulnerabilities": [],
+        "matchDetails": [
+          {
+            "type": "cpe-match",
+            "matcher": "stock-matcher",
+            "searchedBy": {
+              "namespace": "nvd:cpe",
+              "cpes": [
+                "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+              ],
+              "package": {
+                "name": "python",
+                "version": "3.13.15"
+              }
+            },
+            "found": {
+              "vulnerabilityID": "CVE-2026-17084",
+              "versionConstraint": "< 3.15.0rc2 (unknown)",
+              "cpes": [
+                "cpe:2.3:a:python:python:*:*:*:*:*:*:*:*"
+              ]
+            },
+            "fix": {
+              "suggestedVersion": "3.15.0rc2"
+            }
+          }
+        ],
+        "artifact": {
+          "id": "5c776167a9926833",
+          "name": "python",
+          "version": "3.13.15",
+          "type": "binary",
+          "locations": [
+            {
+              "path": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "layerID": "sha256:841aad84c03104098b6341df5264a11d41a8b9a062cc3621a5b81548da518ee9",
+              "accessPath": "/opt/stackstate-agent/embedded/bin/python3.13",
+              "annotations": {
+                "evidence": "primary"
+              }
+            },
+            {
+              "path": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "layerID": "sha256:841aad84c03104098b6341df5264a11d41a8b9a062cc3621a5b81548da518ee9",
+              "accessPath": "/opt/stackstate-agent/embedded/lib/libpython3.13.so.1.0",
+              "annotations": {
+                "evidence": "supporting"
+              }
+            }
+          ],
+          "language": "",
+          "licenses": [],
+          "cpes": [
+            "cpe:2.3:a:python_software_foundation:python:3.13.15:*:*:*:*:*:*:*",
+            "cpe:2.3:a:python:python:3.13.15:*:*:*:*:*:*:*"
+          ],
+          "purl": "pkg:generic/python@3.13.15",
+          "upstreams": []
+        }
+      }
+    ],
+    "stringprep_ignored": [],
+    "other_dispositions_equal_baseline": true
+  }
+}
