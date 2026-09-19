@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-18T12:00:14Z",
+  "updated_at": "2026-09-19T09:14:31Z",
   "packages": [
     {
       "id": "pkg:golang/github.com/containerd/containerd",
@@ -183,6 +183,11 @@
     },
     {
       "id": "pkg:oci/stackstate-k8s-agent",
+      "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
+      "format": "openvex"
+    },
+    {
+      "id": "pkg:oci/stackstate-k8s-agent?repository_url=quay.io%2Fstackstate",
       "location": "pkg/oci/stackstate-k8s-agent/scan.openvex.json",
       "format": "openvex"
     },

@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 7,
+  "version": 8,
   "statements": [
     {
       "vulnerability": {
@@ -1362,12 +1362,60 @@
               "@id": "pkg:generic/python@3.13.15"
             }
           ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:eda48188fa4311f85fe2f52a8badc69f5bec26a9ad292b15b9681690e33503e6?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:640f3b6f69949f1c958a7d89e788e5088ea9956293549182d32784a6f92f3892?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:640f3b6f69949f1c958a7d89e788e5088ea9956293549182d32784a6f92f3892?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:cf3e4f4cf2ba6e66c6c075f68a29e0497e2465fc8672715768e755c98ac6c543?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:cf3e4f4cf2ba6e66c6c075f68a29e0497e2465fc8672715768e755c98ac6c543?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
         }
       ],
       "status": "fixed",
-      "status_notes": "Source-level fix in stackstate-agent PR529: deps/cpython/cpython.MODULE.bazel applies the unchanged upstream Python 3.13 StringPrep backport c28b121a4f0b975937c8b5a1b4934bb361d84296. The packaged interpreter remains version 3.13.15. The current published interpreter fails all four upstream IDNA case-folding regressions; replacing its stringprep module with this patched source passes them. This statement identifies only the exact source commit, not any published image or all Python 3.13.15 installations. Add OCI digest products only after verifying the post-merge published artifacts contain the patch and pass the packaged-runtime regressions on both architectures.",
-      "timestamp": "2026-09-18T12:00:14.519497Z"
+      "status_notes": "The unchanged upstream Python 3.13 StringPrep backport c28b121a4f0b975937c8b5a1b4934bb361d84296 is applied by deps/cpython/cpython.MODULE.bazel in stackstate-agent PR529. Reviewed source 9f51215785bbf3c400065aeb3e3eb8c94e7f18ec and merged source 0812a1b82c80f28667fcdb646d2d0478384c9bee have identical trees. Publication https://github.com/StackVista/stackstate-agent/actions/runs/35352622819 and scan https://github.com/StackVista/cve-reporter/actions/runs/35425413598 identify quay.io/stackstate/stackstate-k8s-agent:0812a1b8 at the listed index and AMD64/ARM64 manifest digests. Independent packaged-runtime review verified the patched stringprep.py SHA256 fc42fedb2a828a34a70cb0ff1b9a17039ca148b4f561fa7db98ce49bb2141c7a and four upstream IDNA regressions plus ASCII control on both architectures: https://omnigent.tooling.stackstate.io/c/4e86b69500ba5480b97e48f0b49385c8. Embedded Python still reports 3.13.15. The fixed assertion covers only the exact reviewed source and these verified Quay digests, not all Python 3.13.15 installations, mutable tags or unverified Rancher images. The two repository_url forms accommodate Grype and Trivy image identifiers.",
+      "timestamp": "2026-09-19T09:14:30Z"
     }
   ],
-  "timestamp": "2026-09-18T12:00:14Z"
+  "timestamp": "2026-09-19T09:14:30Z"
 }
