@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-process-agent/CVE-2026-50195",
   "author": "SUSE Observability Security Team",
-  "version": 1,
+  "version": 2,
   "statements": [
     {
       "vulnerability": {
@@ -157,7 +157,7 @@
           "@id": "pkg:oci/stackstate-k8s-process-agent?repository_url=quay.io/stackstate/stackstate-k8s-process-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/golang.org/x/crypto@v0.53.0"
+              "@id": "pkg:golang/golang.org/x/crypto"
             }
           ]
         },
@@ -165,7 +165,7 @@
           "@id": "pkg:oci/stackstate-k8s-process-agent?repository_url=registry.rancher.com/suse-observability/stackstate-k8s-process-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/golang.org/x/crypto@v0.53.0"
+              "@id": "pkg:golang/golang.org/x/crypto"
             }
           ]
         },
@@ -173,7 +173,7 @@
           "@id": "pkg:oci/stackstate-k8s-process-agent?repository_url=registry.suse.com/suse-observability/stackstate-k8s-process-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/golang.org/x/crypto@v0.53.0"
+              "@id": "pkg:golang/golang.org/x/crypto"
             }
           ]
         },
@@ -181,18 +181,18 @@
           "@id": "pkg:oci/stackstate-k8s-process-agent",
           "subcomponents": [
             {
-              "@id": "pkg:golang/golang.org/x/crypto@v0.53.0"
+              "@id": "pkg:golang/golang.org/x/crypto"
             }
           ]
         }
       ],
       "status": "not_affected",
-      "status_notes": "Reviewed the process-agent Linux command dependency graph at commit 464045ac95f7f081804c10b7d5b9ea42437dc4b0. The scanner reports the parent x/crypto module, but the affected openpgp and openpgp/clearsign packages are not linked into the binary.",
+      "status_notes": "Reviewed the process-agent Linux command dependency graph at commit 464045ac95f7f081804c10b7d5b9ea42437dc4b0. The scanner reports the parent x/crypto module, but the affected openpgp and openpgp/clearsign packages are not linked into the binary. Versionless subcomponent correction: https://github.com/StackVista/cve-reporter/issues/27 records the September 8/9 controlled tests showing that the stale v0.53.0 pin, not product identity, prevents matching v0.56.0. Product scope and the Security Team applicability assessment are retained. scripts/verify-openpgp-absent.sh, wired into release-tag CI, fails closed if an affected OpenPGP package enters the command graph; retain that guard. PR290 delivery permission and its residual UNKNOWN GO-2026-5932 / expired September 10 exception are separate human decisions. This change does not renew or remove an exception.",
       "justification": "vulnerable_code_not_present",
       "impact_statement": "GO-2026-5932 applies to the deprecated golang.org/x/crypto/openpgp implementation. Process-agent links other x/crypto packages, which causes module-level scanners to report the parent module, but the built command dependency graph contains neither openpgp nor its Rekor/Trivy dependency path.",
       "action_statement": "Re-review this statement if an affected OpenPGP package enters the process-agent command dependency graph. Retire it when scanner matching becomes package-aware or upstream publishes a maintained replacement.",
-      "timestamp": "2026-07-28T07:31:23Z"
+      "timestamp": "2026-09-20T05:30:51Z"
     }
   ],
-  "timestamp": "2026-07-28T07:31:23Z"
+  "timestamp": "2026-09-20T05:30:51Z"
 }

@@ -1,0 +1,62 @@
+{
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://github.com/StackVista/vexhub/pkg/generic/stackstate-backup-cli-release-archive/GO-2026-5932",
+  "author": "SUSE Observability Security Team",
+  "version": 1,
+  "timestamp": "2026-09-20T05:30:51Z",
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "GO-2026-5932"
+      },
+      "products": [
+        {
+          "@id": "pkg:generic/stackstate-backup-cli-release-archive@sha256:beb4d8d41775e3e58337cd551bef29781cc0afa5c5eaf9c3fa3ff4be2cafcf88",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/golang.org/x/crypto@v0.56.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:generic/stackstate-backup-cli-release-archive@sha256:e3748b3cfc720b440c6f5194d197966ee20d2718e3bcd63a2e52d82c5b02c05c",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/golang.org/x/crypto@v0.56.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:generic/stackstate-backup-cli-release-archive@sha256:ac00833d611f0934737c422c35ae0f63ab2f6a4892c060587433a87d957488ea",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/golang.org/x/crypto@v0.56.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:generic/stackstate-backup-cli-release-archive@sha256:212869873afaf31d5d53ecd2ae27e0a270eb90fad9f4278beb1cc4245fdf07e7",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/golang.org/x/crypto@v0.56.0"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:generic/stackstate-backup-cli-release-archive@sha256:0bff63bc967504ee1477e8e7aaa12107d2a247f4e8c256e1846addb15dd93c11",
+          "subcomponents": [
+            {
+              "@id": "pkg:golang/golang.org/x/crypto@v0.56.0"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "impact_statement": "The five accepted stackstate-backup-cli v0.10.0 release archives (darwin/amd64, darwin/arm64, linux/amd64, linux/arm64 and windows/amd64) contain binaries from 5feee112a425fcdf3bf92e15b5809cf61f68d612. Source dependency and five-binary symbol/govulncheck inspection show no affected golang.org/x/crypto/openpgp package or call; the source links x/crypto/sha3. Module-level matching reports the parent x/crypto v0.56.0 even though the affected implementation is absent. This is a backup-specific applicability assessment, not a fixed-version claim.",
+      "status_notes": "Evidence: https://github.com/StackVista/cve-reporter/issues/57 and independent all-five-asset delivery review https://omnigent.tooling.stackstate.io/c/828da530563e5baca8d2c3a4ab6f6fbe. Archive SHA256 identities match GitHub release v0.10.0, published checksums, CDN and scan35083378323. Product versions here are archive content hashes, not OCI manifest digests. Central scanning still uses shared cve-release-artifact identity; these archive PURLs intentionally do not match it. Safe identity repair and consumption verification are required under https://github.com/StackVista/cve-reporter/issues/62 before this proposal can affect that scan. UNKNOWN GO-2026-5932 is present in independent SBOM scans across all five assets. Empty Unix Grype detections are not clean evidence: https://github.com/StackVista/cve-reporter/issues/68.",
+      "action_statement": "Limit this decision to the five listed archive hashes. Reassess changed archives or an affected OpenPGP import. Human VEX approval is required; this proposal does not grant an exception, change a delivery decision or establish clean closure.",
+      "timestamp": "2026-09-20T05:30:51Z"
+    }
+  ]
+}
