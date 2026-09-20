@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 8,
+  "version": 9,
   "statements": [
     {
       "vulnerability": {
@@ -1415,7 +1415,25 @@
       "status": "fixed",
       "status_notes": "The unchanged upstream Python 3.13 StringPrep backport c28b121a4f0b975937c8b5a1b4934bb361d84296 is applied by deps/cpython/cpython.MODULE.bazel in stackstate-agent PR529. Reviewed source 9f51215785bbf3c400065aeb3e3eb8c94e7f18ec and merged source 0812a1b82c80f28667fcdb646d2d0478384c9bee have identical trees. Publication https://github.com/StackVista/stackstate-agent/actions/runs/35352622819 and scan https://github.com/StackVista/cve-reporter/actions/runs/35425413598 identify quay.io/stackstate/stackstate-k8s-agent:0812a1b8 at the listed index and AMD64/ARM64 manifest digests. Independent packaged-runtime review verified the patched stringprep.py SHA256 fc42fedb2a828a34a70cb0ff1b9a17039ca148b4f561fa7db98ce49bb2141c7a and four upstream IDNA regressions plus ASCII control on both architectures: https://omnigent.tooling.stackstate.io/c/4e86b69500ba5480b97e48f0b49385c8. Embedded Python still reports 3.13.15. The fixed assertion covers only the exact reviewed source and these verified Quay digests, not all Python 3.13.15 installations, mutable tags or unverified Rancher images. The two repository_url forms accommodate Grype and Trivy image identifiers.",
       "timestamp": "2026-09-19T09:14:30Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-82049"
+      },
+      "products": [
+        {
+          "@id": "https://github.com/StackVista/stackstate-agent/commit/98c358700422951715f0473ba345a664f3a5c2db",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.15"
+            }
+          ]
+        }
+      ],
+      "status": "fixed",
+      "status_notes": "Source-level backport in https://github.com/StackVista/stackstate-agent/pull/532 at exact head 98c358700422951715f0473ba345a664f3a5c2db: deps/cpython/0007-CVE-2026-82049-tarfile-hardlink.patch applies unchanged upstream Python 3.13 commit b8f23e307097552eaea2604383a12ab280520d0d. Python still reports 3.13.15. Native AMD64/ARM64 candidate package/image CI https://github.com/StackVista/stackstate-agent/actions/runs/35460384237 passes the data/tar filters, build.safe_extractall and retained StringPrep regressions; packaged tarfile.py SHA256 is 7ad04a66bb92373bd6d2552a2f01fce8a4ca95463ebf661612fd574465977929. This assertion identifies source only, not published images or every Python 3.13.15 installation. Independent source review accepted this exact head with no required correction: https://omnigent.tooling.stackstate.io/c/4e86b69500ba5480b97e48f0b49385c8. After human merge and actual publication, separately verify and bind published image digests. Tracking: https://github.com/StackVista/cve-reporter/issues/29 and https://github.com/StackVista/vexhub/issues/34.",
+      "timestamp": "2026-09-20T05:30:51Z"
     }
   ],
-  "timestamp": "2026-09-19T09:14:30Z"
+  "timestamp": "2026-09-20T05:30:51Z"
 }

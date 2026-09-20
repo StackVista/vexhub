@@ -1,6 +1,11 @@
 {
-  "updated_at": "2026-09-19T09:24:13Z",
+  "updated_at": "2026-09-20T05:31:33Z",
   "packages": [
+    {
+      "id": "pkg:generic/stackstate-backup-cli-release-archive",
+      "location": "pkg/generic/stackstate-backup-cli-release-archive/scan.openvex.json",
+      "format": "openvex"
+    },
     {
       "id": "pkg:golang/github.com/containerd/containerd",
       "location": "pkg/golang/github.com/containerd/containerd/scan.openvex.json",
