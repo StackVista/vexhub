@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 10,
+  "version": 11,
   "statements": [
     {
       "vulnerability": {
@@ -180,6 +180,9 @@
             },
             {
               "@id": "pkg:generic/python@3.13.15"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.16"
             }
           ]
         },
@@ -194,6 +197,9 @@
             },
             {
               "@id": "pkg:generic/python@3.13.15"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.16"
             }
           ]
         },
@@ -208,16 +214,19 @@
             },
             {
               "@id": "pkg:generic/python@3.13.15"
+            },
+            {
+              "@id": "pkg:generic/python@3.13.16"
             }
           ]
         }
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
-      "impact_statement": "CVE-2025-15367 is in the POP3._putcmd sink of the CPython standard library module Lib/poplib.py. The image embeds a full CPython interpreter under /opt/stackstate-agent/embedded/, so poplib.py is present on disk, but no shipped first-party code reaches it. A recursive search of the whole shipped tree (/opt/stackstate-agent, including every stackstate_checks integration in site-packages, python-scripts/ and /etc/stackstate-agent) for the tokens poplib and POP3 returns exactly one hit, embedded/lib/python3.13/pydoc_data/module_docs.py, which is inert documentation data rather than executable code; there is no import of poplib, no POP3 object construction and no POP3 session anywhere in shipped code. /etc/stackstate-agent/checks.d is empty, so no additional check code is layered in at build time. The interpreter is invoked only by the agent's rtloader check loader to run the bundled integrations, none of which exercise poplib. The image exposes only 8125/udp (DogStatsD) and 8126/tcp (trace-agent) and no POP3 port, and CVSS PR:H means an attacker would additionally need authenticated control of POP3 command arguments - a surface this image does not present. The container runs as USER 1000:1000.",
-      "status_notes": "Re-verified 2026-09-06 against quay.io/stackstate/stackstate-k8s-agent:ff38da51 (index digest sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616) on both published architectures - linux/amd64 (sha256:72287f0a984855dd974821b0d0c8b09111f7f6a5910e3df6b1797b643924184d) and linux/arm64 (sha256:d9d07d885b8da704a0cf177ed7aabcb9d081e4b5e2b062859eaa33f5b018d521). The embedded interpreter now reports itself as 3.13.15 (sys.version probed in the running image) and Grype reports the finding against pkg:generic/python@3.13.15, so pkg:generic/python@3.13.15 is added to subcomponents; the previously listed 3.13.13 and 3.13.14 pins are retained for images still in support. The reachability premise - no shipped code referencing poplib or POP3 - was re-established on both architectures and is unchanged by the interpreter patch bump. Checked against the vendor record on 2026-09-06 for the same error corrected in the CVE-2026-4360 statement: the PSF CNA record for CVE-2025-15367 lists CPython from 0 up to but not including 3.15.0a6 as affected, so the shipped 3.13.15 is inside the affected range and this remains a reachability statement rather than a fix argument. 3.15.0a6 is an alpha of a future minor line and is not a compatible upgrade for the 3.13 series.",
-      "timestamp": "2026-09-06T14:45:00Z",
-      "action_statement": "This statement is pinned to the interpreter versions listed in subcomponents, so a future CPython patch bump makes it inert rather than silently over-broad; extend subcomponents only after re-confirming that no shipped code references poplib or POP3. Re-review if any agent check, integration or helper script begins opening a POP3 session."
+      "impact_statement": "CVE-2025-15367 affects the POP3._putcmd sink in CPython's Lib/poplib.py: attacker-controlled command arguments containing newlines can inject additional POP3 commands. The vulnerable module is present in the embedded interpreter, but the shipped SUSE Observability agent and integrations do not import poplib, construct POP3/POP3_SSL clients or call this sink. Reinspection of /opt/stackstate-agent (including site-packages, bundled integrations and python-scripts), /etc/stackstate-agent and /etc/cont-init.d on both published architectures found only the defining stdlib poplib.py, inert pydoc module documentation, the bytecode build manifest and curl protocol headers; those references do not call the affected Python API. The shipped /etc/stackstate-agent/checks.d is empty on both architectures. Source review of the agent's rtloader check execution path is consistent with these packaged integrations. This applicability assessment covers the shipped agent runtime and integrations, not arbitrary customer-mounted Python checks or use of the image as a general-purpose Python environment. The conclusion rests on absence of POP3 client call paths, not exposed ports, container UID or CVSS severity.",
+      "status_notes": "Revalidated on 2026-10-22 for quay.io/stackstate/stackstate-k8s-agent:11da0d93, index sha256:70d6089a32a433d75152a508644680f92cf490a38682e0c9d07bf41043667b9c; inspected linux/amd64 sha256:e57d283eb36581c71b294ecb48d81f6e048246f59259c75611dd8a590c222003 and linux/arm64 sha256:f6d6adda50feabb410957661cd5fea2f78e31cf5b24802b729854b1bfaea8c04. The dev scan (https://github.com/StackVista/cve-reporter/actions/runs/39794456472, attempt 1) identifies pkg:generic/python@3.13.16 at /opt/stackstate-agent/embedded/bin/python3.13; AMD64 execution confirms 3.13.16, and both architectures ship identical poplib.py (SHA256 527e714523264093910a0a0b1a55c6583f952835c89061537fc40ad98c347056). ARM64 was inspected as a filesystem, not executed. The current residual references are accounted for in the impact statement instead of repeating the historical exact-hit-count claim. Upstream v3.13.17 still has the unvalidated _putcmd implementation (https://github.com/python/cpython/blob/v3.13.17/Lib/poplib.py), and the current 3.13 branch has no POP3 fix. The PSF CNA record (https://www.cve.org/CVERecord?id=CVE-2025-15367) still names 3.15.0a6 as the fix boundary; no compatible released 3.13.x fix was found. Retained the previously reviewed 3.13.13-3.13.15 pins, including the 2026-09-06 review of ff38da51 (index sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616), and added only the reviewed 3.13.16 pin.",
+      "timestamp": "2026-10-22T16:51:03Z",
+      "action_statement": "This statement is pinned to the interpreter versions listed in subcomponents; extend coverage only after confirming that shipped runtime code still does not import poplib or invoke POP3/POP3_SSL. Re-review if an agent check, integration or helper script begins opening a POP3 session. Prefer a supported upstream 3.13.x fix when one becomes available."
     },
     {
       "vulnerability": {
@@ -1531,5 +1540,5 @@
       "timestamp": "2026-09-20T18:41:00Z"
     }
   ],
-  "timestamp": "2026-09-20T18:41:00Z"
+  "timestamp": "2026-10-22T16:51:03Z"
 }
