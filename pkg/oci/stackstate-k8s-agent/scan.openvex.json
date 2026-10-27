@@ -2,7 +2,7 @@
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://github.com/StackVista/vexhub/pkg/oci/stackstate-k8s-agent/CVE-2026-6100",
   "author": "SUSE Observability Security Team",
-  "version": 11,
+  "version": 12,
   "statements": [
     {
       "vulnerability": {
@@ -219,13 +219,93 @@
               "@id": "pkg:generic/python@3.13.16"
             }
           ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:8ce3079f527318910b69042ae3b2c3b0d1861ebe8003332dcb52d5a33eca1f6c?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:8ce3079f527318910b69042ae3b2c3b0d1861ebe8003332dcb52d5a33eca1f6c?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:eeaedbed37f105f341d6f584c6e180dc578dc6d3175ed08399257d9b020c2792?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:eeaedbed37f105f341d6f584c6e180dc578dc6d3175ed08399257d9b020c2792?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:a0738b65c3274de9fbe3755d8e755c0c9eab6c6a9dfbf7e8a72e839b31bfb9f2?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:a0738b65c3274de9fbe3755d8e755c0c9eab6c6a9dfbf7e8a72e839b31bfb9f2?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:ae76f7f2cd651836c0f1bcd51bbd65b153ec071eb88f5511b4ef2ea6c317211b?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:ae76f7f2cd651836c0f1bcd51bbd65b153ec071eb88f5511b4ef2ea6c317211b?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:27e01e371abc5d7534e1bc1102b01c23cea8a29af6dad549215faf60907c347d?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:27e01e371abc5d7534e1bc1102b01c23cea8a29af6dad549215faf60907c347d?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
         }
       ],
       "status": "not_affected",
       "justification": "vulnerable_code_not_in_execute_path",
       "impact_statement": "CVE-2025-15367 affects the POP3._putcmd sink in CPython's Lib/poplib.py: attacker-controlled command arguments containing newlines can inject additional POP3 commands. The vulnerable module is present in the embedded interpreter, but the shipped SUSE Observability agent and integrations do not import poplib, construct POP3/POP3_SSL clients or call this sink. Reinspection of /opt/stackstate-agent (including site-packages, bundled integrations and python-scripts), /etc/stackstate-agent and /etc/cont-init.d on both published architectures found only the defining stdlib poplib.py, inert pydoc module documentation, the bytecode build manifest and curl protocol headers; those references do not call the affected Python API. The shipped /etc/stackstate-agent/checks.d is empty on both architectures. Source review of the agent's rtloader check execution path is consistent with these packaged integrations. This applicability assessment covers the shipped agent runtime and integrations, not arbitrary customer-mounted Python checks or use of the image as a general-purpose Python environment. The conclusion rests on absence of POP3 client call paths, not exposed ports, container UID or CVSS severity.",
-      "status_notes": "Revalidated on 2026-10-22 for quay.io/stackstate/stackstate-k8s-agent:11da0d93, index sha256:70d6089a32a433d75152a508644680f92cf490a38682e0c9d07bf41043667b9c; inspected linux/amd64 sha256:e57d283eb36581c71b294ecb48d81f6e048246f59259c75611dd8a590c222003 and linux/arm64 sha256:f6d6adda50feabb410957661cd5fea2f78e31cf5b24802b729854b1bfaea8c04. The dev scan (https://github.com/StackVista/cve-reporter/actions/runs/39794456472, attempt 1) identifies pkg:generic/python@3.13.16 at /opt/stackstate-agent/embedded/bin/python3.13; AMD64 execution confirms 3.13.16, and both architectures ship identical poplib.py (SHA256 527e714523264093910a0a0b1a55c6583f952835c89061537fc40ad98c347056). ARM64 was inspected as a filesystem, not executed. The current residual references are accounted for in the impact statement instead of repeating the historical exact-hit-count claim. Upstream v3.13.17 still has the unvalidated _putcmd implementation (https://github.com/python/cpython/blob/v3.13.17/Lib/poplib.py), and the current 3.13 branch has no POP3 fix. The PSF CNA record (https://www.cve.org/CVERecord?id=CVE-2025-15367) still names 3.15.0a6 as the fix boundary; no compatible released 3.13.x fix was found. Retained the previously reviewed 3.13.13-3.13.15 pins, including the 2026-09-06 review of ff38da51 (index sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616), and added only the reviewed 3.13.16 pin.",
-      "timestamp": "2026-10-22T16:51:03Z",
+      "status_notes": "Revalidated on 2026-10-22 for quay.io/stackstate/stackstate-k8s-agent:11da0d93, index sha256:70d6089a32a433d75152a508644680f92cf490a38682e0c9d07bf41043667b9c; inspected linux/amd64 sha256:e57d283eb36581c71b294ecb48d81f6e048246f59259c75611dd8a590c222003 and linux/arm64 sha256:f6d6adda50feabb410957661cd5fea2f78e31cf5b24802b729854b1bfaea8c04. The dev scan (https://github.com/StackVista/cve-reporter/actions/runs/39794456472, attempt 1) identifies pkg:generic/python@3.13.16 at /opt/stackstate-agent/embedded/bin/python3.13; AMD64 execution confirms 3.13.16, and both architectures ship identical poplib.py (SHA256 527e714523264093910a0a0b1a55c6583f952835c89061537fc40ad98c347056). ARM64 was inspected as a filesystem, not executed. The current residual references are accounted for in the impact statement instead of repeating the historical exact-hit-count claim. Upstream v3.13.17 still has the unvalidated _putcmd implementation (https://github.com/python/cpython/blob/v3.13.17/Lib/poplib.py), and the current 3.13 branch has no POP3 fix. The PSF CNA record (https://www.cve.org/CVERecord?id=CVE-2025-15367) still names 3.15.0a6 as the fix boundary; no compatible released 3.13.x fix was found. Retained the previously reviewed 3.13.13-3.13.15 pins, including the 2026-09-06 review of ff38da51 (index sha256:4ebe6280d7c28e07ab1447e1497fbe855ee1229e9ef38b3e9945145cb0367616), and added only the reviewed 3.13.16 pin. Revalidated for the published 3.13.18 artifacts on 2026-10-27: independent review confirmed the unchanged poplib.py and unchanged supported-runtime reachability premise. Its reviewed SHA256 remains 527e714523264093910a0a0b1a55c6583f952835c89061537fc40ad98c347056. Python 3.13.18 coverage is limited to the listed immutable Quay index, signed architecture indexes and AMD64/ARM64 leaf digests of stackstate-k8s-agent:3e7e2d95, built from https://github.com/StackVista/stackstate-agent/commit/3e7e2d95587599d7c76518582e12220201be6d1f. Publication and signed receipts: https://github.com/StackVista/stackstate-agent/actions/runs/40487922146. Published native runtime evidence: https://github.com/StackVista/stackstate-agent/actions/runs/40490532185. Independent review: https://github.com/StackVista/cve-reporter/issues/100#issuecomment-6438352632. Human approval of these scoped decisions: https://github.com/StackVista/cve-reporter/issues/100#issuecomment-6439983665. No unversioned Python 3.13.18 product, mutable tag, unverified mirror or other image digest is covered.",
+      "timestamp": "2026-10-27T11:28:00.210123866Z",
       "action_statement": "This statement is pinned to the interpreter versions listed in subcomponents; extend coverage only after confirming that shipped runtime code still does not import poplib or invoke POP3/POP3_SSL. Re-review if an agent check, integration or helper script begins opening a POP3 session. Prefer a supported upstream 3.13.x fix when one becomes available."
     },
     {
@@ -1538,7 +1618,99 @@
       "status": "fixed",
       "status_notes": "Source-level backport in https://github.com/StackVista/stackstate-agent/pull/532 at exact head 98c358700422951715f0473ba345a664f3a5c2db: deps/cpython/0007-CVE-2026-82049-tarfile-hardlink.patch applies unchanged upstream Python 3.13 commit b8f23e307097552eaea2604383a12ab280520d0d. Python still reports 3.13.15. Native AMD64/ARM64 candidate package/image CI https://github.com/StackVista/stackstate-agent/actions/runs/35460384237 passes the data/tar filters, build.safe_extractall and retained StringPrep regressions; packaged tarfile.py SHA256 is 7ad04a66bb92373bd6d2552a2f01fce8a4ca95463ebf661612fd574465977929. This assertion identifies the accepted source and the verified Quay index/child digests listed here, not every Python 3.13.15 installation. Independent source review accepted this exact head with no required correction: https://omnigent.tooling.stackstate.io/c/4e86b69500ba5480b97e48f0b49385c8. Tracking: https://github.com/StackVista/cve-reporter/issues/29 and https://github.com/StackVista/vexhub/issues/34. Published agent532 binding: quay.io/stackstate/stackstate-k8s-agent:dd1cba03, merge dd1cba03843f4580b1634a1583cc79ac444dbf89. Independent review https://omnigent.tooling.stackstate.io/c/4e86b69500ba5480b97e48f0b49385c8, completion 3ffca03d90ba4e64b724d4619a8e0d98, verified the signed index, both child identities and published tarfile/StringPrep regressions. Both installed tarfile.py hashes equal accepted 7ad04a66bb92373bd6d2552a2f01fce8a4ca95463ebf661612fd574465977929. No mutable tag or mirror identity is asserted.",
       "timestamp": "2026-09-20T18:41:00Z"
+    },
+    {
+      "vulnerability": {
+        "name": "CVE-2026-12345"
+      },
+      "products": [
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:8ce3079f527318910b69042ae3b2c3b0d1861ebe8003332dcb52d5a33eca1f6c?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:8ce3079f527318910b69042ae3b2c3b0d1861ebe8003332dcb52d5a33eca1f6c?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:eeaedbed37f105f341d6f584c6e180dc578dc6d3175ed08399257d9b020c2792?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:eeaedbed37f105f341d6f584c6e180dc578dc6d3175ed08399257d9b020c2792?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:a0738b65c3274de9fbe3755d8e755c0c9eab6c6a9dfbf7e8a72e839b31bfb9f2?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:a0738b65c3274de9fbe3755d8e755c0c9eab6c6a9dfbf7e8a72e839b31bfb9f2?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:ae76f7f2cd651836c0f1bcd51bbd65b153ec071eb88f5511b4ef2ea6c317211b?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:ae76f7f2cd651836c0f1bcd51bbd65b153ec071eb88f5511b4ef2ea6c317211b?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:27e01e371abc5d7534e1bc1102b01c23cea8a29af6dad549215faf60907c347d?repository_url=quay.io/stackstate",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        },
+        {
+          "@id": "pkg:oci/stackstate-k8s-agent@sha256:27e01e371abc5d7534e1bc1102b01c23cea8a29af6dad549215faf60907c347d?repository_url=quay.io/stackstate/stackstate-k8s-agent",
+          "subcomponents": [
+            {
+              "@id": "pkg:generic/python@3.13.18"
+            }
+          ]
+        }
+      ],
+      "status": "not_affected",
+      "justification": "vulnerable_code_not_present",
+      "timestamp": "2026-10-27T11:28:00.210123866Z",
+      "impact_statement": "The agent embeds the upstream CPython 3.13.18 release, which includes the Python 3.13 cleanup fix 0478b52788117db4b831b3efd648f56b777628aa (https://github.com/python/cpython/pull/158429; https://github.com/python/cpython/blob/v3.13.18/Lib/tempfile.py). The vulnerable TemporaryDirectory cleanup behavior is absent from these verified artifacts. The maintained non-root test_runtime_maintenance regression forces a PermissionError and directory-to-symlink race and verifies that cleanup preserves the outside file, its contents, permissions and modification time; it passes in the published native AMD64 and ARM64 images. Test source: https://github.com/StackVista/stackstate-agent/blob/3e7e2d95587599d7c76518582e12220201be6d1f/scripts/test_embedded_python_security.py. Grype still reports CVE-2026-12345 using its NVD CPE constraint <3.15.0rc3, which does not describe this verified fixed 3.13 patch release.",
+      "status_notes": "Python 3.13.18 coverage is limited to the listed immutable Quay index, signed architecture indexes and AMD64/ARM64 leaf digests of stackstate-k8s-agent:3e7e2d95, built from https://github.com/StackVista/stackstate-agent/commit/3e7e2d95587599d7c76518582e12220201be6d1f. Publication and signed receipts: https://github.com/StackVista/stackstate-agent/actions/runs/40487922146. Published native runtime evidence: https://github.com/StackVista/stackstate-agent/actions/runs/40490532185. Independent review: https://github.com/StackVista/cve-reporter/issues/100#issuecomment-6438352632. Human approval of these scoped decisions: https://github.com/StackVista/cve-reporter/issues/100#issuecomment-6439983665. No unversioned Python 3.13.18 product, mutable tag, unverified mirror or other image digest is covered."
     }
   ],
-  "timestamp": "2026-10-22T16:51:03Z"
+  "timestamp": "2026-10-27T11:28:00.210123866Z"
 }
